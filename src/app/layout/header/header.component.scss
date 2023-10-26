@@ -1,0 +1,56 @@
+$header-font: 0.75rem;
+$blue: #4aa6e7;
+
+.layout-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 10rem;
+  border-bottom: 1px solid #c4c4c4;
+
+  .app-logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    h1 {
+      font-size: 1.5rem;
+      color: gray;
+    }
+  }
+
+  .header-option {
+    font-size: $header-font;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6rem;
+    .language {
+      .active-language {
+        font-weight: bold;
+        color: $blue;
+      }
+      .active-language::before {
+        content: '';
+        background-color: red;
+        border-right: 2px solid $blue;
+        margin-left: 0.3rem;
+        margin-right: 0.3rem;
+      }
+    }
+    .function {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2rem;
+      .text-blue {
+        font-weight: bold;
+        color: $blue;
+      }
+      .font-semibold {
+        font-weight: bold;
+        opacity: 0.3;
+      }
+    }
+  }
+}

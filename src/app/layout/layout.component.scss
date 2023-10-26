@@ -1,0 +1,6 @@
+.layout-wrapper {
+  background-color: blue;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-rows: 1fr auto 1fr;
+}
