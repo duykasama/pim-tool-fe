@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import axios, {AxiosError} from "axios";
+import axios from "axios";
+import {formatUtcDate} from "../../core/utils/date.util";
 
 @Component({
   selector: 'app-project-list',
@@ -12,7 +13,6 @@ export class ProjectListComponent implements OnInit {
   private url: string = 'http://localhost:10002/projects'
   projects: Project[] = []
   isLoading = true
-  numbers = [1, 2, 3, 4, 5]
   async ngOnInit(): Promise<void> {
     await this.getData()
     console.log(this.projects)
@@ -28,12 +28,14 @@ export class ProjectListComponent implements OnInit {
       })
 
       await new Promise(r => setTimeout(r, 1000))
-      this.projects = response.data?.data
+      this.projects = response.data?.data?.data
       this.isLoading = false
     }catch (e){
       console.log(e)
     }
   }
+
+  protected readonly formatUtcDate = formatUtcDate;
 }
 
 interface Project {

@@ -1,0 +1,33 @@
+$semibold: 600;
+$regular: 0.875rem;
+$default: #333;
+$faded: #666;
+$focus: #2f85fa;
+
+.create-project-layout {
+  padding: 2rem 23rem 0 2rem;
+  font-size: $regular;
+  font-weight: $semibold;
+  color: $faded;
+
+  h2 {
+    padding-bottom: 1rem;
+    border-bottom: 1px solid gray;
+    opacity: 0.5;
+  }
+  form {
+    padding: 3rem;
+    display: flex;
+    flex-flow: column;
+    gap: 2.375rem;
+    .date-selection {
+      display: flex;
+      justify-content: space-between;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: end;
+      gap: 3rem;
+    }
+  }
+}

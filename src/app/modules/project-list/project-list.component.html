@@ -7,8 +7,8 @@
       <col span="1" style="width: 7%">
       <col span="1" style="width: 40%">
       <col span="1" style="width: 13%">
-      <col span="1" style="width: 20%">
-      <col span="1" style="width: 10%">
+      <col span="1" style="width: 18%">
+      <col span="1" style="width: 12%">
       <col span="1" style="width: 7%">
     </colgroup>
 
@@ -33,7 +33,7 @@
         <td>{{project.name}}</td>
         <td>{{project.status}}</td>
         <td>{{project.customer}}</td>
-        <td>{{project.startDate}}</td>
+        <td>{{formatUtcDate(project.startDate)}}</td>
         <td>
           <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
         </td>
@@ -67,7 +67,4 @@
     </tbody>
   </table>
   <app-pagination></app-pagination>
-  <ul>
-    <li *ngFor="let num of numbers">{{num}}</li>
-  </ul>
 </div>
