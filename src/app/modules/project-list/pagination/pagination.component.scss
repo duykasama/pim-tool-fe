@@ -1,0 +1,21 @@
+.pagination {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: end;
+  ul {
+    list-style: none;
+    display: flex;
+    flex-flow: row;
+    border: 1px solid lightgray;
+    li {
+      border: 1px solid lightgray;
+      width: 1.75rem;
+      height: 1.75rem;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

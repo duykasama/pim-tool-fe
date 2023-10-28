@@ -7,6 +7,11 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { DefaultLayoutComponent } from './layout/layout.component';
 import { HomeComponent } from './modules/home/home.component';
+import { SideBarComponent } from './layout/side-bar/side-bar.component';
+import { ProjectListComponent } from './modules/project-list/project-list.component';
+import { SearchBarComponent } from './modules/project-list/search-bar/search-bar.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { PaginationComponent } from './modules/project-list/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -14,11 +19,16 @@ import { HomeComponent } from './modules/home/home.component';
     FooterComponent,
     HeaderComponent,
     DefaultLayoutComponent,
-    HomeComponent
+    HomeComponent,
+    SideBarComponent,
+    ProjectListComponent,
+    SearchBarComponent,
+    PaginationComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

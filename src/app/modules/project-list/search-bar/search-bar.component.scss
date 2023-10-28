@@ -1,0 +1,42 @@
+$semibold: 600;
+
+.search-bar {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 3rem;
+  .search-input {
+    padding: 0.325rem 1rem;
+    min-width: 23rem;
+    outline: none;
+    border: 1px solid gray;
+    font-weight: $semibold;
+    opacity: 0.7;
+  }
+  select {
+    padding: 0.325rem;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    min-width: 12rem;
+    font-weight: $semibold;
+    opacity: 0.7;
+  }
+  .button {
+    padding: 0.325rem 3rem;
+    font-weight: $semibold;
+    border: none;
+    cursor: pointer;
+  }
+  .search-button {
+    color: whitesmoke;
+    background-color: #0061cd;
+  }
+  .reset-button {
+    color: #2f85fa;
+  }
+  .rounded {
+    border-radius: 0.25rem;
+  }
+}

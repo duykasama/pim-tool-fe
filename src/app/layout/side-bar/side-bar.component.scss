@@ -1,0 +1,33 @@
+$semibold: 600;
+$regular: 0.875rem;
+$default: #333;
+$faded: #666;
+$focus: #2f85fa;
+
+.nav {
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  //margin-top: 3rem;
+  border-right: 1px solid gray;
+  height: 100%;
+  ul {
+    margin-top: 3rem;
+    list-style: none;
+    display: flex;
+    flex-flow: column;
+    gap: 1rem;
+    font-weight: $semibold;
+    font-size: $regular;
+    color: $default;
+    .active {
+      font-size: 1.125rem;
+    }
+    li:first-child {
+      color: $focus;
+    }
+    li:last-child {
+      color: $faded;
+    }
+  }
+}
