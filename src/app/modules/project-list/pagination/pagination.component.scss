@@ -8,6 +8,8 @@
     display: flex;
     flex-flow: row;
     border: 1px solid lightgray;
+    color: #2f85fa;
+    font-size: 0.7rem;
     li {
       border: 1px solid lightgray;
       width: 1.75rem;
@@ -16,6 +18,12 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
+
+    }
+    .active {
+       background-color: #dfdfdf !important;
+       color: gray !important;
     }
   }
 }

@@ -1,58 +1,57 @@
 <div class="create-project-layout">
   <h2>New Project</h2>
-  <form action="">
-    <div>
-      <label for="projectNumber">Project number</label>
-      <input type="number" id="projectNumber">
+  <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()">
+    <div class="input-container">
+      <label for="projectNumber" class="required">Project number</label>
+      <input formControlName="projectNumber" type="number" id="projectNumber" min="0" max="9999" pattern="[0-9]{4}">
     </div>
 
-    <div>
-      <label for="projectName">Project name</label>
-        <input type="text" id="projectName">
+    <div class="input-container">
+      <label for="name" class="required">Project name</label>
+      <input formControlName="name" type="text" id="name">
     </div>
 
-    <div>
-      <label for="customer">Customer</label>
-      <input type="text" id="customer">
+    <div class="input-container">
+      <label for="customer" class="required">Customer</label>
+      <input formControlName="customer" type="text" id="customer">
     </div>
 
-    <div>
-      <label for="group">Group</label>
-      <select id="group">
-        <option hidden selected disabled>Select Group</option>
-        <option>Option 1</option>
-        <option>Option 2</option>
-        <option>Option 3</option>
+    <div class="input-container">
+      <label for="group" class="required">Group</label>
+      <select formControlName="groupId" id="group">
+        <option hidden selected>Select Group</option>
+        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 1</option>
+        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 2</option>
+        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 3</option>
       </select>
     </div>
 
-    <div>
+    <div class="input-container">
       <label for="members">Members</label>
-      <input type="text" id="members">
+      <input formControlName="members" type="text" id="members">
     </div>
 
-    <div>
-      <label for="status">Status</label>
-      <select id="status">
-        <option hidden selected disabled>Select Status</option>
-        <option value="new">New</option>
+    <div class="input-container">
+      <label for="status" class="required">Status</label>
+      <select formControlName="status" id="status">
+        <option hidden selected>Select Status</option>
+        <option value="NEW">NEW</option>
+        <option value="PLA">PLA</option>
+        <option value="INP">INP</option>
+        <option value="FIN">FIN</option>
       </select>
     </div>
 
     <div class="date-selection">
-      <div>
-        <label for="startDate">Start date</label>
-        <input type="date" id="startDate">
-      </div>
-      <div>
-        <label for="endDate">End date</label>
-        <input type="date" id="endDate">
-      </div>
+      <label for="startDate" class="required">Start date</label>
+      <input formControlName="startDate" type="date" id="startDate">
+      <label for="endDate">End date</label>
+      <input formControlName="endDate" type="date" id="endDate">
     </div>
 
     <div class="btn-group">
-      <button>Cancel</button>
-      <button>Create Project</button>
+      <button class="btn btn-cancel">Cancel</button>
+      <button class="btn btn-create">Create Project</button>
     </div>
   </form>
 </div>

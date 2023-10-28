@@ -9,25 +9,80 @@ $focus: #2f85fa;
   font-size: $regular;
   font-weight: $semibold;
   color: $faded;
-
   h2 {
     padding-bottom: 1rem;
     border-bottom: 1px solid gray;
     opacity: 0.5;
   }
   form {
-    padding: 3rem;
+    padding: 3rem 0 0 3rem;
     display: flex;
     flex-flow: column;
     gap: 2.375rem;
+    .required::after {
+      content: '*';
+      color: red;
+      margin-left: 1rem;
+      font-weight: bold;
+    }
+    input, select {
+      outline: none;
+      border: 1px solid rgba(128, 128, 128, .5);
+      padding: 0 0.5rem;
+      height: 30px;
+      border-radius: 0.3rem;
+      box-shadow: 0 0 2px #333 inset;
+    }
+    .input-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      label {
+        grid-column: 1 / 4;
+      }
+      input[type=text]{
+        grid-column: 4 / 13;
+      }
+      input[type=number], select {
+        grid-column: 4 / 7;
+      }
+    }
     .date-selection {
-      display: flex;
-      justify-content: space-between;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      label[for=startDate] {
+        grid-column: 1 / 4;
+      }
+      #startDate {
+        grid-column: 4 / 7;
+      }
+      label[for=endDate] {
+        grid-column: 8 / 10;
+      }
+      #endDate {
+        grid-column: 10 / 13;
+      }
     }
     .btn-group {
       display: flex;
       justify-content: end;
-      gap: 3rem;
+      gap: 4rem;
+      border-top: 1px solid gray;
+      padding-top: 2rem;
+      .btn {
+        border-radius: 0.25rem;
+        padding: 0 4rem;
+        cursor: pointer;
+        height: 35px;
+        font-weight: $semibold;
+        border: 1px solid gray;
+      }
+      .btn-create {
+        background-color: #2f85fa;
+        color: white;
+      }
+      .btn-cancel {
+        background-color: #b9b9b9;
+      }
     }
   }
 }

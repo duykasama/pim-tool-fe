@@ -31,39 +31,13 @@
         </td>
         <td>{{project.projectNumber}}</td>
         <td>{{project.name}}</td>
-        <td>{{project.status}}</td>
+        <td>{{resolveProjectStatus(project.status)}}</td>
         <td>{{project.customer}}</td>
         <td>{{formatUtcDate(project.startDate)}}</td>
         <td>
-          <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
+          <fa-icon [icon]="faTrash" *ngIf="selectedForDelete" class="fa-trash"></fa-icon>
         </td>
       </tr>
-<!--      <tr>-->
-<!--        <td>-->
-<!--          <input type="checkbox" name="delete" id="11">-->
-<!--        </td>-->
-<!--        <td>3316</td>-->
-<!--        <td>Factucation / Encaissements</td>-->
-<!--        <td>New</td>-->
-<!--        <td>Les Retaites Popularies</td>-->
-<!--        <td>25.02.2004</td>-->
-<!--        <td>-->
-<!--          <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>-->
-<!--        </td>-->
-<!--      </tr>-->
-<!--      <tr>-->
-<!--        <td>-->
-<!--          <input type="checkbox" name="delete" id="1">-->
-<!--        </td>-->
-<!--        <td>3316</td>-->
-<!--        <td>Factucation / Encaissements</td>-->
-<!--        <td>New</td>-->
-<!--        <td>Les Retaites Popularies</td>-->
-<!--        <td>25.02.2004</td>-->
-<!--        <td>-->
-<!--          <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>-->
-<!--        </td>-->
-<!--      </tr>-->
     </tbody>
   </table>
   <app-pagination></app-pagination>

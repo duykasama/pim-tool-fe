@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {faChevronLeft, faChevronRight} from "@fortawesome/free-solid-svg-icons";
 
 @Component({
   selector: 'app-pagination',
@@ -7,4 +8,6 @@ import { Component } from '@angular/core';
 })
 export class PaginationComponent {
 
+  protected readonly faChevronRight = faChevronRight;
+  protected readonly faChevronLeft = faChevronLeft;
 }
