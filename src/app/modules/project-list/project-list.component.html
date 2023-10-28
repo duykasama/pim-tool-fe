@@ -11,6 +11,7 @@
       <col span="1" style="width: 10%">
       <col span="1" style="width: 7%">
     </colgroup>
+
     <thead>
       <tr>
         <th></th>
@@ -22,34 +23,51 @@
         <th>Delete</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
+
+    <tbody *ngIf="!isLoading">
+      <tr *ngFor="let project of projects">
         <td>
-          <input type="checkbox" name="delete" id="1">
+          <input type="checkbox" name="{{project.id}}" >
         </td>
-        <td>3316</td>
-        <td>Factucation / Encaissements</td>
-        <td>New</td>
-        <td>Les Retaites Popularies</td>
-        <td>25.02.2004</td>
-        <td>
-          <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <input type="checkbox" name="delete" id="1">
-        </td>
-        <td>3316</td>
-        <td>Factucation / Encaissements</td>
-        <td>New</td>
-        <td>Les Retaites Popularies</td>
-        <td>25.02.2004</td>
+        <td>{{project.projectNumber}}</td>
+        <td>{{project.name}}</td>
+        <td>{{project.status}}</td>
+        <td>{{project.customer}}</td>
+        <td>{{project.startDate}}</td>
         <td>
           <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
         </td>
       </tr>
+<!--      <tr>-->
+<!--        <td>-->
+<!--          <input type="checkbox" name="delete" id="11">-->
+<!--        </td>-->
+<!--        <td>3316</td>-->
+<!--        <td>Factucation / Encaissements</td>-->
+<!--        <td>New</td>-->
+<!--        <td>Les Retaites Popularies</td>-->
+<!--        <td>25.02.2004</td>-->
+<!--        <td>-->
+<!--          <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>-->
+<!--        </td>-->
+<!--      </tr>-->
+<!--      <tr>-->
+<!--        <td>-->
+<!--          <input type="checkbox" name="delete" id="1">-->
+<!--        </td>-->
+<!--        <td>3316</td>-->
+<!--        <td>Factucation / Encaissements</td>-->
+<!--        <td>New</td>-->
+<!--        <td>Les Retaites Popularies</td>-->
+<!--        <td>25.02.2004</td>-->
+<!--        <td>-->
+<!--          <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>-->
+<!--        </td>-->
+<!--      </tr>-->
     </tbody>
   </table>
   <app-pagination></app-pagination>
+  <ul>
+    <li *ngFor="let num of numbers">{{num}}</li>
+  </ul>
 </div>
