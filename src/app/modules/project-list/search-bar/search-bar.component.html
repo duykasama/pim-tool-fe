@@ -1,10 +1,17 @@
 <div class="search-bar">
-  <input type="text" placeholder="Project number, name, customer name" class="rounded search-input">
-  <select name="projectStatus" id="projectStatus" class="rounded">
-    <option hidden selected class="rounded">Project status</option>
-    <option value="1">Option 1</option>
-    <option value="2">Option 2</option>
+  <input type="text"
+         placeholder="Project number, name, customer name"
+         [(ngModel)]="searchKeyword"
+         class="rounded search-input">
+
+  <select name="projectStatus" id="projectStatus" class="rounded" [(ngModel)]="projectStatus">
+    <option hidden selected value="Project Status">Project status</option>
+    <option value="NEW">NEW</option>
+    <option value="PLA">PLA</option>
+    <option value="INP">INP</option>
+    <option value="FIN">FIN</option>
   </select>
-  <button class="button search-button rounded">Search project</button>
-  <button class="button reset-button rounded">Reset Search</button>
+
+  <button class="button search-button rounded" type="button" (click)="search()">Search project</button>
+  <button class="button reset-button rounded" type="button" (click)="resetSearch()">Reset Search</button>
 </div>

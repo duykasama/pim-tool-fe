@@ -1,6 +1,6 @@
 <div class="projects-list-layout">
   <h2>Projects List</h2>
-  <app-search-bar></app-search-bar>
+  <app-search-bar [searchInfos]="searchInfos" (searchProjectEvent)="setProjects()"></app-search-bar>
   <table>
     <colgroup>
       <col span="1" style="width: 3%">
@@ -27,7 +27,11 @@
     <tbody *ngIf="!isLoading">
       <tr *ngFor="let project of projects">
         <td>
-          <input type="checkbox" name="{{project.id}}" >
+          <input type="checkbox"
+                 name="{{project.id}}"
+                 (click)="selectProject(project.id)"
+                 [checked]="isProjectSelected(project.id)"
+                 [disabled]="project.status.toUpperCase() !== 'NEW'">
         </td>
         <td>{{project.projectNumber}}</td>
         <td>{{project.name}}</td>
@@ -35,10 +39,28 @@
         <td>{{project.customer}}</td>
         <td>{{formatUtcDate(project.startDate)}}</td>
         <td>
-          <fa-icon [icon]="faTrash" *ngIf="selectedForDelete" class="fa-trash"></fa-icon>
+          <fa-icon [icon]="faTrash" *ngIf="project.status.toUpperCase() === 'NEW'" class="fa-trash"></fa-icon>
         </td>
       </tr>
     </tbody>
+
+    <tfoot *ngIf="selectedProjects.length > 0">
+      <tr>
+        <td colspan="7">
+          <div class="delete-items-container">
+            <p>{{selectedProjects.length}} items selected</p>
+            <div class="right-container">
+              <p>delete selected items</p>
+              <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </tfoot>
   </table>
-  <app-pagination></app-pagination>
+  <app-pagination [projects]="projects"
+                  [paginationStatus]="paginationStatus"
+                  (childEvent)="setProjects()"
+                  *ngIf="!isLoading && paginationStatus.lastPage > 1"></app-pagination>
+  <app-loader *ngIf="isLoading"></app-loader>
 </div>

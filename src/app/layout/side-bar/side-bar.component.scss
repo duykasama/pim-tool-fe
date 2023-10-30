@@ -8,7 +8,6 @@ $focus: #2f85fa;
   display: flex;
   justify-content: center;
   align-items: start;
-  //margin-top: 3rem;
   border-right: 1px solid gray;
   height: 100%;
   ul {
@@ -19,15 +18,27 @@ $focus: #2f85fa;
     gap: 1rem;
     font-weight: $semibold;
     font-size: $regular;
-    color: $default;
+    color: $faded;
     .active {
       font-size: 1.125rem;
-    }
-    li:first-child {
       color: $focus;
     }
-    li:last-child {
-      color: $faded;
+    li {
+      cursor: pointer;
+      a, a:visited {
+        text-decoration: none;
+        color: inherit;
+      }
+      &:hover {
+        scale: 1.2;
+        transition-duration: 150ms;
+      }
     }
+    //li:first-child {
+    //  color: $focus;
+    //}
+    //li:last-child {
+    //  color: $faded;
+    //}
   }
 }

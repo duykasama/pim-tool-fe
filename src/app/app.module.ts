@@ -12,6 +12,12 @@ import { ProjectListComponent } from './modules/project-list/project-list.compon
 import { SearchBarComponent } from './modules/project-list/search-bar/search-bar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { PaginationComponent } from './modules/project-list/pagination/pagination.component';
+import { CreateProjectComponent } from './modules/create-project/create-project.component';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { StoreModule } from "@ngrx/store";
+import { LoaderComponent } from './core/components/loader/loader.component';
+import {projectReducer} from "./core/store/project/project.reducer";
+
 
 @NgModule({
   declarations: [
@@ -23,12 +29,17 @@ import { PaginationComponent } from './modules/project-list/pagination/paginatio
     SideBarComponent,
     ProjectListComponent,
     SearchBarComponent,
-    PaginationComponent
+    PaginationComponent,
+    CreateProjectComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    ReactiveFormsModule,
+    StoreModule.forRoot({projects: projectReducer}),
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

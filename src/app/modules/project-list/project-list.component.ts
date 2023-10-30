@@ -1,9 +1,14 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Output} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import {formatUtcDate} from "../../core/utils/date.util";
 import {resolveProjectStatus} from "../../core/utils/project.util";
 import BASE_URL, {ENDPOINTS} from "../../data/apiInfo";
+import {Store} from "@ngrx/store";
+import {AppState} from "../../core/store/project/project.reducer";
+import {Project} from "../../core/models/project/project.models";
+import {Observable} from "rxjs";
+import {setProjects} from "../../core/store/project/project.action";
 
 @Component({
   selector: 'app-project-list',
@@ -12,28 +17,68 @@ import BASE_URL, {ENDPOINTS} from "../../data/apiInfo";
 })
 export class ProjectListComponent implements OnInit {
   faTrash = faTrash
+
   projects: Project[] = []
+
+  selectedProjects: string[] = []
+
   isLoading = true
-  selectedForDelete = false
-  async ngOnInit(): Promise<void> {
-    await this.getData()
+
+  paginationStatus: PaginationStatus = {
+    pageIndex: 1,
+    pageSize: 10,
+    lastPage: 1,
+    isLastPage: false,
   }
 
-  async getData(): Promise<void> {
+  searchInfos: SearchInfo[] = []
+
+  axiosInstance = axios.create({
+    baseURL: BASE_URL
+  })
+
+  constructor(private store: Store<AppState>) {
+  }
+
+  async ngOnInit(): Promise<void> {
+    await this.setProjects()
+  }
+
+  async setProjects(): Promise<void> {
+    const data = await this.getData(this.paginationStatus.pageIndex, this.paginationStatus.pageSize)
+    this.projects = data?.data
+    this.paginationStatus.pageIndex = data?.pageIndex
+    this.paginationStatus.lastPage = data?.lastPage
+  }
+
+  selectProject(projectId: string): void {
+    if (this.isProjectSelected(projectId)){
+      this.selectedProjects.splice(this.selectedProjects.indexOf(projectId),1)
+      return
+    }
+
+    this.selectedProjects.push(projectId)
+  }
+
+  isProjectSelected(projectId: string): boolean {
+    return this.selectedProjects.includes(projectId)
+  }
+
+  async getData(pageIndex: number, pageSize: number): Promise<any> {
     try {
-      const axiosInstance = axios.create({
-        baseURL: BASE_URL
-      })
-      const response = await axiosInstance.post(ENDPOINTS.PROJECTS, {
-        pageSize: 10,
-        pageIndex: 1
+      this.isLoading = true
+      const response = await this.axiosInstance.post(ENDPOINTS.PROJECTS, {
+        pageSize,
+        pageIndex: Math.max(pageIndex, 1),
+        searchInfos: this.searchInfos
       })
 
-      // await new Promise(r => setTimeout(r, 1000))
-      this.projects = response.data?.data?.data
-      this.isLoading = false
+      // await new Promise(r => setTimeout(r, 2000))
+      return response.data?.data
     }catch (e){
       console.log(e)
+    }finally {
+      this.isLoading = false
     }
   }
 
@@ -41,11 +86,14 @@ export class ProjectListComponent implements OnInit {
   protected readonly resolveProjectStatus = resolveProjectStatus;
 }
 
-interface Project {
-  id: string
-  projectNumber: number
-  name: string
-  status: string
-  customer: string
-  startDate: string
+export interface PaginationStatus {
+  pageIndex: number,
+  pageSize: number,
+  lastPage: number,
+  isLastPage: boolean
+}
+
+export interface SearchInfo {
+  fieldName: string,
+  value: string
 }
