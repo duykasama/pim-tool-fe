@@ -9,6 +9,11 @@ $focus: #2f85fa;
   font-size: $regular;
   font-weight: $semibold;
   color: $faded;
+  .empty-msg {
+    padding: 2rem;
+    text-align: center;
+    font-size: 1.5em;
+  }
   h2 {
     padding-bottom: 1rem;
     border-bottom: 1px solid gray;

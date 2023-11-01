@@ -17,6 +17,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { StoreModule } from "@ngrx/store";
 import { LoaderComponent } from './core/components/loader/loader.component';
 import {projectReducer} from "./core/store/project/project.reducer";
+import { LoginComponent } from './modules/login/login.component';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import {projectReducer} from "./core/store/project/project.reducer";
     SearchBarComponent,
     PaginationComponent,
     CreateProjectComponent,
-    LoaderComponent
+    LoaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

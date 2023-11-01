@@ -1,6 +1,6 @@
 <div class="projects-list-layout">
   <h2>Projects List</h2>
-  <app-search-bar [searchInfos]="searchInfos" (searchProjectEvent)="setProjects()"></app-search-bar>
+  <app-search-bar [searchCriteria]="searchCriteria" (searchProjectEvent)="setProjects()"></app-search-bar>
   <table>
     <colgroup>
       <col span="1" style="width: 3%">
@@ -62,5 +62,6 @@
                   [paginationStatus]="paginationStatus"
                   (childEvent)="setProjects()"
                   *ngIf="!isLoading && paginationStatus.lastPage > 1"></app-pagination>
+  <p *ngIf="!isLoading && !projects" class="empty-msg">Project list is empty...</p>
   <app-loader *ngIf="isLoading"></app-loader>
 </div>

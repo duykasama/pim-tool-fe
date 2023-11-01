@@ -31,7 +31,10 @@ export class ProjectListComponent implements OnInit {
     isLastPage: false,
   }
 
-  searchInfos: SearchInfo[] = []
+  searchCriteria: SearchCriteria = {
+    ConjunctionSearchInfos: [],
+    DisjunctionSearchInfos: []
+  }
 
   axiosInstance = axios.create({
     baseURL: BASE_URL
@@ -70,7 +73,7 @@ export class ProjectListComponent implements OnInit {
       const response = await this.axiosInstance.post(ENDPOINTS.PROJECTS, {
         pageSize,
         pageIndex: Math.max(pageIndex, 1),
-        searchInfos: this.searchInfos
+        searchCriteria: this.searchCriteria
       })
 
       // await new Promise(r => setTimeout(r, 2000))
@@ -95,5 +98,10 @@ export interface PaginationStatus {
 
 export interface SearchInfo {
   fieldName: string,
-  value: string
+  value: string,
+}
+
+export interface SearchCriteria {
+  ConjunctionSearchInfos: SearchInfo[],
+  DisjunctionSearchInfos: SearchInfo[]
 }
