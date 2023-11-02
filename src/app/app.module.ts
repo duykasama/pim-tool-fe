@@ -18,6 +18,10 @@ import { StoreModule } from "@ngrx/store";
 import { LoaderComponent } from './core/components/loader/loader.component';
 import {projectReducer} from "./core/store/project/project.reducer";
 import { LoginComponent } from './modules/login/login.component';
+import { PageLoaderComponent } from './core/components/page-loader/page-loader.component';
+import {OAuthModule} from "angular-oauth2-oidc";
+import { LoginFailedModalComponent } from './core/components/modals/login-failed-modal/login-failed-modal.component';
+import { CreateProjectSuccessComponent } from './core/components/modals/create-project-success/create-project-success.component';
 
 
 @NgModule({
@@ -33,7 +37,10 @@ import { LoginComponent } from './modules/login/login.component';
     PaginationComponent,
     CreateProjectComponent,
     LoaderComponent,
-    LoginComponent
+    LoginComponent,
+    PageLoaderComponent,
+    LoginFailedModalComponent,
+    CreateProjectSuccessComponent
   ],
   imports: [
     BrowserModule,

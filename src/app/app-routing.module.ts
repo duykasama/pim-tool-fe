@@ -5,11 +5,13 @@ import {HomeComponent} from "./modules/home/home.component";
 import {ProjectListComponent} from "./modules/project-list/project-list.component";
 import {CreateProjectComponent} from "./modules/create-project/create-project.component";
 import {LoginComponent} from "./modules/login/login.component";
+import {AuthGuard} from "./core/guards/auth-guard";
 
 const routes: Routes = [
   {
     path: '',
     component: DefaultLayoutComponent,
+    canActivate: [AuthGuard],
     children: [
       {
         path: '',

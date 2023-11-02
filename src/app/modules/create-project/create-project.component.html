@@ -96,5 +96,6 @@
       <button class="btn btn-create" [ngClass]="{'forbid': createProjectForm.invalid}">Create Project</button>
     </div>
   </form>
-  <div *ngIf="isLoading">Loading</div>
+  <app-page-loader *ngIf="isLoading"></app-page-loader>
+  <app-create-project-success *ngIf="!isLoading && isRequestSent" [showModal]="isRequestSent" [isSuccess]="isSuccess" [message]="message"></app-create-project-success>
 </div>

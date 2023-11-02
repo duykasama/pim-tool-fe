@@ -2,18 +2,23 @@
   <main>
     <img src="../../../assets/logo_elca.png" alt="Elca Logo">
     <h1>PIM Tool</h1>
-    <form >
-      <div class="input-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="input-container" (focusout)="validateEmail()" [ngClass]="{'alert': !isValidEmail}">
         <label>Email</label>
-        <input type="email">
+        <input type="email" autocomplete="username" formControlName="email">
       </div>
+      <small *ngIf="!isValidEmail" class="validation-error">Please enter a valid email</small>
 
-      <div class="input-container">
+      <div class="input-container" (focusout)="validatePassword()" [ngClass]="{'alert': !isValidPassword}">
         <label>Password</label>
-        <input type="password">
+        <input type="password" autocomplete="current-password" formControlName="password">
       </div>
-      <small>Forgot my password</small>
-      <button type="button">Log in</button>
+      <small *ngIf="!isValidPassword" class="validation-error">Please enter your password</small>
+<!--      <small *ngIf="!isValidPassword" class="validation-error">Password must contains at least 8 characters and an uppercase letter</small>-->
+      <small>Forgot your password</small>
+      <button [ngClass]="{'forbid': loginForm.invalid || loginForm.pristine}" [disabled]="loginForm.invalid || loginForm.pristine">Log in</button>
     </form>
   </main>
+  <app-page-loader *ngIf="isLoading"></app-page-loader>
+  <app-login-failed-modal [showModal]="!isLoading && !isLoginSuccess" [message]="errorMsg"></app-login-failed-modal>
 </div>

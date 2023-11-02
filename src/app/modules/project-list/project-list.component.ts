@@ -9,6 +9,7 @@ import {AppState} from "../../core/store/project/project.reducer";
 import {Project} from "../../core/models/project/project.models";
 import {Observable} from "rxjs";
 import {setProjects} from "../../core/store/project/project.action";
+import {getAxiosInstance} from "../../core/lib/appAxios";
 
 @Component({
   selector: 'app-project-list',
@@ -35,10 +36,6 @@ export class ProjectListComponent implements OnInit {
     ConjunctionSearchInfos: [],
     DisjunctionSearchInfos: []
   }
-
-  axiosInstance = axios.create({
-    baseURL: BASE_URL
-  })
 
   constructor(private store: Store<AppState>) {
   }
@@ -70,7 +67,7 @@ export class ProjectListComponent implements OnInit {
   async getData(pageIndex: number, pageSize: number): Promise<any> {
     try {
       this.isLoading = true
-      const response = await this.axiosInstance.post(ENDPOINTS.PROJECTS, {
+      const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, {
         pageSize,
         pageIndex: Math.max(pageIndex, 1),
         searchCriteria: this.searchCriteria

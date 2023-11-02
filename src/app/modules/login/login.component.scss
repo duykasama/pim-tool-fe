@@ -39,6 +39,14 @@
           font-weight: 500;
         }
       }
+      .alert {
+        animation: 0.2s linear shake;
+        border: 2px solid red;
+        color: red;
+      }
+      .validation-error {
+        color: red;
+      }
       small {
         color: #2f85fa;
         cursor: pointer;
@@ -55,6 +63,21 @@
           background-color: #B52a09;
         }
       }
+      .forbid {
+        cursor: not-allowed;
+      }
     }
+  }
+}
+
+@keyframes shake {
+  33% {
+    transform: translateX(3px);
+  }
+  66%{
+    transform: translateX(-6px);
+  }
+  100%{
+    transform: translateX(3px);
   }
 }
