@@ -1,9 +1,9 @@
 <div class="pagination">
   <ul class="">
-    <li (click)="toPreviousPage()">
-      <fa-icon [icon]="faChevronLeft" [ngClass]="{'disabled' : paginationStatus.pageIndex == 1}"></fa-icon>
+    <li (click)="toPreviousPage()" [ngClass]="{'disabled' : paginationStatus.pageIndex === 1}">
+      <fa-icon [icon]="faChevronLeft"></fa-icon>
     </li>
-    <ng-container *ngIf="paginationStatus.pageIndex < 5">
+    <ng-container *ngIf="paginationStatus.pageIndex <= 5">
       <li *ngFor="let i of [].constructor(Math.min(paginationStatus.lastPage, 5)); index as j"
           [ngClass]="{'active': paginationStatus.pageIndex == j+1}"
           (click)="setPage(j+1)">
@@ -14,7 +14,7 @@
         <li (mouseover)="changeNextMultiIcon()" (mouseleave)="resetIcon()" (click)="toNextMultiPage()">
           <fa-icon [icon]="nextMultiPageIcon"></fa-icon>
         </li>
-        <li>{{paginationStatus.lastPage}}</li>
+        <li (click)="setPage(paginationStatus.lastPage)">{{paginationStatus.lastPage}}</li>
       </ng-container>
     </ng-container>
 
@@ -50,7 +50,7 @@
       <li (click)="setPage(paginationStatus.lastPage)">{{paginationStatus.lastPage}}</li>
     </ng-container>
 
-    <ng-container *ngIf="(paginationStatus.lastPage - paginationStatus.pageIndex < 5) && paginationStatus.pageIndex >= 5">
+    <ng-container *ngIf="(paginationStatus.lastPage - paginationStatus.pageIndex < 5) && paginationStatus.pageIndex > 5">
       <li (click)="setPage(1)">1</li>
       <li (mouseover)="changePrevMultiIcon()" (mouseleave)="resetIcon()" (click)="toPrevMultiPage()">
         <fa-icon [icon]="prevMultiPageIcon"></fa-icon>

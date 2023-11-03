@@ -66,6 +66,19 @@ $focus: #2f85fa;
       border-radius: 0.3rem;
       box-shadow: 0 0 2px #333 inset;
     }
+    input[type=date], select {
+      font-size: 1em;
+      font-weight:$semibold;
+      color: $faded;
+    }
+    select {
+      -webkit-appearance: none;
+      background-image: url("/assets/black-arrow-down-icon-png.png");
+      background-size: 1rem 1rem;
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-origin: content-box;
+    }
     .input-container {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
@@ -101,6 +114,18 @@ $focus: #2f85fa;
       #endDate {
         grid-column: 10 / 13;
       }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        //display: none;
+        z-index: -1;
+      }
+      input[type=date] {
+        -webkit-appearance: none;
+        background-image: url("/assets/calendar.png");
+        background-size: 1.5rem 1.5rem;
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-origin: content-box;
+      }
     }
     .btn-group {
       display: flex;
@@ -119,9 +144,15 @@ $focus: #2f85fa;
       .btn-create {
         background-color: #2f85fa;
         color: white;
+        &:hover {
+          background-color: #175ebf;
+        }
       }
       .btn-cancel {
         background-color: #b9b9b9;
+        &:hover {
+          background-color: #999797;
+        }
       }
       .forbid {
         cursor: not-allowed;

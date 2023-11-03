@@ -61,7 +61,10 @@
   <app-pagination [projects]="projects"
                   [paginationStatus]="paginationStatus"
                   (childEvent)="setProjects()"
-                  *ngIf="!isLoading && paginationStatus.lastPage > 1"></app-pagination>
+                  *ngIf="!isLoading && paginationStatus.lastPage > 1"
+                  class="pagination">
+
+  </app-pagination>
   <p *ngIf="!isLoading && !projects" class="empty-msg">Project list is empty...</p>
   <app-loader *ngIf="isLoading"></app-loader>
 </div>

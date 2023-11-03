@@ -6,6 +6,7 @@ import {isValidDate} from "rxjs/internal/util/isDate";
 import {faClose} from "@fortawesome/free-solid-svg-icons";
 import BASE_URL, {ENDPOINTS} from "../../data/apiInfo";
 import {getAxiosInstance} from "../../core/lib/appAxios";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-project',
@@ -19,7 +20,7 @@ export class CreateProjectComponent {
   isRequestSent = false
   message = ''
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder, protected router: Router) {
   }
 
   createProjectForm = this.formBuilder.group({
@@ -59,7 +60,7 @@ export class CreateProjectComponent {
 
       this.isSuccess = !!response.data?.isSuccess
       this.message = response.data?.messages[0]?.content || 'Request sent'
-      this.createProjectForm.reset()
+      this.resetForm()
     }
     catch (e: any | AxiosError){
       this.message = e.response.data?.messages[0]?.content || 'Request sent'
@@ -69,6 +70,21 @@ export class CreateProjectComponent {
       this.isLoading = false
       this.isRequestSent = true
     }
+  }
+
+  private resetForm() {
+    this.createProjectForm.reset()
+    const initState = {
+      projectNumber: 0,
+      name: '',
+      customer: '',
+      groupId: '',
+      members: '',
+      status: 'NEW',
+      startDate: '',
+      endDate: null
+    }
+    this.createProjectForm.setValue(initState)
   }
 
   showErrorMsg = true
@@ -84,4 +100,5 @@ export class CreateProjectComponent {
   }
 
 
+    protected readonly document = document;
 }

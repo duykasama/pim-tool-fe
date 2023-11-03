@@ -49,6 +49,7 @@ export class ProjectListComponent implements OnInit {
     this.projects = data?.data
     this.paginationStatus.pageIndex = data?.pageIndex
     this.paginationStatus.lastPage = data?.lastPage
+    this.paginationStatus.isLastPage = data?.isLastPage
   }
 
   selectProject(projectId: string): void {
