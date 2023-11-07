@@ -1,6 +1,9 @@
 <div class="projects-list-layout">
-  <h2>Projects List</h2>
-  <app-search-bar [searchCriteria]="searchCriteria" (searchProjectEvent)="setProjects()"></app-search-bar>
+  <h2>{{'PROJECT_LIST' | translate}}</h2>
+  <app-search-bar [searchCriteria]="searchCriteria"
+                  [sortInfo]="sortInfo"
+                  (searchProjectEvent)="setProjects()">
+  </app-search-bar>
   <table>
     <colgroup>
       <col span="1" style="width: 3%">
@@ -15,12 +18,12 @@
     <thead>
       <tr>
         <th></th>
-        <th>Number</th>
-        <th>Name</th>
-        <th>Status</th>
-        <th>Customer</th>
-        <th>Start Date</th>
-        <th>Delete</th>
+        <th (click)="addSort('projectNumber')">{{'NUMBER' | translate}}</th>
+        <th (click)="addSort('name')">{{'NAME' | translate}}</th>
+        <th (click)="addSort('status')">{{'STATUS' | translate}}</th>
+        <th (click)="addSort('customer')">{{'CUSTOMER' | translate}}</th>
+        <th (click)="addSort('startDate')">{{'START_DATE' | translate}}</th>
+        <th>{{'DELETE' | translate}}</th>
       </tr>
     </thead>
 
@@ -33,9 +36,11 @@
                  [checked]="isProjectSelected(project.id)"
                  [disabled]="project.status.toUpperCase() !== 'NEW'">
         </td>
-        <td>{{project.projectNumber}}</td>
+        <td>
+          <a routerLink="/update-project/{{project.projectNumber}}">{{project.projectNumber}}</a>
+        </td>
         <td>{{project.name}}</td>
-        <td>{{resolveProjectStatus(project.status)}}</td>
+        <td>{{resolveProjectStatus(project.status) | translate}}</td>
         <td>{{project.customer}}</td>
         <td>{{formatUtcDate(project.startDate)}}</td>
         <td>
@@ -48,9 +53,9 @@
       <tr>
         <td colspan="7">
           <div class="delete-items-container">
-            <p>{{selectedProjects.length}} items selected</p>
+            <p>{{selectedProjects.length}} {{'ITEMS_SELECTED' | translate}}</p>
             <div class="right-container">
-              <p>delete selected items</p>
+              <p>{{'DELETE_SELECTED_ITEMS' | translate}}</p>
               <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
             </div>
           </div>
@@ -65,6 +70,6 @@
                   class="pagination">
 
   </app-pagination>
-  <p *ngIf="!isLoading && !projects" class="empty-msg">Project list is empty...</p>
+  <p *ngIf="!isLoading && !projects" class="empty-msg">{{'EMPTY_PROJECT_LIST' | translate}}</p>
   <app-loader *ngIf="isLoading"></app-loader>
 </div>

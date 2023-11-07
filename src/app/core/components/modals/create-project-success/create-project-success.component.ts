@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-create-project-success',
@@ -11,8 +12,12 @@ export class CreateProjectSuccessComponent {
   @Input() isSuccess: boolean = false
   @Input() message: string = ''
 
+  constructor(private router: Router) {
+  }
+
   hideModal() {
     this.showModal = false
+    this.router.navigate(['project-list'])
   }
 
   protected readonly faXmark = faXmark;

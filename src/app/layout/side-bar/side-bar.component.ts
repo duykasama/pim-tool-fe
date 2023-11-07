@@ -14,7 +14,6 @@ export class SideBarComponent {
   currentRoute = ''
   selectRout(selectedRoute: string): void {
     this.currentRoute = selectedRoute
-    console.log(HttpContext.name)
   }
 
 }

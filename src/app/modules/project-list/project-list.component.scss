@@ -36,6 +36,10 @@ $focus: #2f85fa;
         opacity: 0.5;
         text-align: start;
         padding-left: 1rem;
+        cursor: pointer;
+        &:last-child, &:first-child {
+          cursor: auto;
+        }
       }
     }
     td {
@@ -45,6 +49,10 @@ $focus: #2f85fa;
       input[type=checkbox] {
         width: 15px;
         height: 15px;
+      }
+      a, a:visited {
+        text-decoration: none;
+        color: inherit;
       }
     }
     td:first-child, td:last-child {

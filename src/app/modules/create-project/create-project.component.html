@@ -1,32 +1,32 @@
 <div class="create-project-layout">
-  <h2>New Project</h2>
+  <h2>{{(doCreate ? 'NEW_PROJECT' : 'EDIT_PROJECT') | translate}}</h2>
   <div *ngIf="(createProjectForm.get('projectNumber')?.invalid && !createProjectForm.get('projectNumber')?.pristine
     || createProjectForm.get('name')?.invalid && !createProjectForm.get('name')?.pristine
     || createProjectForm.get('customer')?.invalid && !createProjectForm.get('customer')?.pristine
     || createProjectForm.get('groupId')?.invalid && !createProjectForm.get('groupId')?.pristine
     || createProjectForm.get('status')?.invalid && !createProjectForm.get('status')?.pristine
     || createProjectForm.get('startDate')?.invalid && !createProjectForm.get('startDate')?.pristine) && showErrorMsg" class="error-container">
-    <p class="error-msg">Please enter all the mandatory fields (*)</p>
+    <p class="error-msg">{{'CREATE_PROJECT_WARNING_MSG' | translate}}</p>
     <p class="btn-close" (click)="hideErrorMsg()">&times;</p>
   </div>
   <form [formGroup]="createProjectForm" (ngSubmit)="onSubmit()">
     <div class="input-container">
-      <label for="projectNumber" class="required">Project number</label>
+      <label for="projectNumber" class="required">{{'PROJECT_NUMBER' | translate}}</label>
       <input
         formControlName="projectNumber"
         type="number"
         id="projectNumber"
         [ngClass]="{'alert': (createProjectForm.get('projectNumber')?.invalid && !createProjectForm.get('projectNumber')?.pristine) || !isValidProjectNumber}"
-      (focusout)="validateProjectNumber()">
+        (focusout)="validateProjectNumber()">
       <div class="validation-msg-container">
         <span *ngIf="!isValidProjectNumber" class="validation-msg">
-          The project number already exists. Please select a different project number
+          {{'DUPLICATE_PROJECT_NUMBER_WARNING_MSG' | translate}}
         </span>
       </div>
     </div>
 
     <div class="input-container">
-      <label for="name" class="required">Project name</label>
+      <label for="name" class="required">{{'PROJECT_NAME' | translate}}</label>
       <input
         formControlName="name"
         type="text"
@@ -35,7 +35,7 @@
     </div>
 
     <div class="input-container">
-      <label for="customer" class="required">Customer</label>
+      <label for="customer" class="required">{{'CUSTOMER' | translate}}</label>
       <input
         formControlName="customer"
         type="text"
@@ -44,20 +44,21 @@
     </div>
 
     <div class="input-container">
-      <label for="group" class="required">Group</label>
+      <label for="group" class="required">{{'GROUP' | translate}}</label>
       <select
         formControlName="groupId"
         id="group"
         [ngClass]="{'alert': createProjectForm.get('groupId')?.invalid && !createProjectForm.get('groupId')?.pristine}">
-        <option hidden selected value="">Select Group</option>
-        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 1</option>
-        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 2</option>
-        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 3</option>
+        <option hidden selected value="">{{'SELECT_GROUP' | translate}}</option>
+        <option [value]="group?.id" *ngFor="let group of groups">{{group?.name}}</option>
+<!--        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 1</option>-->
+<!--        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 2</option>-->
+<!--        <option value="328d7825-7fc8-40ea-4746-08dbd70cdaf6">Group 3</option>-->
       </select>
     </div>
 
     <div class="input-container">
-      <label for="members">Members</label>
+      <label for="members">{{'MEMBERS' | translate}}</label>
       <input
         formControlName="members"
         type="text"
@@ -65,26 +66,26 @@
     </div>
 
     <div class="input-container">
-      <label for="status" class="required">Status</label>
+      <label for="status" class="required">{{'STATUS' | translate}}</label>
       <select
         formControlName="status"
         id="status"
         [ngClass]="{'alert': createProjectForm.get('status')?.invalid && !createProjectForm.get('status')?.pristine}">
-        <option value="NEW" selected>New</option>
-        <option value="PLA">Planned</option>
-        <option value="INP">In Progress</option>
-        <option value="FIN">Finished</option>
+        <option value="NEW" selected>{{'NEW' | translate}}</option>
+        <option value="PLA">{{'PLANNED' | translate}}</option>
+        <option value="INP">{{'IN_PROGRESS' | translate}}</option>
+        <option value="FIN">{{'FINISHED' | translate}}</option>
       </select>
     </div>
 
     <div class="date-selection">
-      <label for="startDate" class="required" >Start date</label>
+      <label for="startDate" class="required" >{{'START_DATE' | translate}}</label>
       <input
         formControlName="startDate"
         type="date"
         id="startDate"
         [ngClass]="{'alert': createProjectForm.get('startDate')?.invalid && !createProjectForm.get('startDate')?.pristine}">
-      <label for="endDate">End date</label>
+      <label for="endDate">{{'END_DATE' | translate}}</label>
       <input
         formControlName="endDate"
         type="date"
@@ -92,8 +93,8 @@
     </div>
 
     <div class="btn-group">
-      <button type="button" class="btn btn-cancel" (click)="router.navigate(['project-list'])">Cancel</button>
-      <button class="btn btn-create" [ngClass]="{'forbid': createProjectForm.invalid}">Create Project</button>
+      <button type="button" class="btn btn-cancel" (click)="router.navigate(['project-list'])">{{'CANCEL' | translate}}</button>
+      <button class="btn btn-create" [ngClass]="{'forbid': createProjectForm.invalid}">{{(doCreate ? 'CREATE_PROJECT' : 'UPDATE') | translate}}</button>
     </div>
   </form>
   <app-page-loader *ngIf="isLoading"></app-page-loader>

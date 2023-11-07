@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SearchCriteria, SearchInfo} from "../project-list.component";
+import {SearchCriteria, SearchInfo, SortInfo} from "../project-list.component";
+import {resolveProjectStatus} from "../../../core/utils/project.util";
 
 @Component({
   selector: 'app-search-bar',
@@ -8,6 +9,7 @@ import {SearchCriteria, SearchInfo} from "../project-list.component";
 })
 export class SearchBarComponent {
   @Input() searchCriteria!: SearchCriteria
+  @Input() sortInfo!: SortInfo
   @Output() searchProjectEvent = new EventEmitter<void>()
   projectStatus = 'Project Status'
   searchKeyword = ''
@@ -41,6 +43,10 @@ export class SearchBarComponent {
     this.searchCriteria.DisjunctionSearchInfos.length = 0
     this.projectStatus = 'Project Status'
     this.searchKeyword = ''
+    this.sortInfo.fieldName = 'projectNumber'
+    this.sortInfo.ascending = true
     this.searchProjectEvent.emit()
   }
+
+  protected readonly resolveProjectStatus = resolveProjectStatus;
 }

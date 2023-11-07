@@ -1,15 +1,15 @@
 function resolveProjectStatus(shortStatus: string): string {
   switch (shortStatus.toUpperCase()) {
     case 'NEW':
-      return 'New';
+      return 'NEW';
     case 'PLA':
-      return 'Planned'
+      return 'PLANNED'
     case 'INP':
-      return 'In progress'
+      return 'IN_PROGRESS'
     case 'FIN':
-      return 'Finished'
+      return 'FINISHED'
     default:
-      return 'Unknown'
+      return 'UNKNOWN'
   }
 }
 

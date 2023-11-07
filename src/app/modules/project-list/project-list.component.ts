@@ -37,6 +37,11 @@ export class ProjectListComponent implements OnInit {
     DisjunctionSearchInfos: []
   }
 
+  sortInfo: SortInfo = {
+    fieldName: 'projectNumber',
+    ascending: true
+  }
+
   constructor(private store: Store<AppState>) {
   }
 
@@ -71,7 +76,8 @@ export class ProjectListComponent implements OnInit {
       const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, {
         pageSize,
         pageIndex: Math.max(pageIndex, 1),
-        searchCriteria: this.searchCriteria
+        searchCriteria: this.searchCriteria,
+        sortByInfos: this.sortInfo.fieldName ? [this.sortInfo] : []
       })
 
       // await new Promise(r => setTimeout(r, 2000))
@@ -81,6 +87,16 @@ export class ProjectListComponent implements OnInit {
     }finally {
       this.isLoading = false
     }
+  }
+
+  async addSort(fieldName: string) {
+    if (this.sortInfo.fieldName === fieldName) {
+      this.sortInfo.ascending = !this.sortInfo.ascending
+    } else {
+      this.sortInfo.fieldName = fieldName
+      this.sortInfo.ascending = true
+    }
+    await this.setProjects()
   }
 
   protected readonly formatUtcDate = formatUtcDate;
@@ -97,6 +113,11 @@ export interface PaginationStatus {
 export interface SearchInfo {
   fieldName: string,
   value: string,
+}
+
+export interface SortInfo {
+  fieldName: string,
+  ascending: boolean
 }
 
 export interface SearchCriteria {

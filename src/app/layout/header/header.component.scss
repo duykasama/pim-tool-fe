@@ -24,19 +24,23 @@ $blue: #4aa6e7;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6rem;
+    gap: 3rem;
     .language {
-      .active-language {
-        font-weight: bold;
-        color: $blue;
+      img {
+        cursor: pointer;
       }
-      .active-language::before {
-        content: '';
-        background-color: red;
-        border-right: 2px solid $blue;
-        margin-left: 0.3rem;
-        margin-right: 0.3rem;
-      }
+
+      //.active-language {
+      //  font-weight: bold;
+      //  color: $blue;
+      //}
+      //.active-language::before {
+      //  content: '';
+      //  background-color: red;
+      //  border-right: 2px solid $blue;
+      //  margin-left: 0.3rem;
+      //  margin-right: 0.3rem;
+      //}
     }
     .function {
       display: flex;

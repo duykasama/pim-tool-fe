@@ -22,6 +22,9 @@ import { PageLoaderComponent } from './core/components/page-loader/page-loader.c
 import {OAuthModule} from "angular-oauth2-oidc";
 import { LoginFailedModalComponent } from './core/components/modals/login-failed-modal/login-failed-modal.component';
 import { CreateProjectSuccessComponent } from './core/components/modals/create-project-success/create-project-success.component';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
 
 
 @NgModule({
@@ -48,9 +51,21 @@ import { CreateProjectSuccessComponent } from './core/components/modals/create-p
     FontAwesomeModule,
     ReactiveFormsModule,
     StoreModule.forRoot({projects: projectReducer}),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
+    HttpClientModule,
     FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}
