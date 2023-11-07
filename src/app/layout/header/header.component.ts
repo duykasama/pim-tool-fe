@@ -16,11 +16,11 @@ export class HeaderComponent {
     this.router.navigate(['login'])
   }
 
-  temp = true
+  displayLanguageOptions = false
 
-  switchLanguage() {
-    this.temp = !this.temp
-    const lang = this.temp ? 'en' : 'vn'
-    this.translate.use(lang)
+  switchLanguage(langCode: string) {
+    this.translate.use(langCode)
+    localStorage.setItem('lang', langCode)
+    this.displayLanguageOptions = false
   }
 }

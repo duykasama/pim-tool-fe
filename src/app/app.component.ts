@@ -10,10 +10,8 @@ export class AppComponent {
   title = 'PIM Tool';
   constructor(public translate: TranslateService) {
     translate.addLangs(['en', 'vn'])
-    translate.setDefaultLang('vn')
-  }
-
-  switchLang(lang: string){
-    this.translate.use(lang)
+    const lang = localStorage.getItem('lang') || 'en'
+    localStorage.setItem('lang', lang)
+    translate.setDefaultLang(lang)
   }
 }
