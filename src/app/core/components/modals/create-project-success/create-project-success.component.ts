@@ -17,7 +17,9 @@ export class CreateProjectSuccessComponent {
 
   hideModal() {
     this.showModal = false
-    this.router.navigate(['project-list'])
+    if (this.isSuccess) {
+      this.router.navigate(['project-list'])
+    }
   }
 
   protected readonly faXmark = faXmark;
