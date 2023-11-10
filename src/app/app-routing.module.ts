@@ -6,6 +6,8 @@ import {ProjectListComponent} from "./modules/project-list/project-list.componen
 import {CreateProjectComponent} from "./modules/create-project/create-project.component";
 import {LoginComponent} from "./modules/login/login.component";
 import {AuthGuard} from "./core/guards/auth-guard";
+import {NotFoundComponent} from "./modules/not-found/not-found.component";
+import {ErrorComponent} from "./modules/error/error.component";
 
 const routes: Routes = [
   {
@@ -34,6 +36,14 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
+  },
+  {
+    path: 'error',
+    component: ErrorComponent
+  },
+  {
+    path: '**',
+    component: NotFoundComponent
   }
 ];
 

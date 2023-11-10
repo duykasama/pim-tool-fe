@@ -5,6 +5,7 @@ const ENDPOINTS = {
   CREATE_PROJECT: "/projects/create",
   UPDATE_PROJECT: "/projects/update",
   SEARCH_PROJECTS: "/projects/search",
+  DELETE_PROJECT: "/projects/delete",
   VALIDATE_PROJECT_NUMBER: "/projects/validate",
   LOGIN: "/auth/login",
   VALIDATE_TOKEN: "/auth/validate-token",

@@ -44,7 +44,7 @@
         <td>{{project.customer}}</td>
         <td>{{formatUtcDate(project.startDate)}}</td>
         <td>
-          <fa-icon [icon]="faTrash" *ngIf="project.status.toUpperCase() === 'NEW'" class="fa-trash"></fa-icon>
+          <fa-icon [icon]="faTrash" *ngIf="project.status.toUpperCase() === 'NEW'" (click)="selectProjectToDelete(project.id, project.name)" class="fa-trash"></fa-icon>
         </td>
       </tr>
     </tbody>
@@ -56,7 +56,7 @@
             <p>{{selectedProjects.length}} {{'ITEMS_SELECTED' | translate}}</p>
             <div class="right-container">
               <p>{{'DELETE_SELECTED_ITEMS' | translate}}</p>
-              <fa-icon [icon]="faTrash" class="fa-trash"></fa-icon>
+              <fa-icon [icon]="faTrash" class="fa-trash" (click)="showDeleteModal = true; singleDeletion = false;"></fa-icon>
             </div>
           </div>
         </td>
@@ -72,4 +72,9 @@
   </app-pagination>
   <p *ngIf="!isLoading && !projects" class="empty-msg">{{'EMPTY_PROJECT_LIST' | translate}}</p>
   <app-loader *ngIf="isLoading"></app-loader>
+  <app-delete-confirmation *ngIf="showDeleteModal"
+                           [projectName]="projectToDelete.name"
+                           [isSingle]="singleDeletion"
+                           (cancelEvent)="cancelDelete()"
+                           (deleteEvent)="singleDeletion ? deleteSingleProject() : deleteMultipleProjects()"></app-delete-confirmation>
 </div>

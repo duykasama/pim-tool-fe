@@ -1,10 +1,8 @@
-import {AfterContentInit, AfterViewInit, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, isFormControl, RequiredValidator, Validators} from "@angular/forms";
-import axios, {AxiosError} from "axios";
-import {group} from "@angular/animations";
-import {isValidDate} from "rxjs/internal/util/isDate";
-import {faClose} from "@fortawesome/free-solid-svg-icons";
-import BASE_URL, {ENDPOINTS} from "../../data/apiInfo";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, Validators} from "@angular/forms";
+import {AxiosError} from "axios";
+import {faXmark} from "@fortawesome/free-solid-svg-icons";
+import {ENDPOINTS} from "../../data/apiInfo";
 import {getAxiosInstance} from "../../core/lib/appAxios";
 import {Router} from "@angular/router";
 import {GroupService} from "../../core/services/group.service";
@@ -21,11 +19,22 @@ export class CreateProjectComponent implements OnInit {
   isValidProjectNumber = true
   isRequestSent = false
   doCreate = true
+  focus = false
+  mouseIn = false
   message = ''
   groups: Group[] = []
   projectId = ''
   projectVersion = 0
-
+  members: string[] = [
+    'ATN: Nguyen Ba Anh Thu',
+    'MKN: Nguyen Minh Kha',
+    'MQD: Dang Vu Minh Quang',
+    'PNH: Nguyen Hong Phong',
+    'DNT: Duy Nguyen Thanh',
+    'TDN: Thanh Duy Nguyen'
+  ]
+  filteredMembers: string[] = this.members
+  selectedMembers: string[] = []
 
   constructor(private formBuilder: FormBuilder, protected router: Router, protected groupService: GroupService) {
   }
@@ -156,6 +165,28 @@ export class CreateProjectComponent implements OnInit {
       .post(`${ENDPOINTS.VALIDATE_PROJECT_NUMBER}/${this.createProjectForm.get('projectNumber')?.getRawValue()}`)
     this.isValidProjectNumber = response.data?.data
   }
+
+  selectMember(member: string) {
+    this.selectedMembers.push(member)
+    const index = this.members.indexOf(member)
+    this.members.splice(index, 1)
+  }
+
+  deselectMember(member: string) {
+    this.members.push(member)
+    this.selectedMembers.splice(this.selectedMembers.indexOf(member), 1)
+  }
+
+  filterMember() {
+    const kw = this.createProjectForm.get('members')?.value
+    if (kw) {
+      this.filteredMembers = this.filteredMembers.filter((value, index, array) => array[index].toUpperCase().includes(kw.toUpperCase().trim()))
+    } else {
+      this.filteredMembers = this.members
+    }
+  }
+
+  protected readonly faXmark = faXmark;
 }
 
 interface Group {

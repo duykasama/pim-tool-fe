@@ -25,6 +25,12 @@ import { CreateProjectSuccessComponent } from './core/components/modals/create-p
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { NotFoundComponent } from './modules/not-found/not-found.component';
+import { ErrorComponent } from './modules/error/error.component';
+import { DeleteConfirmationComponent } from './core/components/modals/delete-confirmation/delete-confirmation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
+import {DragScrollModule} from "ngx-drag-scroll";
 
 
 @NgModule({
@@ -43,7 +49,10 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
     LoginComponent,
     PageLoaderComponent,
     LoginFailedModalComponent,
-    CreateProjectSuccessComponent
+    CreateProjectSuccessComponent,
+    NotFoundComponent,
+    ErrorComponent,
+    DeleteConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -59,7 +68,11 @@ import { HttpClient, HttpClientModule } from "@angular/common/http";
       }
     }),
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    CdkDrag,
+    CdkDropList,
+    DragScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]

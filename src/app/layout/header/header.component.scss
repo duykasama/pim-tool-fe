@@ -35,10 +35,12 @@ $blue: #4aa6e7;
       position: relative;
       .language-container {
         position: absolute;
-        top: 2rem;
+        top: 1.5rem;
         border-radius: 1rem;
         z-index: 1;
         width: max-content;
+        animation: dropdown linear 0.2s;
+        transform-origin: top;
         ul {
           background-color: #f4f4f4;
           list-style: none;
@@ -94,5 +96,14 @@ $blue: #4aa6e7;
         cursor: pointer;
       }
     }
+  }
+}
+
+@keyframes dropdown {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
   }
 }

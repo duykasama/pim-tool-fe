@@ -10,6 +10,7 @@ import {Project} from "../../core/models/project/project.models";
 import {Observable} from "rxjs";
 import {setProjects} from "../../core/store/project/project.action";
 import {getAxiosInstance} from "../../core/lib/appAxios";
+import {ProjectService} from "../../core/services/project.service";
 
 @Component({
   selector: 'app-project-list',
@@ -17,14 +18,12 @@ import {getAxiosInstance} from "../../core/lib/appAxios";
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-  faTrash = faTrash
 
   projects: Project[] = []
-
   selectedProjects: string[] = []
-
   isLoading = true
-
+  showDeleteModal = false
+  singleDeletion = true
   paginationStatus: PaginationStatus = {
     pageIndex: 1,
     pageSize: 10,
@@ -42,7 +41,12 @@ export class ProjectListComponent implements OnInit {
     ascending: true
   }
 
-  constructor(private store: Store<AppState>) {
+  projectToDelete: ProjectToDelete = {
+    id: '',
+    name: ''
+  }
+
+  constructor(private store: Store<AppState>, private projectService: ProjectService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -99,6 +103,33 @@ export class ProjectListComponent implements OnInit {
     await this.setProjects()
   }
 
+
+
+  selectProjectToDelete(id: string, name: string) {
+    this.projectToDelete.id = id
+    this.projectToDelete.name = name
+    this.singleDeletion = true
+    this.showDeleteModal = true
+  }
+
+  async deleteSingleProject() {
+    this.showDeleteModal = false
+    await this.projectService.deleteProject(this.projectToDelete.id)
+    await this.setProjects()
+  }
+
+  async deleteMultipleProjects() {
+    this.showDeleteModal = false
+    await this.projectService.deleteMultipleProjects(this.selectedProjects)
+    this.selectedProjects.length = 0
+    await this.setProjects()
+  }
+
+  cancelDelete() {
+    this.showDeleteModal = false
+  }
+
+  faTrash = faTrash
   protected readonly formatUtcDate = formatUtcDate;
   protected readonly resolveProjectStatus = resolveProjectStatus;
 }
@@ -123,4 +154,9 @@ export interface SortInfo {
 export interface SearchCriteria {
   ConjunctionSearchInfos: SearchInfo[],
   DisjunctionSearchInfos: SearchInfo[]
+}
+
+export interface ProjectToDelete {
+  id: string,
+  name: string
 }
