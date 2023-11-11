@@ -1,0 +1,29 @@
+.error-page-layout {
+  height: 100dvh;
+  width: 100dvw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  .error-msg-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 1rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: gray;
+    a, :visited {
+      text-decoration: none;
+    }
+    .contact {
+      color: #c54b33;
+      cursor: pointer;
+    }
+    .search {
+      color: #3985e5;
+      cursor: pointer;
+    }
+  }
+}

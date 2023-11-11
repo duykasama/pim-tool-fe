@@ -58,13 +58,26 @@ $focus: #2f85fa;
       margin-left: 0.75rem;
       font-weight: bold;
     }
-    input, select {
+    .form-input {
       outline: none;
       border: 1px solid rgba(128, 128, 128, .5);
       padding: 0 0.5rem;
       height: 30px;
       border-radius: 0.3rem;
       box-shadow: 0 0 2px #333 inset;
+    }
+    input[type=date], select {
+      font-size: 1em;
+      font-weight:$semibold;
+      color: $faded;
+    }
+    select {
+      -webkit-appearance: none;
+      background-image: url("/assets/black-arrow-down-icon-png.png");
+      background-size: 1rem 1rem;
+      background-repeat: no-repeat;
+      background-position: right center;
+      background-origin: content-box;
     }
     .input-container {
       display: grid;
@@ -85,6 +98,79 @@ $focus: #2f85fa;
           content: '*';
         }
       }
+      .member-select {
+        grid-column: 4 / 13;
+        position: relative;
+        .member-input-group {
+          display: flex;
+          justify-content: start;
+          align-items: center;
+          gap: 1rem;
+          border: 1px solid rgba(128, 128, 128, .5);
+          padding: 0 0.5rem;
+          height: 30px;
+          border-radius: 0.3rem;
+          box-shadow: 0 0 2px #333 inset;
+          .selected-members-container {
+            list-style: none;
+            display: flex;
+            justify-content: start;
+            gap: 0.5rem;
+            align-items: center;
+            li {
+              width: max-content;
+              border: 1px solid rgba(128, 128, 128, .5);
+              border-radius: 0.2rem;
+              padding: 0 0.25rem;
+              background-color: #e6e7e4;
+              display: flex !important;
+              justify-content: space-between;
+              align-items: center;
+              gap: 0.25rem;
+              cursor: pointer;
+              span {
+                background-color: inherit;
+              }
+              .x-mark-icon {
+                background: transparent;
+                cursor: pointer;
+              }
+            }
+          }
+          input {
+            outline: none;
+            border: none;
+            width: 100%;
+            min-width: 30%;
+            &:focus {
+              cursor: auto;
+            }
+          }
+        }
+        .member-dropdown {
+          border: 1px solid gray;
+          list-style: none;
+          position: absolute;
+          width: 100%;
+          gap: 0.2rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: start;
+          li {
+            width: 100%;
+            cursor: pointer;
+            padding: 0.2rem;
+            transition-property: background-color;
+            transition-duration: 0.15s;
+            transition-timing-function: linear;
+            &:hover {
+              background-color: gray;
+              color: whitesmoke;
+            }
+          }
+        }
+      }
     }
     .date-selection {
       display: grid;
@@ -100,6 +186,18 @@ $focus: #2f85fa;
       }
       #endDate {
         grid-column: 10 / 13;
+      }
+      input[type="date"]::-webkit-calendar-picker-indicator {
+        //display: none;
+        z-index: -1;
+      }
+      input[type=date] {
+        -webkit-appearance: none;
+        background-image: url("/assets/calendar.png");
+        background-size: 1.5rem 1.5rem;
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-origin: content-box;
       }
     }
     .btn-group {
@@ -119,13 +217,51 @@ $focus: #2f85fa;
       .btn-create {
         background-color: #2f85fa;
         color: white;
+        &:hover {
+          background-color: #175ebf;
+        }
       }
       .btn-cancel {
         background-color: #b9b9b9;
+        &:hover {
+          background-color: #999797;
+        }
       }
       .forbid {
         cursor: not-allowed;
       }
     }
   }
+}
+
+::-webkit-scrollbar {
+  //width: 50px;
+  display: none;
+}
+
+//::-webkit-scrollbar {
+//  transform: translateY(20px);
+//  background-color: red;
+//  width: 1px;
+//  ////display: none;
+//  //width: 60px;
+//}
+::-webkit-scrollbar-track {
+  transform: translateY(10px);
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: transparent;
+}
+
+drag-scroll {
+  width: fit-content;
+  max-width: 70%;
 }

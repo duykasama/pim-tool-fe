@@ -24,19 +24,60 @@ $blue: #4aa6e7;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 6rem;
+    gap: 3rem;
     .language {
-      .active-language {
-        font-weight: bold;
-        color: $blue;
+      img {
+        cursor: pointer;
       }
-      .active-language::before {
-        content: '';
-        background-color: red;
-        border-right: 2px solid $blue;
-        margin-left: 0.3rem;
-        margin-right: 0.3rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      .language-container {
+        position: absolute;
+        top: 1.5rem;
+        border-radius: 1rem;
+        z-index: 1;
+        width: max-content;
+        animation: dropdown linear 0.2s;
+        transform-origin: top;
+        ul {
+          background-color: #f4f4f4;
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem;
+          li {
+            cursor: pointer;
+            width: 100%;
+            padding: 0.25rem;
+            transition-property: background-color;
+            transition-duration: 0.1s;
+            transition-timing-function: linear;
+            font-weight: 600;
+            border-radius: 4px;
+            &:hover {
+              background-color: gray;
+              color: whitesmoke;
+            }
+          }
+        }
       }
+
+      //.active-language {
+      //  font-weight: bold;
+      //  color: $blue;
+      //}
+      //.active-language::before {
+      //  content: '';
+      //  background-color: red;
+      //  border-right: 2px solid $blue;
+      //  margin-left: 0.3rem;
+      //  margin-right: 0.3rem;
+      //}
     }
     .function {
       display: flex;
@@ -55,5 +96,14 @@ $blue: #4aa6e7;
         cursor: pointer;
       }
     }
+  }
+}
+
+@keyframes dropdown {
+  from {
+    transform: rotateX(90deg);
+  }
+  to {
+    transform: rotateX(0deg);
   }
 }

@@ -5,12 +5,21 @@
   </div>
   <div class="header-option">
     <div class="language">
-      <span>EN</span>
-      <span class="active-language">FR</span>
+      <img src="assets/language-icon-removebg.png" alt="Language" width="20" (mouseover)="displayLanguageOptions = true">
+      <div *ngIf="displayLanguageOptions" class="language-container" (mouseleave)="displayLanguageOptions = false">
+        <ul>
+          <li (click)="switchLanguage('en')">English</li>
+          <li (click)="switchLanguage('vn')">Tiếng Việt</li>
+          <li (click)="switchLanguage('fr')">Français</li>
+          <li (click)="switchLanguage('jp')">日本語</li>
+        </ul>
+      </div>
+<!--      <span>EN</span>-->
+<!--      <span class="active-language">FR</span>-->
     </div>
     <div class="function">
-      <span class="text-blue">Help</span>
-      <span class="font-semibold pointer" (click)="logout()">Log out</span>
+      <span class="text-blue">{{'HELP' | translate}}</span>
+      <span class="font-semibold pointer" (click)="logout()">{{'LOG_OUT' | translate}}</span>
     </div>
   </div>
 </header>

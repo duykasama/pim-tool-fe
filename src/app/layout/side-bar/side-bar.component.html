@@ -1,23 +1,23 @@
 <nav class="nav">
   <ul>
     <li [ngClass]="{'active': currentRoute == 'project-list'}">
-      <a [routerLink]="['/project-list']" (click)="selectRout('project-list')">Project List</a>
+      <a [routerLink]="['/project-list']" (click)="selectRout('project-list')">{{'PROJECT_LIST' | translate}}</a>
     </li>
 
     <li [ngClass]="{'active': currentRoute == 'create-project'}">
-      <a [routerLink]="['/create-project']" (click)="selectRout('create-project')">New</a>
+      <a [routerLink]="['/create-project']" (click)="selectRout('create-project')">{{'NEW' | translate}}</a>
     </li>
 
     <li [ngClass]="{'active': currentRoute == 'project'}">
-      <a [routerLink]="['/project']" (click)="selectRout('project')">Project</a>
+      <a [routerLink]="['/project']" (click)="selectRout('project')">{{'PROJECT' | translate}}</a>
     </li>
 
     <li [ngClass]="{'active': currentRoute == 'customer'}">
-      <a [routerLink]="['/customer']" (click)="selectRout('customer')">Customer</a>
+      <a [routerLink]="['/customer']" (click)="selectRout('customer')">{{'CUSTOMER' | translate}}</a>
     </li>
 
     <li [ngClass]="{'active': currentRoute == 'supplier'}">
-      <a [routerLink]="['/supplier']" (click)="selectRout('supplier')">Supplier</a>
+      <a [routerLink]="['/supplier']" (click)="selectRout('supplier')">{{'SUPPLIER' | translate}}</a>
     </li>
   </ul>
 </nav>

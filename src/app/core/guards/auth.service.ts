@@ -20,7 +20,11 @@ export class AuthService {
 
   // Get expiration time in milliseconds
   getExpirationTime(token: string) {
-    const decodedToken = jwtDecode(token)
-    return (decodedToken.exp || 0) * 1000
+    try {
+      const decodedToken = jwtDecode(token)
+      return (decodedToken.exp || 0) * 1000
+    } catch {
+      return 0
+    }
   }
 }

@@ -22,6 +22,15 @@ import { PageLoaderComponent } from './core/components/page-loader/page-loader.c
 import {OAuthModule} from "angular-oauth2-oidc";
 import { LoginFailedModalComponent } from './core/components/modals/login-failed-modal/login-failed-modal.component';
 import { CreateProjectSuccessComponent } from './core/components/modals/create-project-success/create-project-success.component';
+import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { NotFoundComponent } from './modules/not-found/not-found.component';
+import { ErrorComponent } from './modules/error/error.component';
+import { DeleteConfirmationComponent } from './core/components/modals/delete-confirmation/delete-confirmation.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
+import {DragScrollModule} from "ngx-drag-scroll";
 
 
 @NgModule({
@@ -40,7 +49,10 @@ import { CreateProjectSuccessComponent } from './core/components/modals/create-p
     LoginComponent,
     PageLoaderComponent,
     LoginFailedModalComponent,
-    CreateProjectSuccessComponent
+    CreateProjectSuccessComponent,
+    NotFoundComponent,
+    ErrorComponent,
+    DeleteConfirmationComponent
   ],
   imports: [
     BrowserModule,
@@ -48,9 +60,25 @@ import { CreateProjectSuccessComponent } from './core/components/modals/create-p
     FontAwesomeModule,
     ReactiveFormsModule,
     StoreModule.forRoot({projects: projectReducer}),
-    FormsModule
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoader,
+        deps: [HttpClient]
+      }
+    }),
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    CdkDrag,
+    CdkDropList,
+    DragScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+export function httpTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http)
+}

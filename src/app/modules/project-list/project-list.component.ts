@@ -10,6 +10,7 @@ import {Project} from "../../core/models/project/project.models";
 import {Observable} from "rxjs";
 import {setProjects} from "../../core/store/project/project.action";
 import {getAxiosInstance} from "../../core/lib/appAxios";
+import {ProjectService} from "../../core/services/project.service";
 
 @Component({
   selector: 'app-project-list',
@@ -17,14 +18,12 @@ import {getAxiosInstance} from "../../core/lib/appAxios";
   styleUrls: ['./project-list.component.scss']
 })
 export class ProjectListComponent implements OnInit {
-  faTrash = faTrash
 
   projects: Project[] = []
-
   selectedProjects: string[] = []
-
   isLoading = true
-
+  showDeleteModal = false
+  singleDeletion = true
   paginationStatus: PaginationStatus = {
     pageIndex: 1,
     pageSize: 10,
@@ -37,7 +36,17 @@ export class ProjectListComponent implements OnInit {
     DisjunctionSearchInfos: []
   }
 
-  constructor(private store: Store<AppState>) {
+  sortInfo: SortInfo = {
+    fieldName: 'projectNumber',
+    ascending: true
+  }
+
+  projectToDelete: ProjectToDelete = {
+    id: '',
+    name: ''
+  }
+
+  constructor(private store: Store<AppState>, private projectService: ProjectService) {
   }
 
   async ngOnInit(): Promise<void> {
@@ -49,6 +58,7 @@ export class ProjectListComponent implements OnInit {
     this.projects = data?.data
     this.paginationStatus.pageIndex = data?.pageIndex
     this.paginationStatus.lastPage = data?.lastPage
+    this.paginationStatus.isLastPage = data?.isLastPage
   }
 
   selectProject(projectId: string): void {
@@ -70,7 +80,8 @@ export class ProjectListComponent implements OnInit {
       const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, {
         pageSize,
         pageIndex: Math.max(pageIndex, 1),
-        searchCriteria: this.searchCriteria
+        searchCriteria: this.searchCriteria,
+        sortByInfos: this.sortInfo.fieldName ? [this.sortInfo] : []
       })
 
       // await new Promise(r => setTimeout(r, 2000))
@@ -82,6 +93,43 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
+  async addSort(fieldName: string) {
+    if (this.sortInfo.fieldName === fieldName) {
+      this.sortInfo.ascending = !this.sortInfo.ascending
+    } else {
+      this.sortInfo.fieldName = fieldName
+      this.sortInfo.ascending = true
+    }
+    await this.setProjects()
+  }
+
+
+
+  selectProjectToDelete(id: string, name: string) {
+    this.projectToDelete.id = id
+    this.projectToDelete.name = name
+    this.singleDeletion = true
+    this.showDeleteModal = true
+  }
+
+  async deleteSingleProject() {
+    this.showDeleteModal = false
+    await this.projectService.deleteProject(this.projectToDelete.id)
+    await this.setProjects()
+  }
+
+  async deleteMultipleProjects() {
+    this.showDeleteModal = false
+    await this.projectService.deleteMultipleProjects(this.selectedProjects)
+    this.selectedProjects.length = 0
+    await this.setProjects()
+  }
+
+  cancelDelete() {
+    this.showDeleteModal = false
+  }
+
+  faTrash = faTrash
   protected readonly formatUtcDate = formatUtcDate;
   protected readonly resolveProjectStatus = resolveProjectStatus;
 }
@@ -98,7 +146,17 @@ export interface SearchInfo {
   value: string,
 }
 
+export interface SortInfo {
+  fieldName: string,
+  ascending: boolean
+}
+
 export interface SearchCriteria {
   ConjunctionSearchInfos: SearchInfo[],
   DisjunctionSearchInfos: SearchInfo[]
+}
+
+export interface ProjectToDelete {
+  id: string,
+  name: string
 }
