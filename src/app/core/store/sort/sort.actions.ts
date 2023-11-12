@@ -1,20 +1,20 @@
 import {createAction, props} from "@ngrx/store";
 
 export const addSortInfo = createAction(
-  'Add sort info',
+  '[Sort Action] Add sort info',
   props<{fieldName: string}>()
 )
 
 export const removeSortInfo = createAction(
-  'Remove sort info',
+  '[Sort Action] Remove sort info',
   props<{fieldName: string}>()
 )
 
 export const revertSortOrder = createAction(
-  'Revert sort order',
+  '[Sort Action] Revert sort order',
   props<{fieldName: string}>()
 )
 
 export const resetSortInfo = createAction(
-  'Reset sort info'
+  '[Sort Action] Reset sort info'
 )

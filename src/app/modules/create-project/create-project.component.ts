@@ -7,6 +7,10 @@ import {Router} from "@angular/router";
 import {GroupService} from "../../core/services/group.service";
 import {formatDateTime} from "../../core/utils/date.util";
 import {ProjectService} from "../../core/services/project.service";
+import {Group} from "../../core/models/project/project.models";
+import {Store} from "@ngrx/store";
+import {switchRoute} from "../../core/store/route/route.actions";
+import {routes} from "../../core/constants/routeConstants";
 
 @Component({
   selector: 'app-create-project',
@@ -36,13 +40,17 @@ export class CreateProjectComponent implements OnInit {
   filteredMembers: string[] = this.members
   selectedMembers: string[] = []
 
-  constructor(private formBuilder: FormBuilder, protected router: Router, protected groupService: GroupService, protected projectService: ProjectService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    protected router: Router,
+    protected groupService: GroupService,
+    protected projectService: ProjectService) {
   }
 
   async ngOnInit() {
     this.groups = await this.groupService.getGroups()
     const url = this.router.url
-    if (url.includes('create-project')) {
+    if (url === routes.CREATE_PROJECT) {
       this.doCreate = true
     } else {
       this.doCreate = false
@@ -56,7 +64,7 @@ export class CreateProjectComponent implements OnInit {
         members: project?.members || '',
         status: project?.status,
         startDate: formatDateTime(project?.startDate),
-        endDate: project ? formatDateTime(project?.endDate) : null
+        endDate: (project && project?.endDate) ? formatDateTime(project?.endDate) : null
       })
       this.projectId = project?.id
       this.projectVersion = project?.version
@@ -153,8 +161,8 @@ export class CreateProjectComponent implements OnInit {
 
   selectMember(member: string) {
     this.selectedMembers.push(member)
-    const index = this.members.indexOf(member)
-    this.members.splice(index, 1)
+    this.members.splice(this.members.indexOf(member), 1)
+    this.filteredMembers.splice(this.filteredMembers.indexOf(member), 1)
   }
 
   deselectMember(member: string) {
@@ -164,18 +172,10 @@ export class CreateProjectComponent implements OnInit {
 
   filterMember() {
     const kw = this.createProjectForm.get('members')?.value
-    if (kw) {
-      this.filteredMembers = this.filteredMembers.filter((value, index, array) => array[index].toUpperCase().includes(kw.toUpperCase().trim()))
-    } else {
-      this.filteredMembers = this.members
-    }
+    this.filteredMembers = kw
+      ? this.filteredMembers.filter(value=> value.toUpperCase().includes(kw.toUpperCase().trim()))
+      : this.filteredMembers = this.members
   }
 
   protected readonly faXmark = faXmark;
-}
-
-interface Group {
-  id: string,
-  name: string,
-  leaderId: string
 }

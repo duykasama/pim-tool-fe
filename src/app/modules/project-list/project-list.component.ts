@@ -36,11 +36,10 @@ export class ProjectListComponent implements OnInit {
 
   constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo}>, private projectService: ProjectService) {
     store.select('searchCriteria').subscribe(value => this.searchCriteria = value)
+    store.select('sortInfo').subscribe(value => this.sortInfo = value)
   }
 
   async ngOnInit(): Promise<void> {
-    this.store.select('sortInfo').subscribe(value => this.sortInfo = value)
-    console.log('value of sort info: ', this.sortInfo)
     await this.setProjects()
   }
 
@@ -48,19 +47,19 @@ export class ProjectListComponent implements OnInit {
     this.isLoading = true
     const data = await this.projectService.getProjects(this.paginationStatus.pageIndex, this.paginationStatus.pageSize, this.searchCriteria, this.sortInfo)
     this.projects = data?.data
-    this.paginationStatus.pageIndex = data?.pageIndex
-    this.paginationStatus.lastPage = data?.lastPage
-    this.paginationStatus.isLastPage = data?.isLastPage
+    this.paginationStatus = {
+      ...this.paginationStatus,
+      pageIndex: data?.pageIndex,
+      lastPage: data?.lastPage,
+      isLastPage: data?.isLastPage
+    }
     this.isLoading = false
   }
 
   selectProject(projectId: string): void {
-    if (this.isProjectSelected(projectId)){
-      this.selectedProjects.splice(this.selectedProjects.indexOf(projectId),1)
-      return
-    }
-
-    this.selectedProjects.push(projectId)
+    this.isProjectSelected(projectId)
+      ? this.selectedProjects.splice(this.selectedProjects.indexOf(projectId),1)
+      : this.selectedProjects.push(projectId)
   }
 
   isProjectSelected(projectId: string): boolean {
@@ -90,7 +89,7 @@ export class ProjectListComponent implements OnInit {
   async deleteMultipleProjects() {
     this.showDeleteModal = false
     await this.projectService.deleteMultipleProjects(this.selectedProjects)
-    this.selectedProjects.length = 0
+    this.selectedProjects = []
     await this.setProjects()
   }
 

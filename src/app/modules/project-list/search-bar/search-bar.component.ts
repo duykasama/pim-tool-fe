@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {SearchCriteria, SortInfo} from "../../../core/models/filter.models";
+import {Component, EventEmitter, Output} from '@angular/core';
+import {SearchCriteria, SearchInfo} from "../../../core/models/filter.models";
 import {Store} from "@ngrx/store";
 import {
   addConjunctionSearchInfo, addDisjunctionSearchInfo,
@@ -13,18 +13,13 @@ import {resetSortInfo} from "../../../core/store/sort/sort.actions";
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnInit {
-  @Input() sortInfo!: SortInfo
+export class SearchBarComponent {
   @Output() searchProjectEvent = new EventEmitter<void>()
   projectStatus = ''
   currentProjectStatus = ''
   searchKeyword = ''
-  currentSearchKeyword = ''
 
-  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo}>) {
-  }
-
-  ngOnInit() {
+  constructor(private store: Store<{searchCriteria: SearchCriteria}>) {
     this.store.select('searchCriteria').subscribe(value => {
       const disjunctionSearchInfos = value.DisjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName == 'status')
       if (disjunctionSearchInfos.length > 0) {
@@ -34,7 +29,7 @@ export class SearchBarComponent implements OnInit {
     this.store.select('searchCriteria').subscribe(value => {
       const conjunctionSearchInfos = value.ConjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName === 'name')
       if (conjunctionSearchInfos.length > 0) {
-        this.currentSearchKeyword = conjunctionSearchInfos[0].value
+        this.searchKeyword = conjunctionSearchInfos[0].value
       }
     })
   }
@@ -42,37 +37,24 @@ export class SearchBarComponent implements OnInit {
   protected search(){
     this.store.dispatch(clearConjunctionSearchInfo())
     this.store.dispatch(clearDisjunctionSearchInfo())
-
-    console.log('current project status is ', this.projectStatus)
-
     this.store.dispatch(addDisjunctionSearchInfo({
       searchInfo: {
         fieldName: 'status',
-        value: this.projectStatus
+        value: this.projectStatus || this.currentProjectStatus
       }
     }))
 
-    this.store.dispatch(addConjunctionSearchInfo({
-      searchInfo: {
+    const setSearchInfo = () => {
+      const searchInfo: SearchInfo = {
         fieldName: 'projectNumber',
         value: this.searchKeyword
       }
-    }))
+      this.store.dispatch(addConjunctionSearchInfo({searchInfo}))
+      this.store.dispatch(addConjunctionSearchInfo({searchInfo: {...searchInfo, fieldName: 'name'}}))
+      this.store.dispatch(addConjunctionSearchInfo({searchInfo: {...searchInfo, fieldName: 'customer'}}))
+    }
 
-    this.store.dispatch(addConjunctionSearchInfo({
-      searchInfo: {
-        fieldName: 'name',
-        value: this.searchKeyword
-      }
-    }))
-
-    this.store.dispatch(addConjunctionSearchInfo({
-      searchInfo: {
-        fieldName: 'customer',
-        value: this.searchKeyword
-      }
-    }))
-
+    this.searchKeyword && setSearchInfo()
     this.searchProjectEvent.emit()
   }
 
@@ -83,7 +65,6 @@ export class SearchBarComponent implements OnInit {
     this.projectStatus = ''
     this.currentProjectStatus = ''
     this.searchKeyword = ''
-    this.currentSearchKeyword = ''
     this.searchProjectEvent.emit()
   }
 }

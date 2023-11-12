@@ -53,6 +53,9 @@ $focus: #2f85fa;
       a, a:visited {
         text-decoration: none;
         color: inherit;
+        &:hover {
+          text-decoration: underline;
+        }
       }
     }
     td:first-child, td:last-child {

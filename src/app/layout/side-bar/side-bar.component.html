@@ -1,23 +1,23 @@
 <nav class="nav">
   <ul>
-    <li [ngClass]="{'active': currentRoute == 'project-list'}">
-      <a [routerLink]="['/project-list']" (click)="selectRout('project-list')">{{'PROJECT_LIST' | translate}}</a>
+    <li [ngClass]="{'active': currentRoute === routes.PROJECT_LIST}">
+      <a [routerLink]="[routes.PROJECT_LIST]">{{'PROJECT_LIST' | translate}}</a>
     </li>
 
-    <li [ngClass]="{'active': currentRoute == 'create-project'}">
-      <a [routerLink]="['/create-project']" (click)="selectRout('create-project')">{{'NEW' | translate}}</a>
+    <li [ngClass]="{'active': currentRoute === routes.CREATE_PROJECT}">
+      <a [routerLink]="[routes.CREATE_PROJECT]">{{'NEW' | translate}}</a>
     </li>
 
-    <li [ngClass]="{'active': currentRoute == 'project'}">
-      <a [routerLink]="['/project']" (click)="selectRout('project')">{{'PROJECT' | translate}}</a>
+    <li [ngClass]="{'active': currentRoute === routes.PROJECT}">
+      <a [routerLink]="[routes.PROJECT]">{{'PROJECT' | translate}}</a>
     </li>
 
-    <li [ngClass]="{'active': currentRoute == 'customer'}">
-      <a [routerLink]="['/customer']" (click)="selectRout('customer')">{{'CUSTOMER' | translate}}</a>
+    <li [ngClass]="{'active': currentRoute === routes.CUSTOMER}">
+      <a [routerLink]="[routes.CUSTOMER]">{{'CUSTOMER' | translate}}</a>
     </li>
 
-    <li [ngClass]="{'active': currentRoute == 'supplier'}">
-      <a [routerLink]="['/supplier']" (click)="selectRout('supplier')">{{'SUPPLIER' | translate}}</a>
+    <li [ngClass]="{'active': currentRoute === routes.SUPPLIER}">
+      <a [routerLink]="[routes.SUPPLIER]">{{'SUPPLIER' | translate}}</a>
     </li>
   </ul>
 </nav>

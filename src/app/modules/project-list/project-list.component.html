@@ -1,8 +1,6 @@
 <div class="projects-list-layout">
   <h2>{{'PROJECT_LIST' | translate}}</h2>
-  <app-search-bar [sortInfo]="sortInfo"
-                  (searchProjectEvent)="setProjects()">
-  </app-search-bar>
+  <app-search-bar (searchProjectEvent)="setProjects()"></app-search-bar>
   <table>
     <colgroup>
       <col span="1" style="width: 3%">

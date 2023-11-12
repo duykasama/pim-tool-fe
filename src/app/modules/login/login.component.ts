@@ -3,7 +3,7 @@ import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {getAxiosInstance} from "../../core/lib/appAxios";
 import {ENDPOINTS} from "../../data/apiInfo";
 import {Router} from "@angular/router";
-import {AxiosError} from "axios";
+import {routes} from "../../core/constants/routeConstants";
 
 @Component({
   selector: 'app-login',
@@ -53,15 +53,15 @@ export class LoginComponent {
         ...this.loginForm.getRawValue()
       })
 
-      await new Promise(r => setTimeout(r, 1000))
+      await new Promise(r => setTimeout(r, 200))
       if (response.data?.isSuccess) {
         localStorage.setItem('access_token', response.data?.data?.accessToken)
         localStorage.setItem('refresh_token', response.data?.data?.refreshToken)
-        await this.router.navigate([''])
+        await this.router.navigate([routes.PROJECT_LIST])
       } else {
         this.isLoginSuccess = false
       }
-    } catch (e: any | AxiosError) {
+    } catch (e: any) {
       this.errorMsg = e.response.data?.messages[0]?.content
       this.isLoginSuccess = false
       console.log(e)

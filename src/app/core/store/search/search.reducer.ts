@@ -17,13 +17,13 @@ export const searchReducer = createReducer(
   on(addConjunctionSearchInfo, (state, {searchInfo}) => {
     const searchInfos: SearchInfo[] = []
     state.ConjunctionSearchInfos.forEach(value => searchInfos.push(value))
-    searchInfos.push(searchInfo)
+    searchInfos.includes(searchInfo) || searchInfos.push(searchInfo)
     return {...state, ConjunctionSearchInfos: searchInfos}
   }),
   on(addDisjunctionSearchInfo, (state, {searchInfo}) => {
     let searchInfos: SearchInfo[] = []
     state.DisjunctionSearchInfos.forEach(value => searchInfos.push(value))
-    searchInfos.push(searchInfo)
+    searchInfos.includes(searchInfo) || searchInfos.push(searchInfo)
     return {...state, DisjunctionSearchInfos: searchInfos}
   }),
   on(clearConjunctionSearchInfo, (state) => ({...state, ConjunctionSearchInfos: []})),

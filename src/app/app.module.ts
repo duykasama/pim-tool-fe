@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -35,6 +35,12 @@ import { DateFormatPipe } from './core/pipes/date-format.pipe';
 import { ProjectStatusResolvePipe } from './core/pipes/project-status-resolve.pipe';
 import {searchReducer} from "./core/store/search/search.reducer";
 import {sortReducer} from "./core/store/sort/sort.reducers";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {routeReducer} from "./core/store/route/route.reducers";
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {RouteEffects} from "./core/store/route/route.effects";
 
 
 @NgModule({
@@ -65,7 +71,7 @@ import {sortReducer} from "./core/store/sort/sort.reducers";
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({searchCriteria: searchReducer, sortInfo: sortReducer}),
+    StoreModule.forRoot({searchCriteria: searchReducer, sortInfo: sortReducer, route: routeReducer}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -78,9 +84,12 @@ import {sortReducer} from "./core/store/sort/sort.reducers";
     BrowserAnimationsModule,
     CdkDrag,
     CdkDropList,
-    DragScrollModule
+    DragScrollModule,
+    MatDatepickerModule,
+    EffectsModule.forRoot([RouteEffects]),
+    StoreRouterConnectingModule.forRoot()
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'en-US'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

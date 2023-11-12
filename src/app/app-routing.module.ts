@@ -15,10 +15,10 @@ const routes: Routes = [
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      {
-        path: '',
-        component: HomeComponent
-      },
+      // {
+      //   path: '',
+      //   component: HomeComponent
+      // },
       {
         path: 'project-list',
         component: ProjectListComponent

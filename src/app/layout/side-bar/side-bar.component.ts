@@ -1,19 +1,20 @@
-import { Component } from '@angular/core';
-import {HttpContext} from "@angular/common/http";
-import {Router} from "@angular/router";
+import {Component, OnInit} from '@angular/core';
+import {Store} from "@ngrx/store";
+import {routes} from "../../core/constants/routeConstants";
 
 @Component({
   selector: 'app-side-bar',
   templateUrl: './side-bar.component.html',
   styleUrls: ['./side-bar.component.scss']
 })
-export class SideBarComponent {
-  constructor(router: Router) {
-    this.currentRoute = router.url.slice(1, router.url.length)
-  }
+export class SideBarComponent implements OnInit {
+  constructor(private store: Store<{route: string}>) { }
+
   currentRoute = ''
-  selectRout(selectedRoute: string): void {
-    this.currentRoute = selectedRoute
+
+  ngOnInit() {
+    this.store.select('route').subscribe(value => this.currentRoute = value)
   }
 
+  protected readonly routes = routes;
 }
