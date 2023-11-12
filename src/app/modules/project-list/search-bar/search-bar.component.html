@@ -1,15 +1,15 @@
 <div class="search-bar">
   <input type="text"
-         placeholder="{{'PROJECT_NUMBER_NAME_CUSTOMER' | translate}}"
+         placeholder="{{currentSearchKeyword || ('PROJECT_NUMBER_NAME_CUSTOMER' | translate)}}"
          [(ngModel)]="searchKeyword"
          class="rounded search-input">
 
   <select name="projectStatus" id="projectStatus" class="rounded" [(ngModel)]="projectStatus">
-    <option hidden selected value="Project Status">{{'PROJECT_STATUS' | translate}}</option>
-    <option value="NEW">{{resolveProjectStatus('NEW') | translate}}</option>
-    <option value="PLA">{{resolveProjectStatus('PLA') | translate}}</option>
-    <option value="INP">{{resolveProjectStatus('INP') | translate}}</option>
-    <option value="FIN">{{resolveProjectStatus('FIN') | translate}}</option>
+    <option hidden selected value="">{{(currentProjectStatus === '' ? '' : currentProjectStatus | resolveStatus) || 'PROJECT_STATUS' | translate}}</option>
+    <option value="NEW">{{'NEW' | resolveStatus | translate}}</option>
+    <option value="PLA">{{'PLA' | resolveStatus | translate}}</option>
+    <option value="INP">{{'INP' | resolveStatus | translate}}</option>
+    <option value="FIN">{{'FIN' | resolveStatus | translate}}</option>
   </select>
 
   <button class="button search-button rounded" type="button" (click)="search()">{{'SEARCH_PROJECT' | translate}}</button>

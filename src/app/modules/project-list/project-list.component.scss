@@ -58,6 +58,9 @@ $focus: #2f85fa;
     td:first-child, td:last-child {
       text-align: center!important;
     }
+    td:nth-child(2) {
+      text-align: end;
+    }
     tfoot {
       td {
         .delete-items-container {

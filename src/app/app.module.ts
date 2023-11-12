@@ -31,6 +31,10 @@ import { DeleteConfirmationComponent } from './core/components/modals/delete-con
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {DragScrollModule} from "ngx-drag-scroll";
+import { DateFormatPipe } from './core/pipes/date-format.pipe';
+import { ProjectStatusResolvePipe } from './core/pipes/project-status-resolve.pipe';
+import {searchReducer} from "./core/store/search/search.reducer";
+import {sortReducer} from "./core/store/sort/sort.reducers";
 
 
 @NgModule({
@@ -52,14 +56,16 @@ import {DragScrollModule} from "ngx-drag-scroll";
     CreateProjectSuccessComponent,
     NotFoundComponent,
     ErrorComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    DateFormatPipe,
+    ProjectStatusResolvePipe
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({projects: projectReducer}),
+    StoreModule.forRoot({searchCriteria: searchReducer, sortInfo: sortReducer}),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

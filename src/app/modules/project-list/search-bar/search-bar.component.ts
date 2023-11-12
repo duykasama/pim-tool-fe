@@ -1,52 +1,89 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SearchCriteria, SearchInfo, SortInfo} from "../project-list.component";
-import {resolveProjectStatus} from "../../../core/utils/project.util";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {SearchCriteria, SortInfo} from "../../../core/models/filter.models";
+import {Store} from "@ngrx/store";
+import {
+  addConjunctionSearchInfo, addDisjunctionSearchInfo,
+  clearConjunctionSearchInfo,
+  clearDisjunctionSearchInfo
+} from "../../../core/store/search/search.actions";
+import {resetSortInfo} from "../../../core/store/sort/sort.actions";
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent {
-  @Input() searchCriteria!: SearchCriteria
+export class SearchBarComponent implements OnInit {
   @Input() sortInfo!: SortInfo
   @Output() searchProjectEvent = new EventEmitter<void>()
-  projectStatus = 'Project Status'
+  projectStatus = ''
+  currentProjectStatus = ''
   searchKeyword = ''
+  currentSearchKeyword = ''
+
+  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo}>) {
+  }
+
+  ngOnInit() {
+    this.store.select('searchCriteria').subscribe(value => {
+      const disjunctionSearchInfos = value.DisjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName == 'status')
+      if (disjunctionSearchInfos.length > 0) {
+        this.currentProjectStatus = disjunctionSearchInfos[0].value
+      }
+    })
+    this.store.select('searchCriteria').subscribe(value => {
+      const conjunctionSearchInfos = value.ConjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName === 'name')
+      if (conjunctionSearchInfos.length > 0) {
+        this.currentSearchKeyword = conjunctionSearchInfos[0].value
+      }
+    })
+  }
 
   protected search(){
-    this.searchCriteria.DisjunctionSearchInfos.length = 0
-    this.searchCriteria.ConjunctionSearchInfos.length = 0
-    this.searchCriteria.DisjunctionSearchInfos.push({
-      fieldName: 'status',
-      value: this.projectStatus != 'Project Status' ? this.projectStatus : ''
-    })
+    this.store.dispatch(clearConjunctionSearchInfo())
+    this.store.dispatch(clearDisjunctionSearchInfo())
 
-    this.searchCriteria.ConjunctionSearchInfos.push({
-      fieldName: 'projectNumber',
-      value: this.searchKeyword
-    })
-    this.searchCriteria.ConjunctionSearchInfos.push({
-      fieldName: 'name',
-      value: this.searchKeyword
-    })
-    this.searchCriteria.ConjunctionSearchInfos.push({
-      fieldName: 'customer',
-      value: this.searchKeyword
-    })
+    console.log('current project status is ', this.projectStatus)
+
+    this.store.dispatch(addDisjunctionSearchInfo({
+      searchInfo: {
+        fieldName: 'status',
+        value: this.projectStatus
+      }
+    }))
+
+    this.store.dispatch(addConjunctionSearchInfo({
+      searchInfo: {
+        fieldName: 'projectNumber',
+        value: this.searchKeyword
+      }
+    }))
+
+    this.store.dispatch(addConjunctionSearchInfo({
+      searchInfo: {
+        fieldName: 'name',
+        value: this.searchKeyword
+      }
+    }))
+
+    this.store.dispatch(addConjunctionSearchInfo({
+      searchInfo: {
+        fieldName: 'customer',
+        value: this.searchKeyword
+      }
+    }))
 
     this.searchProjectEvent.emit()
   }
 
   protected resetSearch(){
-    this.searchCriteria.ConjunctionSearchInfos.length = 0
-    this.searchCriteria.DisjunctionSearchInfos.length = 0
-    this.projectStatus = 'Project Status'
+    this.store.dispatch(clearDisjunctionSearchInfo())
+    this.store.dispatch(clearConjunctionSearchInfo())
+    this.store.dispatch(resetSortInfo())
+    this.projectStatus = ''
+    this.currentProjectStatus = ''
     this.searchKeyword = ''
-    this.sortInfo.fieldName = 'projectNumber'
-    this.sortInfo.ascending = true
+    this.currentSearchKeyword = ''
     this.searchProjectEvent.emit()
   }
-
-  protected readonly resolveProjectStatus = resolveProjectStatus;
 }

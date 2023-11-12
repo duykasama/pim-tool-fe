@@ -1,16 +1,10 @@
-import {Component, Input, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import {formatUtcDate} from "../../core/utils/date.util";
-import {resolveProjectStatus} from "../../core/utils/project.util";
-import BASE_URL, {ENDPOINTS} from "../../data/apiInfo";
 import {Store} from "@ngrx/store";
-import {AppState} from "../../core/store/project/project.reducer";
-import {Project} from "../../core/models/project/project.models";
-import {Observable} from "rxjs";
-import {setProjects} from "../../core/store/project/project.action";
-import {getAxiosInstance} from "../../core/lib/appAxios";
+import {Project, ProjectToDelete} from "../../core/models/project/project.models";
 import {ProjectService} from "../../core/services/project.service";
+import {PaginationStatus, SearchCriteria, SortInfo} from "../../core/models/filter.models";
+import {addSortInfo, revertSortOrder} from "../../core/store/sort/sort.actions";
 
 @Component({
   selector: 'app-project-list',
@@ -31,34 +25,33 @@ export class ProjectListComponent implements OnInit {
     isLastPage: false,
   }
 
-  searchCriteria: SearchCriteria = {
-    ConjunctionSearchInfos: [],
-    DisjunctionSearchInfos: []
-  }
+  searchCriteria!: SearchCriteria
 
-  sortInfo: SortInfo = {
-    fieldName: 'projectNumber',
-    ascending: true
-  }
+  sortInfo!: SortInfo
 
   projectToDelete: ProjectToDelete = {
     id: '',
     name: ''
   }
 
-  constructor(private store: Store<AppState>, private projectService: ProjectService) {
+  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo}>, private projectService: ProjectService) {
+    store.select('searchCriteria').subscribe(value => this.searchCriteria = value)
   }
 
   async ngOnInit(): Promise<void> {
+    this.store.select('sortInfo').subscribe(value => this.sortInfo = value)
+    console.log('value of sort info: ', this.sortInfo)
     await this.setProjects()
   }
 
   async setProjects(): Promise<void> {
-    const data = await this.getData(this.paginationStatus.pageIndex, this.paginationStatus.pageSize)
+    this.isLoading = true
+    const data = await this.projectService.getProjects(this.paginationStatus.pageIndex, this.paginationStatus.pageSize, this.searchCriteria, this.sortInfo)
     this.projects = data?.data
     this.paginationStatus.pageIndex = data?.pageIndex
     this.paginationStatus.lastPage = data?.lastPage
     this.paginationStatus.isLastPage = data?.isLastPage
+    this.isLoading = false
   }
 
   selectProject(projectId: string): void {
@@ -74,40 +67,16 @@ export class ProjectListComponent implements OnInit {
     return this.selectedProjects.includes(projectId)
   }
 
-  async getData(pageIndex: number, pageSize: number): Promise<any> {
-    try {
-      this.isLoading = true
-      const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, {
-        pageSize,
-        pageIndex: Math.max(pageIndex, 1),
-        searchCriteria: this.searchCriteria,
-        sortByInfos: this.sortInfo.fieldName ? [this.sortInfo] : []
-      })
-
-      // await new Promise(r => setTimeout(r, 2000))
-      return response.data?.data
-    }catch (e){
-      console.log(e)
-    }finally {
-      this.isLoading = false
-    }
-  }
-
   async addSort(fieldName: string) {
-    if (this.sortInfo.fieldName === fieldName) {
-      this.sortInfo.ascending = !this.sortInfo.ascending
-    } else {
-      this.sortInfo.fieldName = fieldName
-      this.sortInfo.ascending = true
-    }
+    this.sortInfo.fieldName === fieldName
+      ? this.store.dispatch(revertSortOrder({fieldName}))
+      : this.store.dispatch(addSortInfo({fieldName}))
+
     await this.setProjects()
   }
 
-
-
   selectProjectToDelete(id: string, name: string) {
-    this.projectToDelete.id = id
-    this.projectToDelete.name = name
+    this.projectToDelete = { id, name }
     this.singleDeletion = true
     this.showDeleteModal = true
   }
@@ -130,33 +99,4 @@ export class ProjectListComponent implements OnInit {
   }
 
   faTrash = faTrash
-  protected readonly formatUtcDate = formatUtcDate;
-  protected readonly resolveProjectStatus = resolveProjectStatus;
-}
-
-export interface PaginationStatus {
-  pageIndex: number,
-  pageSize: number,
-  lastPage: number,
-  isLastPage: boolean
-}
-
-export interface SearchInfo {
-  fieldName: string,
-  value: string,
-}
-
-export interface SortInfo {
-  fieldName: string,
-  ascending: boolean
-}
-
-export interface SearchCriteria {
-  ConjunctionSearchInfos: SearchInfo[],
-  DisjunctionSearchInfos: SearchInfo[]
-}
-
-export interface ProjectToDelete {
-  id: string,
-  name: string
 }

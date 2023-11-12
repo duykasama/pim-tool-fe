@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {AxiosError} from "axios";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {ENDPOINTS} from "../../data/apiInfo";
 import {getAxiosInstance} from "../../core/lib/appAxios";
 import {Router} from "@angular/router";
 import {GroupService} from "../../core/services/group.service";
 import {formatDateTime} from "../../core/utils/date.util";
+import {ProjectService} from "../../core/services/project.service";
 
 @Component({
   selector: 'app-create-project',
@@ -36,7 +36,7 @@ export class CreateProjectComponent implements OnInit {
   filteredMembers: string[] = this.members
   selectedMembers: string[] = []
 
-  constructor(private formBuilder: FormBuilder, protected router: Router, protected groupService: GroupService) {
+  constructor(private formBuilder: FormBuilder, protected router: Router, protected groupService: GroupService, protected projectService: ProjectService) {
   }
 
   async ngOnInit() {
@@ -47,19 +47,19 @@ export class CreateProjectComponent implements OnInit {
     } else {
       this.doCreate = false
       const id = url.slice(16, url.length)
-      const response = await getAxiosInstance().post(`${ENDPOINTS.PROJECTS}/${id}`)
+      const project = await this.projectService.getSingleProject(id)
       this.createProjectForm.setValue({
-        projectNumber: response.data?.data.projectNumber,
-        name: response.data?.data?.name,
-        customer: response.data?.data?.customer,
-        groupId: response.data?.data?.groupId || '',
-        members: response.data?.data?.members || '',
-        status: response.data?.data?.status,
-        startDate: formatDateTime(response.data?.data?.startDate),
-        endDate: response.data?.data?.endDate || null
+        projectNumber: project.projectNumber,
+        name: project?.name,
+        customer: project?.customer,
+        groupId: project?.groupId || '',
+        members: project?.members || '',
+        status: project?.status,
+        startDate: formatDateTime(project?.startDate),
+        endDate: project ? formatDateTime(project?.endDate) : null
       })
-      this.projectId = response.data?.data?.id
-      this.projectVersion = response.data?.data?.version
+      this.projectId = project?.id
+      this.projectVersion = project?.version
       this.createProjectForm.controls['projectNumber'].disable()
     }
   }
@@ -86,7 +86,7 @@ export class CreateProjectComponent implements OnInit {
     startDate:  new FormControl('', [
       Validators.required,
     ]),
-    endDate: null
+    endDate: ''
   })
 
   async onSubmit(): Promise<void> {
@@ -95,48 +95,33 @@ export class CreateProjectComponent implements OnInit {
     }
 
     if (!this.doCreate){
-      try {
-        this.isLoading = true
-        const response = await getAxiosInstance().put(`${ENDPOINTS.UPDATE_PROJECT}/${this.projectId}`,
-          {...this.createProjectForm.getRawValue(), version: this.projectVersion}, {
-            headers: {
-              'UpdaterId': '295189a8-e4df-4b41-fd14-08dbdbacb07b'
-            }
-          })
-        await new Promise(r => setTimeout(r, 1000))
+      this.isLoading = true
+      const response = await this.projectService.updateProject(this.projectId, this.createProjectForm.getRawValue(), this.projectVersion)
 
-        this.isSuccess = !!response.data?.isSuccess
-        this.message = response.data?.messages[0]?.content || 'Request sent'
+      this.isSuccess = !!response?.isSuccess
+      if (this.isSuccess) {
+        this.message = response?.messages[0]?.content || 'Request sent'
         this.resetForm()
+      } else {
+        this.message = response
       }
-      catch (e: any | AxiosError){
-        this.message = e.response.data?.messages[0]?.content || 'Request sent'
-        this.isSuccess = false
-      }
-      finally {
-        this.isLoading = false
-        this.isRequestSent = true
-      }
+      this.isLoading = false
+      this.isRequestSent = true
       return
     }
 
-    try {
-      this.isLoading = true
-      const response = await getAxiosInstance().post(ENDPOINTS.CREATE_PROJECT, this.createProjectForm.getRawValue())
-      await new Promise(r => setTimeout(r, 1000))
+    this.isLoading = true
+    const response = await this.projectService.createProject(this.createProjectForm.getRawValue())
 
-      this.isSuccess = !!response.data?.isSuccess
+    this.isSuccess = !!response?.isSuccess
+    if (this.isSuccess) {
       this.message = response.data?.messages[0]?.content || 'Request sent'
       this.resetForm()
+    } else {
+      this.message = response || 'Request sent'
     }
-    catch (e: any | AxiosError){
-      this.message = e.response.data?.messages[0]?.content || 'Request sent'
-      this.isSuccess = false
-    }
-    finally {
-      this.isLoading = false
-      this.isRequestSent = true
-    }
+    this.isLoading = false
+    this.isRequestSent = true
   }
 
   private resetForm() {

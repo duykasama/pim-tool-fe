@@ -6,3 +6,8 @@ export interface Project {
   customer: string
   startDate: string
 }
+
+export interface ProjectToDelete {
+  id: string,
+  name: string
+}
