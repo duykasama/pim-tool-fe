@@ -7,6 +7,7 @@ import {
   clearDisjunctionSearchInfo
 } from "../../../core/store/search/search.actions";
 import {resetSortInfo} from "../../../core/store/sort/sort.actions";
+import {showAdvancedFilter} from "../../../core/store/advanced-filter/advancedFilter.actions";
 
 @Component({
   selector: 'app-search-bar',
@@ -19,7 +20,7 @@ export class SearchBarComponent {
   currentProjectStatus = ''
   searchKeyword = ''
 
-  constructor(private store: Store<{searchCriteria: SearchCriteria}>) {
+  constructor(protected store: Store<{searchCriteria: SearchCriteria}>) {
     this.store.select('searchCriteria').subscribe(value => {
       const disjunctionSearchInfos = value.DisjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName == 'status')
       if (disjunctionSearchInfos.length > 0) {
@@ -67,4 +68,6 @@ export class SearchBarComponent {
     this.searchKeyword = ''
     this.searchProjectEvent.emit()
   }
+
+  protected readonly showAdvancedFilter = showAdvancedFilter;
 }

@@ -18,6 +18,7 @@ export class ProjectListComponent implements OnInit {
   isLoading = true
   showDeleteModal = false
   singleDeletion = true
+  showAdvancedFilter: boolean = false
   paginationStatus: PaginationStatus = {
     pageIndex: 1,
     pageSize: 10,
@@ -34,9 +35,10 @@ export class ProjectListComponent implements OnInit {
     name: ''
   }
 
-  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo}>, private projectService: ProjectService) {
+  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo, advancedFilter: boolean}>, private projectService: ProjectService) {
     store.select('searchCriteria').subscribe(value => this.searchCriteria = value)
     store.select('sortInfo').subscribe(value => this.sortInfo = value)
+    store.select('advancedFilter').subscribe(value => this.showAdvancedFilter = value)
   }
 
   async ngOnInit(): Promise<void> {

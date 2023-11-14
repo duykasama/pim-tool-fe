@@ -3,7 +3,7 @@ $semibold: 600;
 .search-bar {
   margin-top: 1rem;
   display: flex;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   gap: 3rem;
   .search-input {
@@ -24,7 +24,7 @@ $semibold: 600;
     opacity: 0.7;
   }
   .button {
-    padding: 0.325rem 3rem;
+    padding: 0.325rem 2rem;
     font-weight: $semibold;
     border: none;
     cursor: pointer;
@@ -38,5 +38,8 @@ $semibold: 600;
   }
   .rounded {
     border-radius: 0.25rem;
+  }
+  .show-advanced-filter{
+    cursor: pointer;
   }
 }

@@ -41,6 +41,10 @@ import {routeReducer} from "./core/store/route/route.reducers";
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import {RouteEffects} from "./core/store/route/route.effects";
+import { AdvancedFilterComponent } from './modules/project-list/advanced-filter/advanced-filter.component';
+import {advancedFilterReducer} from "./core/store/advanced-filter/advancedFilter.reducers";
+import { DateInputComponent } from './core/components/date-input/date-input.component';
+import {NgOptimizedImage} from "@angular/common";
 
 
 @NgModule({
@@ -64,14 +68,21 @@ import {RouteEffects} from "./core/store/route/route.effects";
     ErrorComponent,
     DeleteConfirmationComponent,
     DateFormatPipe,
-    ProjectStatusResolvePipe
+    ProjectStatusResolvePipe,
+    AdvancedFilterComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({searchCriteria: searchReducer, sortInfo: sortReducer, route: routeReducer}),
+    StoreModule.forRoot({
+      searchCriteria: searchReducer,
+      sortInfo: sortReducer,
+      route: routeReducer,
+      advancedFilter: advancedFilterReducer
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -87,7 +98,8 @@ import {RouteEffects} from "./core/store/route/route.effects";
     DragScrollModule,
     MatDatepickerModule,
     EffectsModule.forRoot([RouteEffects]),
-    StoreRouterConnectingModule.forRoot()
+    StoreRouterConnectingModule.forRoot(),
+    NgOptimizedImage
   ],
   providers: [{provide: LOCALE_ID, useValue: 'en-US'}],
   bootstrap: [AppComponent]
