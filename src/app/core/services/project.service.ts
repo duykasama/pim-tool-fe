@@ -2,13 +2,19 @@ import { Injectable } from '@angular/core';
 import {getAxiosInstance} from "../lib/appAxios";
 import {ENDPOINTS} from "../../data/apiInfo";
 import {SearchCriteria, SortInfo} from "../models/filter.models";
+import {Store} from "@ngrx/store";
+import {AdvancedFilterState} from "../store/advanced-filter/advancedFilter.reducers";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
 
-  constructor() { }
+  isAdvancedSearch = false
+
+  constructor(private store: Store<{advancedFilter: AdvancedFilterState}>) {
+    store.select('advancedFilter').subscribe(value => this.isAdvancedSearch = value.showFilter)
+  }
 
   apiResponse: ApiResponse = {
     isSuccess: false,
@@ -17,12 +23,17 @@ export class ProjectService {
 
   async getProjects(pageIndex: number, pageSize: number, searchCriteria: SearchCriteria, sortInfo: SortInfo): Promise<any> {
     try {
-      const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, {
+      let payLoad = {
         pageSize,
         pageIndex: Math.max(pageIndex, 1),
         searchCriteria: searchCriteria,
         sortByInfos: sortInfo.fieldName ? [sortInfo] : []
-      })
+      }
+      let advancedFilterPayload;
+      this.isAdvancedSearch && this.store.select('advancedFilter')
+        .subscribe(value => advancedFilterPayload = {...payLoad, advancedFilter: value.filterState})
+      const finalPayload = this.isAdvancedSearch ? advancedFilterPayload : payLoad;
+      const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, finalPayload)
 
       return response.data?.data
     }catch (e){

@@ -19,3 +19,15 @@ export interface PaginationStatus {
   lastPage: number,
   isLastPage: boolean
 }
+
+export interface AdvancedFilter {
+  leaderName: string,
+  memberName: string,
+  startDateRange: DateRange,
+  endDateRange: DateRange
+}
+
+export interface DateRange {
+  from: string,
+  to: string
+}

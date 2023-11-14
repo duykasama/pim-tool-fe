@@ -5,6 +5,7 @@ import {Project, ProjectToDelete} from "../../core/models/project/project.models
 import {ProjectService} from "../../core/services/project.service";
 import {PaginationStatus, SearchCriteria, SortInfo} from "../../core/models/filter.models";
 import {addSortInfo, revertSortOrder} from "../../core/store/sort/sort.actions";
+import {AdvancedFilterState} from "../../core/store/advanced-filter/advancedFilter.reducers";
 
 @Component({
   selector: 'app-project-list',
@@ -35,10 +36,10 @@ export class ProjectListComponent implements OnInit {
     name: ''
   }
 
-  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo, advancedFilter: boolean}>, private projectService: ProjectService) {
+  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo, advancedFilter: AdvancedFilterState}>, private projectService: ProjectService) {
     store.select('searchCriteria').subscribe(value => this.searchCriteria = value)
     store.select('sortInfo').subscribe(value => this.sortInfo = value)
-    store.select('advancedFilter').subscribe(value => this.showAdvancedFilter = value)
+    store.select('advancedFilter').subscribe(value => this.showAdvancedFilter = value.showFilter)
   }
 
   async ngOnInit(): Promise<void> {

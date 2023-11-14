@@ -7,7 +7,7 @@ import {
   clearDisjunctionSearchInfo
 } from "../../../core/store/search/search.actions";
 import {resetSortInfo} from "../../../core/store/sort/sort.actions";
-import {showAdvancedFilter} from "../../../core/store/advanced-filter/advancedFilter.actions";
+import {resetAdvancedFilter, showAdvancedFilter} from "../../../core/store/advanced-filter/advancedFilter.actions";
 
 @Component({
   selector: 'app-search-bar',
@@ -63,6 +63,7 @@ export class SearchBarComponent {
     this.store.dispatch(clearDisjunctionSearchInfo())
     this.store.dispatch(clearConjunctionSearchInfo())
     this.store.dispatch(resetSortInfo())
+    this.store.dispatch(resetAdvancedFilter())
     this.projectStatus = ''
     this.currentProjectStatus = ''
     this.searchKeyword = ''

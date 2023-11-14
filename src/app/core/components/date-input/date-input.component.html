@@ -2,6 +2,8 @@
   <input
     type="date"
     #dateInput
+    [(ngModel)]="date"
+    (change)="onDateChange(date)"
     class="date-input">
   <img ngSrc="{{'assets/calendar.png'}}" alt="date" (click)="dateInput.showPicker()" height="25" width="25" class="date-icon">
 </div>
