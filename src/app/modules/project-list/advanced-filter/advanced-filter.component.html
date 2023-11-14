@@ -1,0 +1,52 @@
+<section class="advanced-filter">
+  <div class="content">
+    <div class="text-filter">
+      <div class="input-filter-field">
+        <label for="leaderName">Leader:</label>
+        <input [(ngModel)]="advancedFilter.leaderName"
+               (change)="updateFilter(AdvancedFilterFieldName.LeaderName)"
+               type="text"
+               id="leaderName"
+               placeholder="Leader name">
+      </div>
+      <div class="input-filter-field">
+        <label for="member">Member:</label>
+        <input [(ngModel)]="advancedFilter.memberName"
+               (change)="updateFilter(AdvancedFilterFieldName.MemberName)"
+               type="text"
+               id="member"
+               placeholder="Member name">
+      </div>
+    </div>
+    <div class="start-date-range">
+      <p>Start date:</p>
+      <div class="date-from">
+        <label for="startDateFrom">From:</label>
+        <app-date-input [(date)]="advancedFilter.startDateRange.from"
+                        (change)="updateFilter(AdvancedFilterFieldName.StartDateFrom)"
+                        id="startDateFrom"></app-date-input>
+      </div>
+      <div class="date-to">
+        <label for="startDateTo">To:</label>
+        <app-date-input [(date)]="advancedFilter.startDateRange.to"
+                        (change)="updateFilter(AdvancedFilterFieldName.StartDateTo)"
+                        id="startDateTo"></app-date-input>
+      </div>
+    </div>
+    <div class="start-date-range">
+      <p>End date:</p>
+      <div class="date-from">
+        <label for="endDateFrom">From:</label>
+        <app-date-input [(date)]="advancedFilter.endDateRange.from"
+                        (change)="updateFilter(AdvancedFilterFieldName.EndDateFrom)"
+                        id="endDateFrom"></app-date-input>
+      </div>
+      <div class="date-to">
+        <label for="endDateTo">To:</label>
+        <app-date-input [(date)]="advancedFilter.endDateRange.to"
+                        (change)="updateFilter(AdvancedFilterFieldName.EndDateTo)"
+                        id="endDateTo"></app-date-input>
+      </div>
+    </div>
+  </div>
+</section>

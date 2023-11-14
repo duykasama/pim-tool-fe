@@ -6,9 +6,8 @@ import {
   faChevronRight,
   faEllipsis
 } from "@fortawesome/free-solid-svg-icons";
-import {PaginationStatus, ProjectListComponent} from "../project-list.component";
-import {min} from "rxjs";
 import {Project} from "../../../core/models/project/project.models";
+import {PaginationStatus} from "../../../core/models/filter.models";
 
 @Component({
   selector: 'app-pagination',
@@ -72,7 +71,6 @@ export class PaginationComponent {
 
   protected readonly faChevronRight = faChevronRight;
   protected readonly faChevronLeft = faChevronLeft;
-  protected readonly faEllipsis = faEllipsis;
   protected nextMultiPageIcon = faEllipsis;
   protected prevMultiPageIcon = faEllipsis;
   protected readonly Math = Math;

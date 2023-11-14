@@ -1,12 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {AxiosError} from "axios";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {ENDPOINTS} from "../../data/apiInfo";
 import {getAxiosInstance} from "../../core/lib/appAxios";
 import {Router} from "@angular/router";
 import {GroupService} from "../../core/services/group.service";
 import {formatDateTime} from "../../core/utils/date.util";
+import {ProjectService} from "../../core/services/project.service";
+import {Group} from "../../core/models/project/project.models";
+import {Store} from "@ngrx/store";
+import {switchRoute} from "../../core/store/route/route.actions";
+import {routes} from "../../core/constants/routeConstants";
 
 @Component({
   selector: 'app-create-project',
@@ -36,30 +40,34 @@ export class CreateProjectComponent implements OnInit {
   filteredMembers: string[] = this.members
   selectedMembers: string[] = []
 
-  constructor(private formBuilder: FormBuilder, protected router: Router, protected groupService: GroupService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    protected router: Router,
+    protected groupService: GroupService,
+    protected projectService: ProjectService) {
   }
 
   async ngOnInit() {
     this.groups = await this.groupService.getGroups()
     const url = this.router.url
-    if (url.includes('create-project')) {
+    if (url === routes.CREATE_PROJECT) {
       this.doCreate = true
     } else {
       this.doCreate = false
       const id = url.slice(16, url.length)
-      const response = await getAxiosInstance().post(`${ENDPOINTS.PROJECTS}/${id}`)
+      const project = await this.projectService.getSingleProject(id)
       this.createProjectForm.setValue({
-        projectNumber: response.data?.data.projectNumber,
-        name: response.data?.data?.name,
-        customer: response.data?.data?.customer,
-        groupId: response.data?.data?.groupId || '',
-        members: response.data?.data?.members || '',
-        status: response.data?.data?.status,
-        startDate: formatDateTime(response.data?.data?.startDate),
-        endDate: response.data?.data?.endDate || null
+        projectNumber: project.projectNumber,
+        name: project?.name,
+        customer: project?.customer,
+        groupId: project?.groupId || '',
+        members: project?.members || '',
+        status: project?.status,
+        startDate: formatDateTime(project?.startDate),
+        endDate: (project && project?.endDate) ? formatDateTime(project?.endDate) : null
       })
-      this.projectId = response.data?.data?.id
-      this.projectVersion = response.data?.data?.version
+      this.projectId = project?.id
+      this.projectVersion = project?.version
       this.createProjectForm.controls['projectNumber'].disable()
     }
   }
@@ -86,7 +94,7 @@ export class CreateProjectComponent implements OnInit {
     startDate:  new FormControl('', [
       Validators.required,
     ]),
-    endDate: null
+    endDate: ''
   })
 
   async onSubmit(): Promise<void> {
@@ -95,48 +103,33 @@ export class CreateProjectComponent implements OnInit {
     }
 
     if (!this.doCreate){
-      try {
-        this.isLoading = true
-        const response = await getAxiosInstance().put(`${ENDPOINTS.UPDATE_PROJECT}/${this.projectId}`,
-          {...this.createProjectForm.getRawValue(), version: this.projectVersion}, {
-            headers: {
-              'UpdaterId': '295189a8-e4df-4b41-fd14-08dbdbacb07b'
-            }
-          })
-        await new Promise(r => setTimeout(r, 1000))
+      this.isLoading = true
+      const response = await this.projectService.updateProject(this.projectId, this.createProjectForm.getRawValue(), this.projectVersion)
 
-        this.isSuccess = !!response.data?.isSuccess
-        this.message = response.data?.messages[0]?.content || 'Request sent'
+      this.isSuccess = !!response?.isSuccess
+      if (this.isSuccess) {
+        this.message = response?.messages[0]?.content || 'Request sent'
         this.resetForm()
+      } else {
+        this.message = response
       }
-      catch (e: any | AxiosError){
-        this.message = e.response.data?.messages[0]?.content || 'Request sent'
-        this.isSuccess = false
-      }
-      finally {
-        this.isLoading = false
-        this.isRequestSent = true
-      }
+      this.isLoading = false
+      this.isRequestSent = true
       return
     }
 
-    try {
-      this.isLoading = true
-      const response = await getAxiosInstance().post(ENDPOINTS.CREATE_PROJECT, this.createProjectForm.getRawValue())
-      await new Promise(r => setTimeout(r, 1000))
+    this.isLoading = true
+    const response = await this.projectService.createProject(this.createProjectForm.getRawValue())
 
-      this.isSuccess = !!response.data?.isSuccess
+    this.isSuccess = !!response?.isSuccess
+    if (this.isSuccess) {
       this.message = response.data?.messages[0]?.content || 'Request sent'
       this.resetForm()
+    } else {
+      this.message = response || 'Request sent'
     }
-    catch (e: any | AxiosError){
-      this.message = e.response.data?.messages[0]?.content || 'Request sent'
-      this.isSuccess = false
-    }
-    finally {
-      this.isLoading = false
-      this.isRequestSent = true
-    }
+    this.isLoading = false
+    this.isRequestSent = true
   }
 
   private resetForm() {
@@ -168,8 +161,8 @@ export class CreateProjectComponent implements OnInit {
 
   selectMember(member: string) {
     this.selectedMembers.push(member)
-    const index = this.members.indexOf(member)
-    this.members.splice(index, 1)
+    this.members.splice(this.members.indexOf(member), 1)
+    this.filteredMembers.splice(this.filteredMembers.indexOf(member), 1)
   }
 
   deselectMember(member: string) {
@@ -179,18 +172,10 @@ export class CreateProjectComponent implements OnInit {
 
   filterMember() {
     const kw = this.createProjectForm.get('members')?.value
-    if (kw) {
-      this.filteredMembers = this.filteredMembers.filter((value, index, array) => array[index].toUpperCase().includes(kw.toUpperCase().trim()))
-    } else {
-      this.filteredMembers = this.members
-    }
+    this.filteredMembers = kw
+      ? this.filteredMembers.filter(value=> value.toUpperCase().includes(kw.toUpperCase().trim()))
+      : this.filteredMembers = this.members
   }
 
   protected readonly faXmark = faXmark;
-}
-
-interface Group {
-  id: string,
-  name: string,
-  leaderId: string
 }

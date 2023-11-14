@@ -103,7 +103,7 @@ $focus: #2f85fa;
         position: relative;
         .member-input-group {
           display: flex;
-          justify-content: start;
+          justify-content: flex-start;
           align-items: center;
           gap: 1rem;
           border: 1px solid rgba(128, 128, 128, .5);
@@ -114,7 +114,7 @@ $focus: #2f85fa;
           .selected-members-container {
             list-style: none;
             display: flex;
-            justify-content: start;
+            justify-content: flex-start;
             gap: 0.5rem;
             align-items: center;
             li {
@@ -156,7 +156,7 @@ $focus: #2f85fa;
           display: flex;
           flex-direction: column;
           justify-content: center;
-          align-items: start;
+          align-items: flex-start;
           li {
             width: 100%;
             cursor: pointer;
@@ -198,11 +198,12 @@ $focus: #2f85fa;
         background-position: right center;
         background-repeat: no-repeat;
         background-origin: content-box;
+        cursor: pointer;
       }
     }
     .btn-group {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       gap: 4rem;
       border-top: 1px solid gray;
       padding-top: 2rem;

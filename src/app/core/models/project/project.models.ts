@@ -6,3 +6,14 @@ export interface Project {
   customer: string
   startDate: string
 }
+
+export interface ProjectToDelete {
+  id: string,
+  name: string
+}
+
+export interface Group {
+  id: string,
+  name: string,
+  leaderId: string
+}

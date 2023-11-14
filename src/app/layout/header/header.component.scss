@@ -16,6 +16,7 @@ $blue: #4aa6e7;
     h1 {
       font-size: 1.5rem;
       color: gray;
+      font-weight: 500;
     }
   }
 
@@ -54,6 +55,7 @@ $blue: #4aa6e7;
             cursor: pointer;
             width: 100%;
             padding: 0.25rem;
+            background-color: transparent;
             transition-property: background-color;
             transition-duration: 0.1s;
             transition-timing-function: linear;

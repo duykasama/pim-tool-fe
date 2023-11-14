@@ -103,14 +103,18 @@
         formControlName="startDate"
         type="date"
         id="startDate"
+        #startDate
         class="form-input"
+        (click)="startDate.showPicker()"
         [ngClass]="{'alert': createProjectForm.get('startDate')?.invalid && !createProjectForm.get('startDate')?.pristine}">
       <label for="endDate">{{'END_DATE' | translate}}</label>
       <input
         formControlName="endDate"
         type="date"
         class="form-input"
-        id="endDate">
+        id="endDate"
+        #endDate
+        (click)="endDate.showPicker()">
     </div>
 
     <div class="btn-group">

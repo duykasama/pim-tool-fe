@@ -18,6 +18,7 @@ export class GroupService {
       return []
     } catch (e) {
       console.log(e)
+      return []
     }
   }
 }

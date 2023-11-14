@@ -1,6 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import {ProjectToDelete} from "../../../../modules/project-list/project-list.component";
 
 @Component({
   selector: 'app-delete-confirmation',

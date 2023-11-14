@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import {LOCALE_ID, NgModule} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -31,6 +31,20 @@ import { DeleteConfirmationComponent } from './core/components/modals/delete-con
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {CdkDrag, CdkDropList} from "@angular/cdk/drag-drop";
 import {DragScrollModule} from "ngx-drag-scroll";
+import { DateFormatPipe } from './core/pipes/date-format.pipe';
+import { ProjectStatusResolvePipe } from './core/pipes/project-status-resolve.pipe';
+import {searchReducer} from "./core/store/search/search.reducer";
+import {sortReducer} from "./core/store/sort/sort.reducers";
+import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MAT_DATE_LOCALE} from "@angular/material/core";
+import {routeReducer} from "./core/store/route/route.reducers";
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
+import {RouteEffects} from "./core/store/route/route.effects";
+import { AdvancedFilterComponent } from './modules/project-list/advanced-filter/advanced-filter.component';
+import {advancedFilterReducer} from "./core/store/advanced-filter/advancedFilter.reducers";
+import { DateInputComponent } from './core/components/date-input/date-input.component';
+import {NgOptimizedImage} from "@angular/common";
 
 
 @NgModule({
@@ -52,14 +66,23 @@ import {DragScrollModule} from "ngx-drag-scroll";
     CreateProjectSuccessComponent,
     NotFoundComponent,
     ErrorComponent,
-    DeleteConfirmationComponent
+    DeleteConfirmationComponent,
+    DateFormatPipe,
+    ProjectStatusResolvePipe,
+    AdvancedFilterComponent,
+    DateInputComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({projects: projectReducer}),
+    StoreModule.forRoot({
+      searchCriteria: searchReducer,
+      sortInfo: sortReducer,
+      route: routeReducer,
+      advancedFilter: advancedFilterReducer
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -72,9 +95,13 @@ import {DragScrollModule} from "ngx-drag-scroll";
     BrowserAnimationsModule,
     CdkDrag,
     CdkDropList,
-    DragScrollModule
+    DragScrollModule,
+    MatDatepickerModule,
+    EffectsModule.forRoot([RouteEffects]),
+    StoreRouterConnectingModule.forRoot(),
+    NgOptimizedImage
   ],
-  providers: [],
+  providers: [{provide: LOCALE_ID, useValue: 'en-US'}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
