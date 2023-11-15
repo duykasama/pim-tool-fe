@@ -1,15 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
-import {ENDPOINTS} from "../../data/apiInfo";
-import {getAxiosInstance} from "../../core/lib/appAxios";
+import {EndPoints} from "../../data/apiInfo";
 import {Router} from "@angular/router";
 import {GroupService} from "../../core/services/group.service";
 import {formatDateTime} from "../../core/utils/date.util";
 import {ProjectService} from "../../core/services/project.service";
 import {Group} from "../../core/models/project/project.models";
-import {Store} from "@ngrx/store";
-import {switchRoute} from "../../core/store/route/route.actions";
 import {routes} from "../../core/constants/routeConstants";
 
 @Component({
@@ -47,27 +44,29 @@ export class CreateProjectComponent implements OnInit {
     protected projectService: ProjectService) {
   }
 
-  async ngOnInit() {
-    this.groups = await this.groupService.getGroups()
+  ngOnInit() {
+    this.groupService.getGroups().subscribe(value => this.groups = value)
+
     const url = this.router.url
     if (url === routes.CREATE_PROJECT) {
       this.doCreate = true
     } else {
       this.doCreate = false
       const id = url.slice(16, url.length)
-      const project = await this.projectService.getSingleProject(id)
-      this.createProjectForm.setValue({
-        projectNumber: project.projectNumber,
-        name: project?.name,
-        customer: project?.customer,
-        groupId: project?.groupId || '',
-        members: project?.members || '',
-        status: project?.status,
-        startDate: formatDateTime(project?.startDate),
-        endDate: (project && project?.endDate) ? formatDateTime(project?.endDate) : null
+      this.projectService.getSingleProject(id).subscribe(project => {
+        this.createProjectForm.setValue({
+          projectNumber: project.projectNumber,
+          name: project?.name,
+          customer: project?.customer,
+          groupId: project?.groupId || '',
+          members: project?.members || '',
+          status: project?.status,
+          startDate: formatDateTime(project?.startDate),
+          endDate: (project && project?.endDate) ? formatDateTime(project?.endDate) : null
+        })
+        this.projectId = project?.id
+        this.projectVersion = project?.version
       })
-      this.projectId = project?.id
-      this.projectVersion = project?.version
       this.createProjectForm.controls['projectNumber'].disable()
     }
   }
@@ -97,39 +96,39 @@ export class CreateProjectComponent implements OnInit {
     endDate: ''
   })
 
-  async onSubmit(): Promise<void> {
+  onSubmit() {
     if (!this.createProjectForm.valid || !this.isValidProjectNumber) {
-      return;
+      return
     }
 
     if (!this.doCreate){
       this.isLoading = true
-      const response = await this.projectService.updateProject(this.projectId, this.createProjectForm.getRawValue(), this.projectVersion)
-
-      this.isSuccess = !!response?.isSuccess
-      if (this.isSuccess) {
-        this.message = response?.messages[0]?.content || 'Request sent'
-        this.resetForm()
-      } else {
-        this.message = response
-      }
-      this.isLoading = false
-      this.isRequestSent = true
-      return
+      this.projectService.updateProject(this.projectId, this.createProjectForm.getRawValue(), this.projectVersion).subscribe(response => {
+        this.isSuccess = !!response?.isSuccess
+        if (this.isSuccess) {
+          this.message = response?.messages[0]?.content || 'Request sent'
+          this.resetForm()
+        } else {
+          this.message = response?.messages[0]?.content || 'Request failed'
+        }
+        this.isLoading = false
+        this.isRequestSent = true
+        return
+      })
     }
 
     this.isLoading = true
-    const response = await this.projectService.createProject(this.createProjectForm.getRawValue())
-
-    this.isSuccess = !!response?.isSuccess
-    if (this.isSuccess) {
-      this.message = response.data?.messages[0]?.content || 'Request sent'
-      this.resetForm()
-    } else {
-      this.message = response || 'Request sent'
-    }
-    this.isLoading = false
-    this.isRequestSent = true
+    this.projectService.createProject(this.createProjectForm.getRawValue()).subscribe(response => {
+      this.isSuccess = !!response?.isSuccess
+      if (this.isSuccess) {
+        this.message = response.data?.messages[0]?.content || 'Request sent'
+        this.resetForm()
+      } else {
+        this.message = response?.messages[0]?.content || 'Request failed'
+      }
+      this.isLoading = false
+      this.isRequestSent = true
+    })
   }
 
   private resetForm() {
@@ -153,10 +152,12 @@ export class CreateProjectComponent implements OnInit {
     this.showErrorMsg = false
   }
 
-  async validateProjectNumber(): Promise<void> {
-    const response = await getAxiosInstance()
-      .post(`${ENDPOINTS.VALIDATE_PROJECT_NUMBER}/${this.createProjectForm.get('projectNumber')?.getRawValue()}`)
-    this.isValidProjectNumber = response.data?.data
+  validateProjectNumber() {
+    this.projectService.validateProjectNumber(this.createProjectForm.get('projectNumber')?.getRawValue())
+      .subscribe(value => this.isValidProjectNumber = value)
+    // const response = await getAxiosInstance()
+    //   .post(`${EndPoints.VALIDATE_PROJECT_NUMBER}/${this.createProjectForm.get('projectNumber')?.getRawValue()}`)
+    // this.isValidProjectNumber = response.data?.data
   }
 
   selectMember(member: string) {

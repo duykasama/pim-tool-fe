@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
-import {getAxiosInstance} from "../../core/lib/appAxios";
-import {ENDPOINTS} from "../../data/apiInfo";
-import {Router} from "@angular/router";
+import BASE_URL, {EndPoints} from "../../data/apiInfo";
+import {HttpClient} from "@angular/common/http";
+import {ApiResponse} from "../../core/services/project.service";
 import {routes} from "../../core/constants/routeConstants";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -11,8 +12,11 @@ import {routes} from "../../core/constants/routeConstants";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  constructor(private formBuilder: FormBuilder, private router: Router) {
-  }
+  constructor(
+    private formBuilder: FormBuilder,
+    private http: HttpClient,
+    private router: Router
+  ) {}
 
   isValidEmail = true
   isValidPassword = true
@@ -40,33 +44,27 @@ export class LoginComponent {
     this.isValidPassword = !this.loginForm.get('password')?.invalid && !this.loginForm.pristine
   }
 
-  async onSubmit(): Promise<void> {
+  onSubmit() {
     if (this.loginForm.invalid) {
       this.validateEmail()
       this.validatePassword()
       return
     }
 
-    try {
-      this.isLoading = true
-      const response = await getAxiosInstance().post(ENDPOINTS.LOGIN, {
-        ...this.loginForm.getRawValue()
-      })
-
-      await new Promise(r => setTimeout(r, 200))
-      if (response.data?.isSuccess) {
-        localStorage.setItem('access_token', response.data?.data?.accessToken)
-        localStorage.setItem('refresh_token', response.data?.data?.refreshToken)
-        await this.router.navigate([routes.PROJECT_LIST])
+    this.isLoading = true
+    this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.LOGIN}`,
+      this.loginForm.getRawValue()
+    ).subscribe(response =>  {
+      if (response.isSuccess) {
+        localStorage.setItem('access_token', response.data?.accessToken)
+        localStorage.setItem('refresh_token', response.data?.refreshToken)
+        this.router.navigate([routes.PROJECT_LIST])
       } else {
         this.isLoginSuccess = false
       }
-    } catch (e: any) {
-      this.errorMsg = e.response.data?.messages[0]?.content
-      this.isLoginSuccess = false
-      console.log(e)
-    } finally {
-      this.isLoading = false
-    }
+
+    })
+    this.isLoading = false
   }
 }

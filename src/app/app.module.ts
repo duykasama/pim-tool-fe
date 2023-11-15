@@ -16,15 +16,13 @@ import { CreateProjectComponent } from './modules/create-project/create-project.
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { StoreModule } from "@ngrx/store";
 import { LoaderComponent } from './core/components/loader/loader.component';
-import {projectReducer} from "./core/store/project/project.reducer";
 import { LoginComponent } from './modules/login/login.component';
 import { PageLoaderComponent } from './core/components/page-loader/page-loader.component';
-import {OAuthModule} from "angular-oauth2-oidc";
 import { LoginFailedModalComponent } from './core/components/modals/login-failed-modal/login-failed-modal.component';
 import { CreateProjectSuccessComponent } from './core/components/modals/create-project-success/create-project-success.component';
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from "@angular/common/http";
 import { NotFoundComponent } from './modules/not-found/not-found.component';
 import { ErrorComponent } from './modules/error/error.component';
 import { DeleteConfirmationComponent } from './core/components/modals/delete-confirmation/delete-confirmation.component';
@@ -36,7 +34,6 @@ import { ProjectStatusResolvePipe } from './core/pipes/project-status-resolve.pi
 import {searchReducer} from "./core/store/search/search.reducer";
 import {sortReducer} from "./core/store/sort/sort.reducers";
 import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {routeReducer} from "./core/store/route/route.reducers";
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
@@ -45,6 +42,7 @@ import { AdvancedFilterComponent } from './modules/project-list/advanced-filter/
 import {advancedFilterReducer} from "./core/store/advanced-filter/advancedFilter.reducers";
 import { DateInputComponent } from './core/components/date-input/date-input.component';
 import {NgOptimizedImage} from "@angular/common";
+import {HttpClientInterceptor} from "./core/lib/httpClientInterceptor";
 
 
 @NgModule({
@@ -101,7 +99,17 @@ import {NgOptimizedImage} from "@angular/common";
     StoreRouterConnectingModule.forRoot(),
     NgOptimizedImage
   ],
-  providers: [{provide: LOCALE_ID, useValue: 'en-US'}],
+  providers: [
+    {
+      provide: LOCALE_ID,
+      useValue: 'en-US'
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpClientInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

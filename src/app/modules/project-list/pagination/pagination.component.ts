@@ -20,7 +20,7 @@ export class PaginationComponent {
   @Input() paginationStatus!: PaginationStatus
   @Output() childEvent = new EventEmitter<void>()
 
-  async toNextPage(): Promise<void> {
+  toNextPage() {
     if (this.paginationStatus.pageIndex < this.paginationStatus.lastPage) {
       this.paginationStatus.pageIndex++;
     }

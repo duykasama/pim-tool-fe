@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
-import {getAxiosInstance} from "../lib/appAxios";
-import {ENDPOINTS} from "../../data/apiInfo";
+import BASE_URL, {EndPoints} from "../../data/apiInfo";
 import {SearchCriteria, SortInfo} from "../models/filter.models";
 import {Store} from "@ngrx/store";
 import {AdvancedFilterState} from "../store/advanced-filter/advancedFilter.reducers";
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs";
+import {getLocalAccessToken} from "../utils/localStorage.util";
+import {Project} from "../models/project/project.models";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -12,106 +16,107 @@ export class ProjectService {
 
   isAdvancedSearch = false
 
-  constructor(private store: Store<{advancedFilter: AdvancedFilterState}>) {
+  constructor(private store: Store<{advancedFilter: AdvancedFilterState}>, private http: HttpClient) {
     store.select('advancedFilter').subscribe(value => this.isAdvancedSearch = value.showFilter)
   }
 
   apiResponse: ApiResponse = {
     isSuccess: false,
-    message: ''
+    messages: [],
+    data: null
   }
 
-  async getProjects(pageIndex: number, pageSize: number, searchCriteria: SearchCriteria, sortInfo: SortInfo): Promise<any> {
-    try {
-      let payLoad = {
-        pageSize,
-        pageIndex: Math.max(pageIndex, 1),
-        searchCriteria: searchCriteria,
-        sortByInfos: sortInfo.fieldName ? [sortInfo] : []
-      }
-      let advancedFilterPayload;
-      this.isAdvancedSearch && this.store.select('advancedFilter')
-        .subscribe(value => advancedFilterPayload = {...payLoad, advancedFilter: value.filterState})
-      const finalPayload = this.isAdvancedSearch ? advancedFilterPayload : payLoad;
-      const response = await getAxiosInstance().post(ENDPOINTS.PROJECTS, finalPayload)
-
-      return response.data?.data
-    }catch (e){
-      console.log(e)
-      return []
+  config = {
+    headers: {
+      'Authorization': `Bearer ${getLocalAccessToken()}`
     }
   }
 
-  async getSingleProject(id: string): Promise<any> {
-    try {
-      const response = await getAxiosInstance().post(`${ENDPOINTS.PROJECTS}/${id}`)
-      return response.data?.data
-    } catch (e) {
-      console.log(e)
-      return undefined
+  loadProjects(pageIndex: number, pageSize: number, searchCriteria: SearchCriteria, sortInfo: SortInfo): Observable<ApiResponse> {
+    let payLoad = {
+      pageSize,
+      pageIndex: Math.max(pageIndex, 1),
+      searchCriteria: searchCriteria,
+      sortByInfos: sortInfo.fieldName ? [sortInfo] : []
     }
+    let advancedFilterPayload;
+    this.isAdvancedSearch && this.store.select('advancedFilter')
+      .subscribe(value => advancedFilterPayload = {...payLoad, advancedFilter: value.filterState})
+    const finalPayload = this.isAdvancedSearch ? advancedFilterPayload : payLoad;
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.PROJECTS}`,
+      finalPayload,
+      this.config
+    )
   }
 
-  async updateProject(projectId: string, projectInfo: any, projectVersion: number): Promise<any> {
-    try {
-      const response = await getAxiosInstance().put(`${ENDPOINTS.UPDATE_PROJECT}/${projectId}`,
-      {...projectInfo, version: projectVersion}, {
+  getSingleProject(id: string): Observable<Project> {
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.PROJECTS}/${id}`,
+      null,
+      this.config
+    ).pipe(
+      map(value => value.data)
+    )
+  }
+
+  updateProject(projectId: string, projectInfo: any, projectVersion: number): Observable<ApiResponse> {
+    return this.http.put<ApiResponse>(
+      `${BASE_URL}/${EndPoints.UPDATE_PROJECT}/${projectId}`,
+      {...projectInfo, version: projectVersion},
+      {
+        ...this.config,
         headers: {
+          ...this.config.headers,
           'UpdaterId': '295189a8-e4df-4b41-fd14-08dbdbacb07b'
         }
-      })
-      await new Promise(r => setTimeout(r, 200))
-      return response.data
-    } catch (e: any) {
-      await new Promise(r => setTimeout(r, 200))
-      console.log(e)
-      return e?.response?.message || 'An error occurred'
-    }
+      },
+    )
   }
 
-  async createProject(projectInfo: any): Promise<any> {
-    try {
-      const response = await getAxiosInstance().post(ENDPOINTS.CREATE_PROJECT, projectInfo)
-      await new Promise(r => setTimeout(r, 200))
-      return response.data
-
-    } catch (e: any) {
-      await new Promise(r => setTimeout(r, 200))
-      console.log(e)
-      return e?.response?.message || 'An error occurred'
-    }
+  createProject(projectInfo: any): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.CREATE_PROJECT}`,
+      projectInfo,
+      this.config
+    )
   }
 
-  async deleteProject(id: string) {
-    try {
-      const response = await getAxiosInstance().delete(`${ENDPOINTS.DELETE_PROJECT}/${id}`)
-      this.apiResponse.isSuccess = response.data?.isSuccess
-      this.apiResponse.message = response.data?.messages[0]?.content || ''
-    } catch (e: any) {
-      this.apiResponse.isSuccess = false
-      this.apiResponse.message = e?.response.data.message
-    }
-
-    return this.apiResponse
+  validateProjectNumber(projectNumber: number) {
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.VALIDATE_PROJECT_NUMBER}/${projectNumber}`,
+      null,
+      this.config
+    ).pipe(
+      map(response => response.data)
+    )
   }
 
-  async deleteMultipleProjects(projects: string[]) {
-    try {
-      const response = await getAxiosInstance().post(ENDPOINTS.DELETE_PROJECT, {
+  deleteProject(id: string) {
+    this.http.delete(
+      `${BASE_URL}/${EndPoints.DELETE_PROJECT}/${id}`,
+      this.config
+    ).subscribe()
+  }
+
+  deleteMultipleProjects(projects: string[]) {
+    this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.DELETE_PROJECT}`,
+      {
         projectIds: projects
-      })
-      this.apiResponse.isSuccess = response.data?.isSuccess
-      this.apiResponse.message = response.data?.messages[0]?.content || ''
-    } catch (e: any) {
-      this.apiResponse.isSuccess = false
-      this.apiResponse.message = e?.response.data.message
-    }
-
-    return this.apiResponse
+      },
+      this.config
+    ).subscribe()
   }
 }
 
 export interface ApiResponse {
-  isSuccess: boolean,
-  message: string
+  isSuccess: boolean
+  messages: ApiMessage[]
+  data: any
+}
+
+export interface ApiMessage {
+  content: string
+  type: number
 }

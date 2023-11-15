@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {routes} from "../../core/constants/routeConstants";
+import {selectCurrentRoute} from "../../core/store/route/route.selectors";
 
 @Component({
   selector: 'app-side-bar',
@@ -13,7 +14,7 @@ export class SideBarComponent implements OnInit {
   currentRoute = ''
 
   ngOnInit() {
-    this.store.select('route').subscribe(value => this.currentRoute = value)
+    this.store.select(selectCurrentRoute).subscribe(value => this.currentRoute = value)
   }
 
   protected readonly routes = routes;

@@ -5,14 +5,19 @@ import {Project, ProjectToDelete} from "../../core/models/project/project.models
 import {ProjectService} from "../../core/services/project.service";
 import {PaginationStatus, SearchCriteria, SortInfo} from "../../core/models/filter.models";
 import {addSortInfo, revertSortOrder} from "../../core/store/sort/sort.actions";
-import {AdvancedFilterState} from "../../core/store/advanced-filter/advancedFilter.reducers";
+import {selectFilterStatus} from "../../core/store/advanced-filter/advancedFilter.selectors";
+import {selectSortInfo} from "../../core/store/sort/sort.selectors";
+import {collapseAnimation} from "../../core/animations/collapse.animation";
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  styleUrls: ['./project-list.component.scss'],
+  animations: collapseAnimation
 })
 export class ProjectListComponent implements OnInit {
+
+  show = false
 
   projects: Project[] = []
   selectedProjects: string[] = []
@@ -36,27 +41,14 @@ export class ProjectListComponent implements OnInit {
     name: ''
   }
 
-  constructor(private store: Store<{searchCriteria: SearchCriteria, sortInfo: SortInfo, advancedFilter: AdvancedFilterState}>, private projectService: ProjectService) {
+  constructor(private store: Store<{searchCriteria: SearchCriteria}>, private projectService: ProjectService) {
     store.select('searchCriteria').subscribe(value => this.searchCriteria = value)
-    store.select('sortInfo').subscribe(value => this.sortInfo = value)
-    store.select('advancedFilter').subscribe(value => this.showAdvancedFilter = value.showFilter)
+    store.select(selectSortInfo).subscribe(value => this.sortInfo = value)
+    store.select(selectFilterStatus).subscribe(value => this.showAdvancedFilter = value)
   }
 
-  async ngOnInit(): Promise<void> {
-    await this.setProjects()
-  }
-
-  async setProjects(): Promise<void> {
-    this.isLoading = true
-    const data = await this.projectService.getProjects(this.paginationStatus.pageIndex, this.paginationStatus.pageSize, this.searchCriteria, this.sortInfo)
-    this.projects = data?.data
-    this.paginationStatus = {
-      ...this.paginationStatus,
-      pageIndex: data?.pageIndex,
-      lastPage: data?.lastPage,
-      isLastPage: data?.isLastPage
-    }
-    this.isLoading = false
+  ngOnInit() {
+    this.setProjects()
   }
 
   selectProject(projectId: string): void {
@@ -65,16 +57,31 @@ export class ProjectListComponent implements OnInit {
       : this.selectedProjects.push(projectId)
   }
 
+  setProjects() {
+    this.isLoading = true
+    this.projectService.loadProjects(this.paginationStatus.pageIndex, this.paginationStatus.pageSize, this.searchCriteria, this.sortInfo)
+      .subscribe(value => {
+        this.projects = value.data?.data
+        this.paginationStatus = {
+          ...this.paginationStatus,
+          pageIndex: value.data?.pageIndex,
+          lastPage: value.data?.lastPage,
+          isLastPage: value.data?.isLastPage
+        }
+      })
+    this.isLoading = false
+  }
+
   isProjectSelected(projectId: string): boolean {
     return this.selectedProjects.includes(projectId)
   }
 
-  async addSort(fieldName: string) {
+  addSort(fieldName: string) {
     this.sortInfo.fieldName === fieldName
       ? this.store.dispatch(revertSortOrder({fieldName}))
       : this.store.dispatch(addSortInfo({fieldName}))
 
-    await this.setProjects()
+    this.setProjects()
   }
 
   selectProjectToDelete(id: string, name: string) {
@@ -83,17 +90,17 @@ export class ProjectListComponent implements OnInit {
     this.showDeleteModal = true
   }
 
-  async deleteSingleProject() {
+  deleteSingleProject() {
     this.showDeleteModal = false
-    await this.projectService.deleteProject(this.projectToDelete.id)
-    await this.setProjects()
+    this.projectService.deleteProject(this.projectToDelete.id)
+    this.setProjects()
   }
 
-  async deleteMultipleProjects() {
+  deleteMultipleProjects() {
     this.showDeleteModal = false
-    await this.projectService.deleteMultipleProjects(this.selectedProjects)
+    this.projectService.deleteMultipleProjects(this.selectedProjects)
     this.selectedProjects = []
-    await this.setProjects()
+    this.setProjects()
   }
 
   cancelDelete() {

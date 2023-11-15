@@ -1,5 +1,5 @@
 import {createAction, props} from "@ngrx/store";
-import {SearchInfo, SortInfo} from "../../models/filter.models";
+import {SearchInfo} from "../../models/filter.models";
 
 export const addConjunctionSearchInfo = createAction(
   '[Search Action] Add conjunction search info',

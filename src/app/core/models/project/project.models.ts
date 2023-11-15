@@ -5,6 +5,10 @@ export interface Project {
   status: string
   customer: string
   startDate: string
+  endDate: string
+  groupId: string
+  members: string
+  version: number
 }
 
 export interface ProjectToDelete {
