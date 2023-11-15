@@ -1,7 +1,4 @@
 import { Injectable } from '@angular/core';
-import {getAxiosInstance} from "../lib/appAxios";
-import {ENDPOINTS} from "../../data/apiInfo";
-import {OAuthService} from "angular-oauth2-oidc";
 import {jwtDecode} from "jwt-decode";
 
 @Injectable({

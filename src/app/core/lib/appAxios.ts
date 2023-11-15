@@ -1,5 +1,5 @@
 import axios from "axios";
-import BASE_URL, {ENDPOINTS} from "../../data/apiInfo";
+import BASE_URL, {EndPoints} from "../../data/apiInfo";
 import {getLocalRefreshToken, getLocalAccessToken} from "../utils/localStorage.util";
 
 export const getAxiosInstance = () => {
@@ -30,7 +30,7 @@ export const getAxiosInstance = () => {
 
 const refreshToken = async () => {
   try {
-    const response = await axios.create({baseURL: BASE_URL}).post(`${ENDPOINTS.REFRESH_TOKEN}/${getLocalRefreshToken()}`)
+    const response = await axios.create({baseURL: BASE_URL}).post(`${EndPoints.REFRESH_TOKEN}/${getLocalRefreshToken()}`)
     const token = response.data?.data
     localStorage.setItem('access_token', token)
     return token

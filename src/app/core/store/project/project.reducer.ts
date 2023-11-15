@@ -1,5 +1,5 @@
-import {Action, createReducer, on} from "@ngrx/store";
-import {ProjectActionTypes, setProjects} from "./project.action";
+import {createReducer, on} from "@ngrx/store";
+import {setProjects} from "./project.action";
 import {Project} from "../../models/project/project.models";
 
 export interface AppState {
