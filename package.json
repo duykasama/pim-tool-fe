@@ -29,7 +29,6 @@
     "@ngx-translate/core": "^15.0.0",
     "@ngx-translate/http-loader": "^8.0.0",
     "angular-oauth2-oidc": "^15.0.1",
-    "axios": "^1.6.0",
     "jwt-decode": "^4.0.0",
     "ngx-drag-scroll": "^16.0.0",
     "rxjs": "~7.8.0",

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import {getAxiosInstance} from "../lib/appAxios";
 import BASE_URL, {EndPoints} from "../../data/apiInfo";
 import {HttpClient} from "@angular/common/http";
 import {getLocalAccessToken} from "../utils/localStorage.util";
@@ -25,15 +24,5 @@ export class GroupService {
     ).pipe(
       map(value => value.data)
     )
-    // try {
-    //   const response = await getAxiosInstance().get(EndPoints.GROUPS_ALL)
-    //   if (response.data?.isSuccess){
-    //     return response.data?.data
-    //   }
-    //   return []
-    // } catch (e) {
-    //   console.log(e)
-    //   return []
-    // }
   }
 }

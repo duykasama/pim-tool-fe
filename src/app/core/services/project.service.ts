@@ -82,6 +82,16 @@ export class ProjectService {
     )
   }
 
+  validateProjectNumber(projectNumber: number) {
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.VALIDATE_PROJECT_NUMBER}/${projectNumber}`,
+      null,
+      this.config
+    ).pipe(
+      map(response => response.data)
+    )
+  }
+
   deleteProject(id: string) {
     this.http.delete(
       `${BASE_URL}/${EndPoints.DELETE_PROJECT}/${id}`,

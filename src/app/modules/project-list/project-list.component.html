@@ -1,7 +1,10 @@
 <div class="projects-list-layout">
   <h2>{{'PROJECT_LIST' | translate}}</h2>
   <app-search-bar (searchProjectEvent)="setProjects()"></app-search-bar>
-  <app-advanced-filter *ngIf="showAdvancedFilter"></app-advanced-filter>
+  <div *ngIf="showAdvancedFilter" @open @close>
+    <app-advanced-filter></app-advanced-filter>
+  </div>
+
   <table>
     <colgroup>
       <col span="1" style="width: 3%">

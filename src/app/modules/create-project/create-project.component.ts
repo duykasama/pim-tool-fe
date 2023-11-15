@@ -2,12 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {EndPoints} from "../../data/apiInfo";
-import {getAxiosInstance} from "../../core/lib/appAxios";
 import {Router} from "@angular/router";
 import {GroupService} from "../../core/services/group.service";
 import {formatDateTime} from "../../core/utils/date.util";
 import {ProjectService} from "../../core/services/project.service";
-import {Group, Project} from "../../core/models/project/project.models";
+import {Group} from "../../core/models/project/project.models";
 import {routes} from "../../core/constants/routeConstants";
 
 @Component({
@@ -153,10 +152,12 @@ export class CreateProjectComponent implements OnInit {
     this.showErrorMsg = false
   }
 
-  async validateProjectNumber(): Promise<void> {
-    const response = await getAxiosInstance()
-      .post(`${EndPoints.VALIDATE_PROJECT_NUMBER}/${this.createProjectForm.get('projectNumber')?.getRawValue()}`)
-    this.isValidProjectNumber = response.data?.data
+  validateProjectNumber() {
+    this.projectService.validateProjectNumber(this.createProjectForm.get('projectNumber')?.getRawValue())
+      .subscribe(value => this.isValidProjectNumber = value)
+    // const response = await getAxiosInstance()
+    //   .post(`${EndPoints.VALIDATE_PROJECT_NUMBER}/${this.createProjectForm.get('projectNumber')?.getRawValue()}`)
+    // this.isValidProjectNumber = response.data?.data
   }
 
   selectMember(member: string) {

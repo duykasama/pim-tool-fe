@@ -7,13 +7,17 @@ import {PaginationStatus, SearchCriteria, SortInfo} from "../../core/models/filt
 import {addSortInfo, revertSortOrder} from "../../core/store/sort/sort.actions";
 import {selectFilterStatus} from "../../core/store/advanced-filter/advancedFilter.selectors";
 import {selectSortInfo} from "../../core/store/sort/sort.selectors";
+import {collapseAnimation} from "../../core/animations/collapse.animation";
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.scss']
+  styleUrls: ['./project-list.component.scss'],
+  animations: collapseAnimation
 })
 export class ProjectListComponent implements OnInit {
+
+  show = false
 
   projects: Project[] = []
   selectedProjects: string[] = []
