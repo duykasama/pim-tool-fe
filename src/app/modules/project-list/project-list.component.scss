@@ -9,10 +9,6 @@ $focus: #2f85fa;
   font-size: $regular;
   font-weight: $semibold;
   color: $faded;
-  //position: relative;
-  //.pagination {
-  //  position: absolute;
-  //}
   .empty-msg {
     padding: 2rem;
     text-align: center;
@@ -39,6 +35,12 @@ $focus: #2f85fa;
         cursor: pointer;
         &:last-child, &:first-child {
           cursor: auto;
+        }
+        .sort-up {
+          margin-top: 5px;
+        }
+        .sort-down {
+          margin-bottom: 2px;
         }
       }
     }

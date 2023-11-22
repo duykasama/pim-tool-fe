@@ -34,6 +34,19 @@
   "DELETE_SELECTED_ITEMS": "xóa các dự án đã chọn",
   "EMPTY_PROJECT_LIST": "Danh sách dự án rỗng...",
   "EDIT_PROJECT": "Chỉnh sửa dự án",
-  "UPDATE": "Cập nhật"
+  "UPDATE": "Cập nhật",
+  "ADVANCED_FILTER": "Bộ lọc nâng cao",
+  "LEADER": "Người lãnh đạo",
+  "LEADER_NAME": "Tên người lãnh đạo",
+  "MEMBER_NAME": "Tên thành viên",
+  "MEMBER": "Thành viên",
+  "FROM": "Từ",
+  "TO": "Đến",
+  "EMAIL": "Email",
+  "PASSWORD": "Mật khẩu",
+  "FORGOT_PASSWORD": "Quên mật khẩu",
+  "LOG_IN": "Đăng nhập",
+  "REQUIRE_VALID_EMAIL": "Vui lòng điền email hợp lệ",
+  "REQUIRE_PASSWORD": "Vui lòng điền mật khẩu"
 
 }

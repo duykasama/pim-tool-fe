@@ -4,19 +4,19 @@
     <h1>PIM Tool</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-container" (focusout)="validateEmail()" [ngClass]="{'alert': !isValidEmail}">
-        <label>Email</label>
+        <label>{{'EMAIL' | translate}}</label>
         <input type="email" autocomplete="username" formControlName="email">
       </div>
-      <small *ngIf="!isValidEmail" class="validation-error">Please enter a valid email</small>
+      <small *ngIf="!isValidEmail" class="validation-error">{{'REQUIRE_VALID_EMAIL' | translate}}</small>
 
       <div class="input-container" (focusout)="validatePassword()" [ngClass]="{'alert': !isValidPassword}">
-        <label>Password</label>
+        <label>{{'PASSWORD' | translate}}</label>
         <input type="password" autocomplete="current-password" formControlName="password">
       </div>
-      <small *ngIf="!isValidPassword" class="validation-error">Please enter your password</small>
+      <small *ngIf="!isValidPassword" class="validation-error">{{'REQUIRE_PASSWORD' | translate}}</small>
 <!--      <small *ngIf="!isValidPassword" class="validation-error">Password must contains at least 8 characters and an uppercase letter</small>-->
-      <small>Forgot your password</small>
-      <button [ngClass]="{'forbid': loginForm.invalid || loginForm.pristine}" [disabled]="loginForm.invalid || loginForm.pristine">Log in</button>
+      <small>{{'FORGOT_PASSWORD' | translate}}</small>
+      <button [ngClass]="{'forbid': loginForm.invalid || loginForm.pristine}" [disabled]="loginForm.invalid || loginForm.pristine">{{'LOG_IN' | translate}}</button>
     </form>
   </main>
   <app-page-loader *ngIf="isLoading"></app-page-loader>

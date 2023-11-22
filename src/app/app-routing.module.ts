@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {DefaultLayoutComponent} from "./layout/layout.component";
-import {HomeComponent} from "./modules/home/home.component";
 import {ProjectListComponent} from "./modules/project-list/project-list.component";
 import {CreateProjectComponent} from "./modules/create-project/create-project.component";
 import {LoginComponent} from "./modules/login/login.component";
@@ -15,10 +14,11 @@ const routes: Routes = [
     component: DefaultLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      // {
-      //   path: '',
-      //   component: HomeComponent
-      // },
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'project-list'
+      },
       {
         path: 'project-list',
         component: ProjectListComponent

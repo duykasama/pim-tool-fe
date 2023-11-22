@@ -8,16 +8,15 @@ import {addSortInfo, revertSortOrder} from "../../core/store/sort/sort.actions";
 import {selectFilterStatus} from "../../core/store/advanced-filter/advancedFilter.selectors";
 import {selectSortInfo} from "../../core/store/sort/sort.selectors";
 import {collapseAnimation} from "../../core/animations/collapse.animation";
+import {selectAllSearch} from "../../core/store/search/search.selectors";
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
-  animations: collapseAnimation
+  animations: [...collapseAnimation]
 })
 export class ProjectListComponent implements OnInit {
-
-  show = false
 
   projects: Project[] = []
   selectedProjects: string[] = []
@@ -41,8 +40,8 @@ export class ProjectListComponent implements OnInit {
     name: ''
   }
 
-  constructor(private store: Store<{searchCriteria: SearchCriteria}>, private projectService: ProjectService) {
-    store.select('searchCriteria').subscribe(value => this.searchCriteria = value)
+  constructor(private store: Store, private projectService: ProjectService) {
+    store.select(selectAllSearch).subscribe(value => this.searchCriteria = value)
     store.select(selectSortInfo).subscribe(value => this.sortInfo = value)
     store.select(selectFilterStatus).subscribe(value => this.showAdvancedFilter = value)
   }
@@ -68,8 +67,8 @@ export class ProjectListComponent implements OnInit {
           lastPage: value.data?.lastPage,
           isLastPage: value.data?.isLastPage
         }
+        this.isLoading = false
       })
-    this.isLoading = false
   }
 
   isProjectSelected(projectId: string): boolean {
@@ -93,6 +92,7 @@ export class ProjectListComponent implements OnInit {
   deleteSingleProject() {
     this.showDeleteModal = false
     this.projectService.deleteProject(this.projectToDelete.id)
+    this.selectedProjects.splice(this.selectedProjects.indexOf(this.projectToDelete.id), 1)
     this.setProjects()
   }
 

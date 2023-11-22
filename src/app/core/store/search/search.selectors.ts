@@ -1,8 +1,19 @@
-import {createSelector} from "@ngrx/store";
-import {AppState} from "../app.state";
+import {createFeatureSelector, createSelector} from "@ngrx/store";
+import {SearchCriteria} from "../../models/filter.models";
 
-export const selectSearchCriteria = (state: AppState) => state.searchCriteria
-export const searchSelectors = createSelector(
+export const selectSearchCriteria = createFeatureSelector<SearchCriteria>('searchCriteria')
+
+export const selectConjunctionSearch = createSelector(
   selectSearchCriteria,
-  (state: any) => state.initialState
+  (state: SearchCriteria) => state.ConjunctionSearchInfos
+)
+
+export const selectDisjunctionSearch = createSelector(
+  selectSearchCriteria,
+  (state: SearchCriteria) => state.DisjunctionSearchInfos
+)
+
+export const selectAllSearch = createSelector(
+  selectSearchCriteria,
+  (state: SearchCriteria) => state
 )

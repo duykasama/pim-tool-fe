@@ -5,6 +5,7 @@ import {HttpClient} from "@angular/common/http";
 import {ApiResponse} from "../../core/services/project.service";
 import {routes} from "../../core/constants/routeConstants";
 import {Router} from "@angular/router";
+import {jwtDecode} from "jwt-decode";
 
 @Component({
   selector: 'app-login',
@@ -55,16 +56,21 @@ export class LoginComponent {
     this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.LOGIN}`,
       this.loginForm.getRawValue()
-    ).subscribe(response =>  {
-      if (response.isSuccess) {
-        localStorage.setItem('access_token', response.data?.accessToken)
-        localStorage.setItem('refresh_token', response.data?.refreshToken)
-        this.router.navigate([routes.PROJECT_LIST])
-      } else {
-        this.isLoginSuccess = false
+    ).subscribe({
+      next: (response) =>  {
+        if (response.isSuccess) {
+          localStorage.setItem('access_token', response.data?.accessToken)
+          localStorage.setItem('refresh_token', response.data?.refreshToken)
+          this.router.navigate([routes.PROJECT_LIST])
+          const expireTime = jwtDecode(response.data?.accessToken).exp
+          expireTime && setTimeout(() => {
+            console.log('request for refresh token')
+          }, expireTime - Date.now())
+        } else {
+          this.isLoginSuccess = false
+          this.isLoading = false
+        }
       }
-
     })
-    this.isLoading = false
   }
 }

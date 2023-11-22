@@ -34,5 +34,18 @@
   "DELETE_SELECTED_ITEMS": "supprimer les éléments sélectionnés",
   "EMPTY_PROJECT_LIST": "La liste des projets est vide...",
   "EDIT_PROJECT": "Modifier le projet",
-  "UPDATE": "Mise à jour"
+  "UPDATE": "Mise à jour",
+  "ADVANCED_FILTER": "Filtre avancé",
+  "LEADER": "Chef",
+  "LEADER_NAME": "Nom du leader",
+  "MEMBER_NAME": "Nom de membre",
+  "MEMBER": "Membre",
+  "FROM": "Depuis",
+  "TO": "À",
+  "EMAIL": "Email",
+  "PASSWORD": "Mot de passe",
+  "FORGOT_PASSWORD": "Mot de passe oublié",
+  "LOG_IN": "Se connecter",
+  "REQUIRE_VALID_EMAIL": "Veuillez entrer un email valide",
+  "REQUIRE_PASSWORD": "s'il vous plait entrez votre mot de passe"
 }

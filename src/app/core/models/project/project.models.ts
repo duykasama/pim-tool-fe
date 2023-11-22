@@ -1,3 +1,5 @@
+import {Employee} from "./employee.model";
+
 export interface Project {
   id: string
   projectNumber: number
@@ -7,7 +9,7 @@ export interface Project {
   startDate: string
   endDate: string
   groupId: string
-  members: string
+  employees: Employee[]
   version: number
 }
 

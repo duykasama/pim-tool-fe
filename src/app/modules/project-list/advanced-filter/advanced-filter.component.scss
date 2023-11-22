@@ -2,7 +2,6 @@
   overflow: hidden;
   margin-top: 1rem;
   .content {
-    //animation: appear ease 350ms forwards;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -28,10 +27,13 @@
         }
       }
     }
-    .start-date-range {
+    .date-range {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       align-items: center;
+      .date-range-label {
+        grid-column: 1 / 4;
+      }
       .date-from {
         grid-column: 4 / 7;
         display: flex;
@@ -47,15 +49,5 @@
         gap: 1rem;
       }
     }
-  }
-}
-
-@keyframes appear {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: traslanteY(0);
-
   }
 }

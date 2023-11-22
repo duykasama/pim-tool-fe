@@ -34,7 +34,18 @@
   "DELETE_SELECTED_ITEMS": "delete selected items",
   "EMPTY_PROJECT_LIST": "Project list is empty...",
   "EDIT_PROJECT": "Edit Project",
-  "UPDATE": "Update"
-
-
+  "UPDATE": "Update",
+  "ADVANCED_FILTER": "Advanced filter",
+  "LEADER": "Leader",
+  "LEADER_NAME": "Leader name",
+  "MEMBER_NAME": "Member name",
+  "MEMBER": "Member",
+  "FROM": "From",
+  "TO": "To",
+  "EMAIL": "Email",
+  "PASSWORD": "Password",
+  "FORGOT_PASSWORD": "Forgot your password",
+  "LOG_IN": "Log in",
+  "REQUIRE_VALID_EMAIL": "Please enter a valid email",
+  "REQUIRE_PASSWORD": "Please enter your password"
 }

@@ -117,6 +117,7 @@ $focus: #2f85fa;
             justify-content: flex-start;
             gap: 0.5rem;
             align-items: center;
+            padding-right: 5rem;
             li {
               width: max-content;
               border: 1px solid rgba(128, 128, 128, .5);
@@ -130,6 +131,7 @@ $focus: #2f85fa;
               cursor: pointer;
               span {
                 background-color: inherit;
+                user-select: none;
               }
               .x-mark-icon {
                 background: transparent;
@@ -157,6 +159,7 @@ $focus: #2f85fa;
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
+          background-color: white;
           li {
             width: 100%;
             cursor: pointer;

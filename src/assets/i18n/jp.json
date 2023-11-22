@@ -34,5 +34,18 @@
   "DELETE_SELECTED_ITEMS": "選択した項目を削除する",
   "EMPTY_PROJECT_LIST": "プロジェクトリストが空です...",
   "EDIT_PROJECT": "プロジェクトの編集",
-  "UPDATE": "アップデート"
+  "UPDATE": "アップデート",
+  "ADVANCED_FILTER": "高度なフィルター",
+  "LEADER": "リーダー",
+  "LEADER_NAME": "リーダー名",
+  "MEMBER_NAME": "メンバー名",
+  "MEMBER": "メンバー",
+  "FROM": "から",
+  "TO": "に",
+  "EMAIL": "メール",
+  "PASSWORD": "パスワード",
+  "FORGOT_PASSWORD": "パスワードをお忘れですか",
+  "LOG_IN": "ログイン",
+  "REQUIRE_VALID_EMAIL": "正しいメールアドレスを入力してください",
+  "REQUIRE_PASSWORD": "パスワードを入力してください"
 }

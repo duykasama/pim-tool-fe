@@ -4,10 +4,11 @@ import { RouterNavigatedAction, ROUTER_NAVIGATION } from '@ngrx/router-store';
 import { map } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
 import {switchRoute} from "./route.actions";
+import {AppState} from "../app.state";
 
 @Injectable()
 export class RouteEffects {
-  constructor(private actions$: Actions, private store: Store<{route: string}>) {}
+  constructor(private actions$: Actions, private store: Store<AppState>) {}
 
   handleRouteChange$ = createEffect(() =>
     this.actions$.pipe(

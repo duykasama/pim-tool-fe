@@ -20,7 +20,7 @@
       <tr>
         <th></th>
         <th (click)="addSort('projectNumber')">{{'NUMBER' | translate}}</th>
-        <th (click)="addSort('name')">{{'NAME' | translate}}</th>
+        <th (click)="addSort('name')" [ngClass]="{'sort-ascending': true}">{{'NAME' | translate}}</th>
         <th (click)="addSort('status')">{{'STATUS' | translate}}</th>
         <th (click)="addSort('customer')">{{'CUSTOMER' | translate}}</th>
         <th (click)="addSort('startDate')">{{'START_DATE' | translate}}</th>
@@ -64,12 +64,10 @@
       </tr>
     </tfoot>
   </table>
-  <app-pagination [projects]="projects"
-                  [paginationStatus]="paginationStatus"
+  <app-pagination [paginationStatus]="paginationStatus"
                   (childEvent)="setProjects()"
                   *ngIf="!isLoading && paginationStatus.lastPage > 1"
                   class="pagination">
-
   </app-pagination>
   <p *ngIf="!isLoading && (!projects || projects.length === 0)" class="empty-msg">{{'EMPTY_PROJECT_LIST' | translate}}</p>
   <app-loader *ngIf="isLoading"></app-loader>

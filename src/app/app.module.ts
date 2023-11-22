@@ -43,7 +43,9 @@ import {advancedFilterReducer} from "./core/store/advanced-filter/advancedFilter
 import { DateInputComponent } from './core/components/date-input/date-input.component';
 import {NgOptimizedImage} from "@angular/common";
 import {HttpClientInterceptor} from "./core/lib/httpClientInterceptor";
-
+import {ToastrModule} from "ngx-toastr";
+import { EmployeeFormatPipe } from './core/pipes/employee-format.pipe';
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 @NgModule({
   declarations: [
@@ -68,7 +70,8 @@ import {HttpClientInterceptor} from "./core/lib/httpClientInterceptor";
     DateFormatPipe,
     ProjectStatusResolvePipe,
     AdvancedFilterComponent,
-    DateInputComponent
+    DateInputComponent,
+    EmployeeFormatPipe,
   ],
   imports: [
     BrowserModule,
@@ -79,7 +82,7 @@ import {HttpClientInterceptor} from "./core/lib/httpClientInterceptor";
       searchCriteria: searchReducer,
       sortInfo: sortReducer,
       route: routeReducer,
-      advancedFilter: advancedFilterReducer
+      advancedFilter: advancedFilterReducer,
     }),
     TranslateModule.forRoot({
       loader: {
@@ -97,7 +100,16 @@ import {HttpClientInterceptor} from "./core/lib/httpClientInterceptor";
     MatDatepickerModule,
     EffectsModule.forRoot([RouteEffects]),
     StoreRouterConnectingModule.forRoot(),
-    NgOptimizedImage
+    NgOptimizedImage,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      closeButton: true,
+      newestOnTop: true,
+      progressBar: true,
+      progressAnimation: 'decreasing',
+      tapToDismiss: false,
+    }),
+    MatTooltipModule
   ],
   providers: [
     {

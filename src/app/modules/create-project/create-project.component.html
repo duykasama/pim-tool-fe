@@ -65,8 +65,9 @@
           <drag-scroll [scrollbar-hidden]="true" [snap-disabled]="true" *ngIf="selectedMembers.length > 0">
             <ul class="selected-members-container">
               <li drag-scroll-item *ngFor="let selectedMember of selectedMembers">
-                <span>{{selectedMember}}</span>
-                <fa-icon [icon]="faXmark" class="x-mark-icon" (click)="deselectMember(selectedMember)"></fa-icon></li>
+                <span>{{selectedMember | employeeFormat}}</span>
+                <fa-icon [icon]="faXmark" class="x-mark-icon" (click)="deselectMember(selectedMember.id)"></fa-icon>
+              </li>
             </ul>
           </drag-scroll>
           <input
@@ -78,7 +79,7 @@
             id="members">
         </div>
         <ul *ngIf="(focus || mouseIn) && filteredMembers.length > 0" class="member-dropdown" (mouseenter)="mouseIn = true" (mouseleave)="mouseIn = false">
-          <li *ngFor="let member of filteredMembers" (click)="selectMember(member)">{{member}}</li>
+          <li *ngFor="let member of filteredMembers" (click)="selectMember(member.id)">{{member | employeeFormat}}</li>
         </ul>
       </div>
     </div>
@@ -123,5 +124,5 @@
     </div>
   </form>
   <app-page-loader *ngIf="isLoading"></app-page-loader>
-  <app-create-project-success *ngIf="!isLoading && isRequestSent" [showModal]="isRequestSent" [isSuccess]="isSuccess" [message]="message"></app-create-project-success>
+<!--  <app-create-project-success *ngIf="!isLoading && isRequestSent" [showModal]="isRequestSent" [isSuccess]="isSuccess" [message]="message"></app-create-project-success>-->
 </div>

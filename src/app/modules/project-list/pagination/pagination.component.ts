@@ -16,7 +16,7 @@ import {PaginationStatus} from "../../../core/models/filter.models";
 })
 export class PaginationComponent {
 
-  @Input() projects: Project[] | undefined
+  // @Input() projects: Project[] | undefined
   @Input() paginationStatus!: PaginationStatus
   @Output() childEvent = new EventEmitter<void>()
 

@@ -12,5 +12,6 @@ export enum EndPoints {
   REFRESH_TOKEN = "auth/refresh",
   GROUPS = "groups",
   GROUPS_ALL = "groups/all",
+  EMPLOYEES_ALL = "employees/all"
 }
 export default BASE_URL

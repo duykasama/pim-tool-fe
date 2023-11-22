@@ -17,6 +17,11 @@ export const sortReducer = createReducer(
   initialState,
   on(addSortInfo, (state, {fieldName}) => ({...state, sort: {...state.sort, fieldName}})),
   on(removeSortInfo, (state, {fieldName}) => ({...state, sort: {...state.sort, fieldName: ''}})),
-  on(revertSortOrder, (state, {fieldName}) => ({...state, sort: {...state.sort, ascending: !state.sort.ascending}})),
+  on(revertSortOrder, (state, {fieldName}) => {
+    if (state.sort.ascending) {
+      return ({...state, sort: {...state.sort, ascending: false}})
+    }
+    return initialState
+  }),
   on(resetSortInfo, _ => initialState)
 )

@@ -4,10 +4,12 @@ import {SearchCriteria, SortInfo} from "../models/filter.models";
 import {Store} from "@ngrx/store";
 import {AdvancedFilterState} from "../store/advanced-filter/advancedFilter.reducers";
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable, of} from "rxjs";
 import {getLocalAccessToken} from "../utils/localStorage.util";
 import {Project} from "../models/project/project.models";
 import {map} from "rxjs/operators";
+import {selectFilterProperties, selectFilterStatus} from "../store/advanced-filter/advancedFilter.selectors";
+import {AppState} from "../store/app.state";
 
 @Injectable({
   providedIn: 'root'
@@ -16,8 +18,8 @@ export class ProjectService {
 
   isAdvancedSearch = false
 
-  constructor(private store: Store<{advancedFilter: AdvancedFilterState}>, private http: HttpClient) {
-    store.select('advancedFilter').subscribe(value => this.isAdvancedSearch = value.showFilter)
+  constructor(private store: Store<AppState>, private http: HttpClient) {
+    store.select(selectFilterStatus).subscribe(value => this.isAdvancedSearch = value)
   }
 
   apiResponse: ApiResponse = {
@@ -40,13 +42,22 @@ export class ProjectService {
       sortByInfos: sortInfo.fieldName ? [sortInfo] : []
     }
     let advancedFilterPayload;
-    this.isAdvancedSearch && this.store.select('advancedFilter')
-      .subscribe(value => advancedFilterPayload = {...payLoad, advancedFilter: value.filterState})
+    this.isAdvancedSearch && this.store.select(selectFilterProperties)
+      .subscribe(value => advancedFilterPayload = {...payLoad, advancedFilter: value})
     const finalPayload = this.isAdvancedSearch ? advancedFilterPayload : payLoad;
     return this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.PROJECTS}`,
       finalPayload,
       this.config
+    ).pipe(
+      catchError((err, caught) => {
+        const errorResponse: ApiResponse = {
+          isSuccess: false,
+          messages: [],
+          data: null,
+        }
+        return of(errorResponse)
+      })
     )
   }
 
