@@ -1,4 +1,4 @@
-$semibold: 600;
+@import 'src/styles';
 
 .search-bar {
   margin-top: 1rem;
@@ -11,8 +11,8 @@ $semibold: 600;
     min-width: 23rem;
     outline: none;
     border: 1px solid gray;
-    font-weight: $semibold;
-    opacity: 0.7;
+    font-weight: $fw-semibold;
+    opacity: $o-70;
   }
   select {
     padding: 0.325rem;
@@ -20,21 +20,21 @@ $semibold: 600;
     -webkit-appearance: none;
     outline: none;
     min-width: 12rem;
-    font-weight: $semibold;
-    opacity: 0.7;
+    font-weight: $fw-semibold;
+    opacity: $o-70;
   }
   .button {
     padding: 0.325rem 2rem;
-    font-weight: $semibold;
+    font-weight: $fw-semibold;
     border: none;
     cursor: pointer;
   }
   .search-button {
     color: whitesmoke;
-    background-color: #0061cd;
+    background-color: $color-dark-blue;
   }
   .reset-button {
-    color: #2f85fa;
+    color: $color-blue;
     background-color: transparent;
   }
   .rounded {

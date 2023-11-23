@@ -1,14 +1,10 @@
-$semibold: 600;
-$regular: 0.875rem;
-$default: #333;
-$faded: #666;
-$focus: #2f85fa;
+@import "src/styles";
 
 .create-project-layout {
   padding: 2rem 23rem 0 2rem;
-  font-size: $regular;
-  font-weight: $semibold;
-  color: $faded;
+  font-size: $font-regular;
+  font-weight: $fw-semibold;
+  color: $text-faded;
   h2 {
     padding-bottom: 1rem;
     border-bottom: 1px solid gray;
@@ -29,8 +25,8 @@ $focus: #2f85fa;
     }
     .btn-close {
       background-color: inherit;
-      color: #666;
-      opacity: 0.7;
+      color: $text-faded;
+      opacity: $o-70;
       cursor: pointer;
       font-size: 1.25em;
     }
@@ -68,8 +64,8 @@ $focus: #2f85fa;
     }
     input[type=date], select {
       font-size: 1em;
-      font-weight:$semibold;
-      color: $faded;
+      font-weight: $fw-semibold;
+      color: $text-faded;
     }
     select {
       -webkit-appearance: none;
@@ -150,7 +146,7 @@ $focus: #2f85fa;
           }
         }
         .member-dropdown {
-          border: 1px solid gray;
+          border: $border-gray;
           list-style: none;
           position: absolute;
           width: 100%;
@@ -215,14 +211,14 @@ $focus: #2f85fa;
         padding: 0 4rem;
         cursor: pointer;
         height: 35px;
-        font-weight: $semibold;
-        border: 1px solid gray;
+        font-weight: $fw-semibold;
+        border: $border-gray;
       }
       .btn-create {
-        background-color: #2f85fa;
+        background-color: $color-blue;
         color: white;
         &:hover {
-          background-color: #175ebf;
+          background-color: $color-dark-blue;
         }
       }
       .btn-cancel {
@@ -238,32 +234,32 @@ $focus: #2f85fa;
   }
 }
 
-::-webkit-scrollbar {
-  //width: 50px;
-  display: none;
-}
-
 //::-webkit-scrollbar {
-//  transform: translateY(20px);
-//  background-color: red;
-//  width: 1px;
-//  ////display: none;
-//  //width: 60px;
+//  //width: 50px;
+//  display: none;
 //}
-::-webkit-scrollbar-track {
-  transform: translateY(10px);
-  background: transparent;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-  background: transparent;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-  background: transparent;
-}
+//
+////::-webkit-scrollbar {
+////  transform: translateY(20px);
+////  background-color: red;
+////  width: 1px;
+////  ////display: none;
+////  //width: 60px;
+////}
+//::-webkit-scrollbar-track {
+//  transform: translateY(10px);
+//  background: transparent;
+//}
+//
+///* Handle */
+//::-webkit-scrollbar-thumb {
+//  background: transparent;
+//}
+//
+///* Handle on hover */
+//::-webkit-scrollbar-thumb:hover {
+//  background: transparent;
+//}
 
 drag-scroll {
   width: fit-content;

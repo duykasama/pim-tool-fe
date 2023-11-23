@@ -1,3 +1,5 @@
+@import "src/styles";
+
 .advanced-filter {
   overflow: hidden;
   margin-top: 1rem;
@@ -20,9 +22,9 @@
           padding: 0.325rem 1rem;
           min-width: 15rem;
           outline: none;
-          border: 1px solid gray;
-          font-weight: 500;
-          opacity: 0.7;
+          border: $border-gray;
+          font-weight: $fw-little-bold;
+          opacity: $o-70;
           border-radius: 0.25rem;
         }
       }

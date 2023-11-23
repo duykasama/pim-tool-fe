@@ -1,14 +1,10 @@
-$semibold: 600;
-$regular: 0.875rem;
-$default: #333;
-$faded: #666;
-$focus: #2f85fa;
+@import 'src/styles';
 
 .projects-list-layout {
   padding: 2rem 12rem 2rem 2rem;
-  font-size: $regular;
-  font-weight: $semibold;
-  color: $faded;
+  font-size: $font-regular;
+  font-weight: $fw-semibold;
+  color: $text-faded;
   .empty-msg {
     padding: 2rem;
     text-align: center;
@@ -73,7 +69,7 @@ $focus: #2f85fa;
           display: flex;
           justify-content: space-between;
           align-items: center;
-          color: #2f85fa;
+          color: $color-blue;
           .right-container {
             display: flex;
             justify-content: center;

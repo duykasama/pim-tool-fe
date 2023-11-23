@@ -1,3 +1,5 @@
+@import 'src/styles';
+
 .not-found-layout {
   height: 100dvh;
   width: 100dvw;
@@ -14,26 +16,26 @@
     gap: 1rem;
     h1 {
       font-size: 2.5rem;
-      color: #c75859;
+      color: $color-primary;
     }
     h2 {
-      font-weight: 500;
+      font-weight: $fw-little-bold;
     }
   }
   a {
     padding: 0.5rem 1.5rem;
     border: none;
     border-radius: 5px;
-    background-color: #d2492a;
+    background-color: $color-dark-primary;
     cursor: pointer;
     transition: background-color;
     transition-timing-function: linear;
     transition-duration: 0.1s;
     color: whitesmoke;
-    font-weight: 600;
+    font-weight: $fw-semibold;
     text-decoration: none;
     &:hover {
-      background-color: #b42b09;
+      background-color: $color-dark-primary-hover;
     }
   }
 }

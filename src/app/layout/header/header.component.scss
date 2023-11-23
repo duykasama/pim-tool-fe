@@ -1,5 +1,4 @@
-$header-font: 0.75rem;
-$blue: #4aa6e7;
+@import "src/styles";
 
 .layout-header {
   display: flex;
@@ -16,12 +15,12 @@ $blue: #4aa6e7;
     h1 {
       font-size: 1.5rem;
       color: gray;
-      font-weight: 500;
+      font-weight: $fw-little-bold;
     }
   }
 
   .header-option {
-    font-size: $header-font;
+    font-size: 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,7 +58,7 @@ $blue: #4aa6e7;
             transition-property: background-color;
             transition-duration: 0.1s;
             transition-timing-function: linear;
-            font-weight: 600;
+            font-weight: $fw-semibold;
             border-radius: 4px;
             &:hover {
               background-color: gray;
@@ -88,7 +87,7 @@ $blue: #4aa6e7;
       gap: 2rem;
       .text-blue {
         font-weight: bold;
-        color: $blue;
+        color: $color-blue;
       }
       .font-semibold {
         font-weight: bold;

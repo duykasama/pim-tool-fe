@@ -1,14 +1,10 @@
-$semibold: 600;
-$regular: 0.875rem;
-$default: #333;
-$faded: #666;
-$focus: #2f85fa;
+@import "src/styles";
 
 .nav {
   display: flex;
   justify-content: center;
   align-items: start;
-  border-right: 1px solid gray;
+  border-right: $border-gray;
   height: 100%;
   ul {
     margin-top: 3rem;
@@ -16,12 +12,12 @@ $focus: #2f85fa;
     display: flex;
     flex-flow: column;
     gap: 1rem;
-    font-weight: $semibold;
-    font-size: $regular;
-    color: $faded;
+    font-weight: $fw-semibold;
+    font-size: $font-regular;
+    color: $text-faded;
     .active {
-      font-size: 1.125rem;
-      color: $focus;
+      font-size: $font-large;
+      color: $color-blue;
     }
     li {
       cursor: pointer;
@@ -30,15 +26,9 @@ $focus: #2f85fa;
         color: inherit;
       }
       &:hover {
-        scale: 1.2;
+        scale: 1.1;
         transition-duration: 150ms;
       }
     }
-    //li:first-child {
-    //  color: $focus;
-    //}
-    //li:last-child {
-    //  color: $faded;
-    //}
   }
 }

@@ -1,3 +1,5 @@
+@import 'src/styles';
+
 .error-page-layout {
   height: 100dvh;
   width: 100dvw;
@@ -12,17 +14,17 @@
     align-items: start;
     gap: 1rem;
     font-size: 1.3rem;
-    font-weight: 700;
+    font-weight: $fw-bold;
     color: gray;
     a, :visited {
       text-decoration: none;
     }
     .contact {
-      color: #c54b33;
+      color: $color-dark-primary;
       cursor: pointer;
     }
     .search {
-      color: #3985e5;
+      color: $color-blue;
       cursor: pointer;
     }
   }

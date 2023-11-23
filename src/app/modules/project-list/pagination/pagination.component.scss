@@ -1,3 +1,5 @@
+@import "src/styles";
+
 .pagination {
   margin-top: 2rem;
   width: 100%;
@@ -7,11 +9,11 @@
     list-style: none;
     display: flex;
     flex-flow: row;
-    border: 1px solid lightgray;
-    color: #2f85fa;
+    border: $border-lightgray;
+    color: $color-blue;
     font-size: 0.7rem;
     li {
-      border: 1px solid lightgray;
+      border: $border-lightgray;
       width: 1.75rem;
       height: 1.75rem;
       text-align: center;
@@ -24,14 +26,13 @@
         white-space: nowrap;
         text-overflow: ellipsis;
       }
-
     }
     .active {
-       background-color: #dfdfdf !important;
-       color: gray !important;
+      background-color: #dfdfdf !important;
+      color: gray !important;
     }
     .disabled {
-       color: gray !important;
+      color: gray !important;
       pointer-events: none;
     }
   }
