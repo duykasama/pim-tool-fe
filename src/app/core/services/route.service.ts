@@ -10,7 +10,7 @@ import {switchRoute} from "../store/route/route.actions";
 export class RouteService {
   private routerSubscription!: Subscription
 
-  constructor(private router: Router, private store: Store<{route: string}>) { }
+  constructor(private router: Router, private store: Store) { }
 
   subscribeToRouteChanges() {
     this.routerSubscription = this.router.events.subscribe((event) => {

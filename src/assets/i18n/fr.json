@@ -47,5 +47,13 @@
   "FORGOT_PASSWORD": "Mot de passe oublié",
   "LOG_IN": "Se connecter",
   "REQUIRE_VALID_EMAIL": "Veuillez entrer un email valide",
-  "REQUIRE_PASSWORD": "s'il vous plait entrez votre mot de passe"
+  "REQUIRE_PASSWORD": "s'il vous plait entrez votre mot de passe",
+  "REQUIRE_PROJECT_NUMBER": "Le numéro de projet ne peut pas être vide",
+  "ERR_PROJECT_NAME": "Le nom du projet doit contenir au maximum 50 caractères.",
+  "REQUIRE_PROJECT_NAME": "Le nom du projet ne peut pas être vide",
+  "ERR_CUSTOMER": "Le client a une longueur maximale de 50 caractères",
+  "REQUIRE_CUSTOMER": "Le client ne peut pas être vide",
+  "REQUIRE_GROUP": "Le groupe ne peut pas être vide",
+  "REQUIRE_STATUS": "Le statut ne peut pas être vide",
+  "REQUIRE_START_DATE": "La date de début ne peut pas être vide"
 }

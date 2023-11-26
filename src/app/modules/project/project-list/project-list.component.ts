@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Store} from "@ngrx/store";
-import {Project, ProjectToDelete} from "../../core/models/project/project.models";
-import {ProjectService} from "../../core/services/project.service";
-import {PaginationStatus, SearchCriteria, SortInfo} from "../../core/models/filter.models";
-import {addSortInfo, revertSortOrder} from "../../core/store/sort/sort.actions";
-import {selectFilterStatus} from "../../core/store/advanced-filter/advancedFilter.selectors";
-import {selectSortInfo} from "../../core/store/sort/sort.selectors";
-import {collapseAnimation} from "../../core/animations/collapse.animation";
-import {selectAllSearch} from "../../core/store/search/search.selectors";
+import {Project, ProjectToDelete} from "../../../core/models/project/project.models";
+import {ProjectService} from "../../../core/services/project.service";
+import {PaginationStatus, SearchCriteria, SortInfo} from "../../../core/models/filter.models";
+import {addSortInfo, revertSortOrder} from "../../../core/store/sort/sort.actions";
+import {selectFilterStatus} from "../../../core/store/advanced-filter/advancedFilter.selectors";
+import {selectSortInfo} from "../../../core/store/sort/sort.selectors";
+import {collapseAnimation} from "../../../core/animations/collapse.animation";
+import {selectAllSearch} from "../../../core/store/search/search.selectors";
 
 @Component({
   selector: 'app-project-list',

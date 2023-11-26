@@ -47,5 +47,13 @@
   "FORGOT_PASSWORD": "パスワードをお忘れですか",
   "LOG_IN": "ログイン",
   "REQUIRE_VALID_EMAIL": "正しいメールアドレスを入力してください",
-  "REQUIRE_PASSWORD": "パスワードを入力してください"
+  "REQUIRE_PASSWORD": "パスワードを入力してください",
+  "REQUIRE_PROJECT_NUMBER": "プロジェクト番号を空にすることはできません",
+  "ERR_PROJECT_NAME": "プロジェクト名の最大長は 50 文字です",
+  "REQUIRE_PROJECT_NAME": "プロジェクト名を空にすることはできません",
+  "ERR_CUSTOMER": "顧客の最大長は 50 文字です",
+  "REQUIRE_CUSTOMER": "顧客を空にすることはできません",
+  "REQUIRE_GROUP": "グループを空にすることはできません",
+  "REQUIRE_STATUS": "ステータスを空にすることはできません",
+  "REQUIRE_START_DATE": "開始日を空にすることはできません"
 }

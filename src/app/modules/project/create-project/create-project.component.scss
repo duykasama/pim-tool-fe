@@ -1,4 +1,4 @@
-@import "src/styles";
+@import "../../../../styles";
 
 .create-project-layout {
   padding: 2rem 23rem 0 2rem;
@@ -69,7 +69,7 @@
     }
     select {
       -webkit-appearance: none;
-      background-image: url("/assets/black-arrow-down-icon-png.png");
+      background-image: url("/assets/media/black-arrow-down-icon-png.png");
       background-size: 1rem 1rem;
       background-repeat: no-repeat;
       background-position: right center;
@@ -78,6 +78,8 @@
     .input-container {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
+      position: relative;
+      align-items: center;
       label {
         grid-column: 1 / 4;
       }
@@ -156,6 +158,7 @@
           justify-content: center;
           align-items: flex-start;
           background-color: white;
+          z-index: 1;
           li {
             width: 100%;
             cursor: pointer;
@@ -170,9 +173,20 @@
           }
         }
       }
+      .alert-container {
+        position: absolute;
+        right: 0;
+        transform: translateX(calc(100% + 5px));
+        max-width: 20rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: red;
+      }
     }
     .date-selection {
       display: grid;
+      align-items: center;
       grid-template-columns: repeat(12, 1fr);
       label[for=startDate] {
         grid-column: 1 / 4;
@@ -192,7 +206,7 @@
       }
       input[type=date] {
         -webkit-appearance: none;
-        background-image: url("/assets/calendar.png");
+        background-image: url("/assets/media/calendar.png");
         background-size: 1.5rem 1.5rem;
         background-position: right center;
         background-repeat: no-repeat;
@@ -234,34 +248,7 @@
   }
 }
 
-//::-webkit-scrollbar {
-//  //width: 50px;
-//  display: none;
-//}
-//
-////::-webkit-scrollbar {
-////  transform: translateY(20px);
-////  background-color: red;
-////  width: 1px;
-////  ////display: none;
-////  //width: 60px;
-////}
-//::-webkit-scrollbar-track {
-//  transform: translateY(10px);
-//  background: transparent;
-//}
-//
-///* Handle */
-//::-webkit-scrollbar-thumb {
-//  background: transparent;
-//}
-//
-///* Handle on hover */
-//::-webkit-scrollbar-thumb:hover {
-//  background: transparent;
-//}
-
 drag-scroll {
-  width: fit-content;
-  max-width: 70%;
+  //width: fit-content;
+  //max-width: 70%;
 }

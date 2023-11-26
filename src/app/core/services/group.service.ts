@@ -15,12 +15,7 @@ export class GroupService {
 
   getGroups(): Observable<any> {
     return this.http.get<ApiResponse>(
-      `${BASE_URL}/${EndPoints.GROUPS_ALL}`,
-      {
-        headers: {
-          'Authorization': 'Bearer ' + getLocalAccessToken()
-        }
-      }
+      `${BASE_URL}/${EndPoints.GROUPS_ALL}`
     ).pipe(
       map(value => value.data)
     )

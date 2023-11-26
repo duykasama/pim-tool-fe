@@ -47,5 +47,13 @@
   "FORGOT_PASSWORD": "Forgot your password",
   "LOG_IN": "Log in",
   "REQUIRE_VALID_EMAIL": "Please enter a valid email",
-  "REQUIRE_PASSWORD": "Please enter your password"
+  "REQUIRE_PASSWORD": "Please enter your password",
+  "REQUIRE_PROJECT_NUMBER": "Project number can't be empty",
+  "ERR_PROJECT_NAME": "Project name has the max length of 50 characters",
+  "REQUIRE_PROJECT_NAME": "Project name can't be empty",
+  "ERR_CUSTOMER": "Customer has the max length of 50 characters",
+  "REQUIRE_CUSTOMER": "Customer can't be empty",
+  "REQUIRE_GROUP": "Group can't be empty",
+  "REQUIRE_STATUS": "Status can't be empty",
+  "REQUIRE_START_DATE": "Start date can't be empty"
 }

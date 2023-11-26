@@ -1,11 +1,11 @@
 <div class="create-project-layout">
   <h2>{{(doCreate ? 'NEW_PROJECT' : 'EDIT_PROJECT') | translate}}</h2>
-  <div *ngIf="(createProjectForm.get('projectNumber')?.invalid && !createProjectForm.get('projectNumber')?.pristine
-    || createProjectForm.get('name')?.invalid && !createProjectForm.get('name')?.pristine
-    || createProjectForm.get('customer')?.invalid && !createProjectForm.get('customer')?.pristine
-    || createProjectForm.get('groupId')?.invalid && !createProjectForm.get('groupId')?.pristine
-    || createProjectForm.get('status')?.invalid && !createProjectForm.get('status')?.pristine
-    || createProjectForm.get('startDate')?.invalid && !createProjectForm.get('startDate')?.pristine) && showErrorMsg" class="error-container">
+  <div *ngIf="(createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched
+    || createProjectForm.get('name')?.invalid && createProjectForm.get('name')?.touched
+    || createProjectForm.get('customer')?.invalid && createProjectForm.get('customer')?.touched
+    || createProjectForm.get('groupId')?.invalid && createProjectForm.get('groupId')?.touched
+    || createProjectForm.get('status')?.invalid && createProjectForm.get('status')?.touched
+    || createProjectForm.get('startDate')?.invalid && createProjectForm.get('startDate')?.touched) && showErrorMsg" class="error-container">
     <p class="error-msg">{{'CREATE_PROJECT_WARNING_MSG' | translate}}</p>
     <p class="btn-close" (click)="hideErrorMsg()">&times;</p>
   </div>
@@ -17,12 +17,15 @@
         type="number"
         id="projectNumber"
         class="form-input"
-        [ngClass]="{'alert': (createProjectForm.get('projectNumber')?.invalid && !createProjectForm.get('projectNumber')?.pristine) || !isValidProjectNumber}"
+        [ngClass]="{'alert': (createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched) || !isValidProjectNumber}"
         (focusout)="validateProjectNumber()">
       <div class="validation-msg-container">
         <span *ngIf="!isValidProjectNumber" class="validation-msg">
           {{'DUPLICATE_PROJECT_NUMBER_WARNING_MSG' | translate}}
         </span>
+      </div>
+      <div *ngIf="createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched" class="alert-container">
+        <span matTooltip="{{'REQUIRE_PROJECT_NUMBER' | translate}}" matTooltipPosition="above">{{'REQUIRE_PROJECT_NUMBER' | translate}}</span>
       </div>
     </div>
 
@@ -33,7 +36,14 @@
         type="text"
         id="name"
         class="form-input"
-        [ngClass]="{'alert': createProjectForm.get('name')?.invalid && !createProjectForm.get('name')?.pristine}">
+        maxlength="51"
+        [ngClass]="{'alert': createProjectForm.get('name')?.invalid && createProjectForm.get('name')?.touched}">
+      <div *ngIf="createProjectForm.get('name')?.invalid && createProjectForm.get('name')?.touched" class="alert-container">
+        <span matTooltip="{{'REQUIRE_PROJECT_NAME' | translate}}" matTooltipPosition="above">{{'REQUIRE_PROJECT_NAME' | translate}}</span>
+      </div>
+      <div *ngIf="createProjectForm.get('name')?.getRawValue().length > 50" class="alert-container">
+        <span matTooltip="{{'ERR_PROJECT_NAME' | translate}}" matTooltipPosition="above">{{'ERR_PROJECT_NAME' | translate}}</span>
+      </div>
     </div>
 
     <div class="input-container">
@@ -43,7 +53,14 @@
         type="text"
         id="customer"
         class="form-input"
-        [ngClass]="{'alert': createProjectForm.get('customer')?.invalid && !createProjectForm.get('customer')?.pristine}">
+        maxlength="50"
+        [ngClass]="{'alert': createProjectForm.get('customer')?.invalid && createProjectForm.get('customer')?.touched}">
+      <div *ngIf="createProjectForm.get('customer')?.invalid && createProjectForm.get('customer')?.touched" class="alert-container">
+        <span matTooltip="{{'REQUIRE_CUSTOMER' | translate}}" matTooltipPosition="above">{{'REQUIRE_CUSTOMER' | translate}}</span>
+      </div>
+      <div *ngIf="createProjectForm.get('customer')?.getRawValue().length > 50" class="alert-container">
+        <span matTooltip="{{'ERR_CUSTOMER' | translate}}" matTooltipPosition="above">{{'ERR_CUSTOMER' | translate}}</span>
+      </div>
     </div>
 
     <div class="input-container">
@@ -56,6 +73,9 @@
         <option hidden selected value="">{{'SELECT_GROUP' | translate}}</option>
         <option [value]="group?.id" *ngFor="let group of groups">{{group?.name}}</option>
       </select>
+      <div *ngIf="createProjectForm.get('group')?.invalid && createProjectForm.get('group')?.touched" class="alert-container">
+        <span matTooltip="{{'REQUIRE_GROUP' | translate}}" matTooltipPosition="above">{{'REQUIRE_GROUP' | translate}}</span>
+      </div>
     </div>
 
     <div class="input-container">
@@ -119,7 +139,7 @@
     </div>
 
     <div class="btn-group">
-      <button type="button" class="btn btn-cancel" (click)="router.navigate(['project-list'])">{{'CANCEL' | translate}}</button>
+      <button type="button" class="btn btn-cancel" (click)="router.navigate(['project/project-list'])">{{'CANCEL' | translate}}</button>
       <button class="btn btn-create" [ngClass]="{'forbid': createProjectForm.invalid}">{{(doCreate ? 'CREATE_PROJECT' : 'UPDATE') | translate}}</button>
     </div>
   </form>

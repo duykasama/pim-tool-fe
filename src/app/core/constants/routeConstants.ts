@@ -1,6 +1,7 @@
 export const routes = {
-  PROJECT_LIST: '/project-list',
-  CREATE_PROJECT: '/create-project',
+  PROJECT_LIST: '/project/project-list',
+  CREATE_PROJECT: '/project/create',
+  UPDATE_PROJECT: '/project/update',
   PROJECT: '/project',
   CUSTOMER: '/customer',
   SUPPLIER: '/supplier'

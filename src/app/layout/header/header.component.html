@@ -1,11 +1,11 @@
 <header class="layout-header">
   <div class="app-logo">
-    <img src="assets/logo_elca.png" alt="Elca logo">
+    <img src="../../../assets/media/logo_elca.png" alt="Elca logo">
     <h1>Project Information Management</h1>
   </div>
   <div class="header-option">
     <div class="language">
-      <img src="assets/language-icon-removebg.png" alt="Language" width="20" (mouseover)="displayLanguageOptions = true">
+      <img src="../../../assets/media/language-icon-removebg.png" alt="Language" width="20" (mouseover)="displayLanguageOptions = true">
       <div *ngIf="displayLanguageOptions" class="language-container" (mouseleave)="displayLanguageOptions = false">
         <ul>
           <li (click)="switchLanguage('en')">English</li>

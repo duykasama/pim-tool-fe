@@ -6,8 +6,8 @@ import {
   faChevronRight,
   faEllipsis
 } from "@fortawesome/free-solid-svg-icons";
-import {Project} from "../../../core/models/project/project.models";
-import {PaginationStatus} from "../../../core/models/filter.models";
+import {Project} from "../../../../core/models/project/project.models";
+import {PaginationStatus} from "../../../../core/models/filter.models";
 
 @Component({
   selector: 'app-pagination',

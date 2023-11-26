@@ -1,13 +1,13 @@
 import {Component, EventEmitter, Output} from '@angular/core';
-import {SearchCriteria, SearchInfo} from "../../../core/models/filter.models";
+import {SearchCriteria, SearchInfo} from "../../../../core/models/filter.models";
 import {Store} from "@ngrx/store";
 import {
   addConjunctionSearchInfo, addDisjunctionSearchInfo,
   clearConjunctionSearchInfo,
   clearDisjunctionSearchInfo
-} from "../../../core/store/search/search.actions";
-import {resetSortInfo} from "../../../core/store/sort/sort.actions";
-import {resetAdvancedFilter, showAdvancedFilter} from "../../../core/store/advanced-filter/advancedFilter.actions";
+} from "../../../../core/store/search/search.actions";
+import {resetSortInfo} from "../../../../core/store/sort/sort.actions";
+import {resetAdvancedFilter, showAdvancedFilter} from "../../../../core/store/advanced-filter/advancedFilter.actions";
 
 @Component({
   selector: 'app-search-bar',

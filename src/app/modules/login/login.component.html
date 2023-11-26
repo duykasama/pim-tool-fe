@@ -1,6 +1,6 @@
 <div class="login-layout">
   <main>
-    <img src="../../../assets/logo_elca.png" alt="Elca Logo">
+    <img src="../../../assets/media/logo_elca.png" alt="Elca Logo">
     <h1>PIM Tool</h1>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
       <div class="input-container" (focusout)="validateEmail()" [ngClass]="{'alert': !isValidEmail}">

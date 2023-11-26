@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Store} from "@ngrx/store";
-import {AdvancedFilterState} from "../../../core/store/advanced-filter/advancedFilter.reducers";
+import {AdvancedFilterState} from "../../../../core/store/advanced-filter/advancedFilter.reducers";
 import {
   updateEndFrom, updateEndTo,
   updateLeader,
   updateMember,
   updateStartFrom,
   updateStartTo
-} from "../../../core/store/advanced-filter/advancedFilter.actions";
-import {AdvancedFilter} from "../../../core/models/filter.models";
-import {selectFilterProperties} from "../../../core/store/advanced-filter/advancedFilter.selectors";
+} from "../../../../core/store/advanced-filter/advancedFilter.actions";
+import {AdvancedFilter} from "../../../../core/models/filter.models";
+import {selectFilterProperties} from "../../../../core/store/advanced-filter/advancedFilter.selectors";
 
 @Component({
   selector: 'app-advanced-filter',

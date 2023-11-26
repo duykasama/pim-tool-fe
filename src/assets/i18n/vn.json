@@ -47,6 +47,14 @@
   "FORGOT_PASSWORD": "Quên mật khẩu",
   "LOG_IN": "Đăng nhập",
   "REQUIRE_VALID_EMAIL": "Vui lòng điền email hợp lệ",
-  "REQUIRE_PASSWORD": "Vui lòng điền mật khẩu"
+  "REQUIRE_PASSWORD": "Vui lòng điền mật khẩu",
+  "REQUIRE_PROJECT_NUMBER": "Số dự án không thể bỏ trống",
+  "ERR_PROJECT_NAME": "Tên dự án không được vượt quá 50 kí tự",
+  "REQUIRE_PROJECT_NAME": "Tên dự án không thể bỏ trống",
+  "ERR_CUSTOMER": "Khách hàng không thể vượt quá 50 kí tự",
+  "REQUIRE_CUSTOMER": "Khách hàng không thể bỏ trống",
+  "REQUIRE_GROUP": "Nhóm không thể bỏ trống",
+  "REQUIRE_STATUS": "Trạng thái không thể bỏ trống",
+  "REQUIRE_START_DATE": "Ngày bắt đầu không thể bỏ trống"
 
 }

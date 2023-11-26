@@ -28,12 +28,6 @@ export class ProjectService {
     data: null
   }
 
-  config = {
-    headers: {
-      'Authorization': `Bearer ${getLocalAccessToken()}`
-    }
-  }
-
   loadProjects(pageIndex: number, pageSize: number, searchCriteria: SearchCriteria, sortInfo: SortInfo): Observable<ApiResponse> {
     let payLoad = {
       pageSize,
@@ -48,7 +42,6 @@ export class ProjectService {
     return this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.PROJECTS}`,
       finalPayload,
-      this.config
     ).pipe(
       catchError((err, caught) => {
         const errorResponse: ApiResponse = {
@@ -65,7 +58,6 @@ export class ProjectService {
     return this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.PROJECTS}/${id}`,
       null,
-      this.config
     ).pipe(
       map(value => value.data)
     )
@@ -76,9 +68,7 @@ export class ProjectService {
       `${BASE_URL}/${EndPoints.UPDATE_PROJECT}/${projectId}`,
       {...projectInfo, version: projectVersion},
       {
-        ...this.config,
         headers: {
-          ...this.config.headers,
           'UpdaterId': '295189a8-e4df-4b41-fd14-08dbdbacb07b'
         }
       },
@@ -89,15 +79,12 @@ export class ProjectService {
     return this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.CREATE_PROJECT}`,
       projectInfo,
-      this.config
     )
   }
 
   validateProjectNumber(projectNumber: number) {
     return this.http.post<ApiResponse>(
-      `${BASE_URL}/${EndPoints.VALIDATE_PROJECT_NUMBER}/${projectNumber}`,
-      null,
-      this.config
+      `${BASE_URL}/${EndPoints.VALIDATE_PROJECT_NUMBER}/${projectNumber}`, null
     ).pipe(
       map(response => response.data)
     )
@@ -106,7 +93,6 @@ export class ProjectService {
   deleteProject(id: string) {
     this.http.delete(
       `${BASE_URL}/${EndPoints.DELETE_PROJECT}/${id}`,
-      this.config
     ).subscribe()
   }
 
@@ -116,7 +102,6 @@ export class ProjectService {
       {
         projectIds: projects
       },
-      this.config
     ).subscribe()
   }
 }

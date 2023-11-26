@@ -6,13 +6,12 @@ import { AppComponent } from './app.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { DefaultLayoutComponent } from './layout/layout.component';
-import { HomeComponent } from './modules/home/home.component';
 import { SideBarComponent } from './layout/side-bar/side-bar.component';
-import { ProjectListComponent } from './modules/project-list/project-list.component';
-import { SearchBarComponent } from './modules/project-list/search-bar/search-bar.component';
+import { ProjectListComponent } from './modules/project/project-list/project-list.component';
+import { SearchBarComponent } from './modules/project/project-list/search-bar/search-bar.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { PaginationComponent } from './modules/project-list/pagination/pagination.component';
-import { CreateProjectComponent } from './modules/create-project/create-project.component';
+import { PaginationComponent } from './modules/project/project-list/pagination/pagination.component';
+import { CreateProjectComponent } from './modules/project/create-project/create-project.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { StoreModule } from "@ngrx/store";
 import { LoaderComponent } from './core/components/loader/loader.component';
@@ -38,7 +37,7 @@ import {routeReducer} from "./core/store/route/route.reducers";
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import {RouteEffects} from "./core/store/route/route.effects";
-import { AdvancedFilterComponent } from './modules/project-list/advanced-filter/advanced-filter.component';
+import { AdvancedFilterComponent } from './modules/project/project-list/advanced-filter/advanced-filter.component';
 import {advancedFilterReducer} from "./core/store/advanced-filter/advancedFilter.reducers";
 import { DateInputComponent } from './core/components/date-input/date-input.component';
 import {NgOptimizedImage} from "@angular/common";
@@ -53,7 +52,6 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     FooterComponent,
     HeaderComponent,
     DefaultLayoutComponent,
-    HomeComponent,
     SideBarComponent,
     ProjectListComponent,
     SearchBarComponent,
@@ -121,6 +119,10 @@ import {MatTooltipModule} from "@angular/material/tooltip";
       useClass: HttpClientInterceptor,
       multi: true
     }
+  ],
+  exports: [
+    ProjectStatusResolvePipe,
+    DateFormatPipe
   ],
   bootstrap: [AppComponent]
 })

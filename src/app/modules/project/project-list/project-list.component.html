@@ -38,7 +38,7 @@
                  [disabled]="project.status.toUpperCase() !== 'NEW'">
         </td>
         <td>
-          <a routerLink="/update-project/{{project.projectNumber}}">{{project.projectNumber}}</a>
+          <a routerLink="/project/update/{{project.projectNumber}}">{{project.projectNumber}}</a>
         </td>
         <td>{{project.name}}</td>
         <td>{{project.status | resolveStatus | translate}}</td>

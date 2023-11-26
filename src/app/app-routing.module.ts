@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import {DefaultLayoutComponent} from "./layout/layout.component";
-import {ProjectListComponent} from "./modules/project-list/project-list.component";
-import {CreateProjectComponent} from "./modules/create-project/create-project.component";
 import {LoginComponent} from "./modules/login/login.component";
 import {AuthGuard} from "./core/guards/auth-guard";
 import {NotFoundComponent} from "./modules/not-found/not-found.component";
@@ -16,20 +14,16 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        pathMatch: 'full',
-        redirectTo: 'project-list'
+        redirectTo: 'project',
+        pathMatch: 'full'
       },
       {
-        path: 'project-list',
-        component: ProjectListComponent
+        path: 'project',
+        loadChildren: () => import('./modules/project/project.module').then(m => m.ProjectModule)
       },
       {
-        path: 'create-project',
-        component: CreateProjectComponent
-      },
-      {
-        path: 'update-project/:id',
-        component: CreateProjectComponent
+        path: 'settings',
+        loadChildren: () => import('./modules/settings/settings.module').then(m => m.SettingsModule)
       }
     ]
   },

@@ -13,14 +13,8 @@ export class EmployeeService {
     private http: HttpClient
   ) { }
 
-  config = {
-    headers: {
-      'Authorization': `Bearer ${getLocalAccessToken()}`
-    }
-  }
-
   getEmployees() {
-    return this.http.get<ApiResponse>(`${BASE_URL}/${EndPoints.EMPLOYEES_ALL}`, this.config)
+    return this.http.get<ApiResponse>(`${BASE_URL}/${EndPoints.EMPLOYEES_ALL}`)
       .pipe(map(response => response.data))
   }
 }
