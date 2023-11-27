@@ -1,5 +1,8 @@
 <div class="create-project-layout">
-  <h2>{{(doCreate ? 'NEW_PROJECT' : 'EDIT_PROJECT') | translate}}</h2>
+  <div class="title-container">
+    <h2>{{(doCreate ? 'NEW_PROJECT' : 'EDIT_PROJECT') | translate}}</h2>
+    <button *ngIf="allowImportFile" class="common-button">Import from file</button>
+  </div>
   <div *ngIf="(createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched
     || createProjectForm.get('name')?.invalid && createProjectForm.get('name')?.touched
     || createProjectForm.get('customer')?.invalid && createProjectForm.get('customer')?.touched

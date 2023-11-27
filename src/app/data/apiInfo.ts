@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:20000"
+export const BASE_URL = "http://localhost:20000"
 
 export enum EndPoints {
   PROJECTS = "projects",

@@ -9,6 +9,7 @@ import {selectFilterStatus} from "../../../core/store/advanced-filter/advancedFi
 import {selectSortInfo} from "../../../core/store/sort/sort.selectors";
 import {collapseAnimation} from "../../../core/animations/collapse.animation";
 import {selectAllSearch} from "../../../core/store/search/search.selectors";
+import { selectAllowExportFile, selectAllowImportFile } from 'src/app/core/store/setting/setting.selectors';
 
 @Component({
   selector: 'app-project-list',
@@ -20,10 +21,11 @@ export class ProjectListComponent implements OnInit {
 
   projects: Project[] = []
   selectedProjects: string[] = []
-  isLoading = true
-  showDeleteModal = false
-  singleDeletion = true
+  isLoading: boolean = true
+  showDeleteModal: boolean = false
+  singleDeletion: boolean = true
   showAdvancedFilter: boolean = false
+  allowExportFile: boolean = false
   paginationStatus: PaginationStatus = {
     pageIndex: 1,
     pageSize: 10,
@@ -41,12 +43,13 @@ export class ProjectListComponent implements OnInit {
   }
 
   constructor(private store: Store, private projectService: ProjectService) {
-    store.select(selectAllSearch).subscribe(value => this.searchCriteria = value)
-    store.select(selectSortInfo).subscribe(value => this.sortInfo = value)
-    store.select(selectFilterStatus).subscribe(value => this.showAdvancedFilter = value)
   }
-
+  
   ngOnInit() {
+    this.store.select(selectAllSearch).subscribe(value => this.searchCriteria = value)
+    this.store.select(selectSortInfo).subscribe(value => this.sortInfo = value)
+    this.store.select(selectFilterStatus).subscribe(value => this.showAdvancedFilter = value)
+    this.store.select(selectAllowExportFile).subscribe(value => this.allowExportFile = value)
     this.setProjects()
   }
 

@@ -45,6 +45,7 @@ import {HttpClientInterceptor} from "./core/lib/httpClientInterceptor";
 import {ToastrModule} from "ngx-toastr";
 import { EmployeeFormatPipe } from './core/pipes/employee-format.pipe';
 import {MatTooltipModule} from "@angular/material/tooltip";
+import {settingReducer} from "./core/store/setting/setting.reducers";
 
 @NgModule({
   declarations: [
@@ -81,6 +82,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
       sortInfo: sortReducer,
       route: routeReducer,
       advancedFilter: advancedFilterReducer,
+      settings: settingReducer
     }),
     TranslateModule.forRoot({
       loader: {

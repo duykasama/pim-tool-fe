@@ -12,6 +12,8 @@ import {ToastrService} from "ngx-toastr";
 import {Employee} from "../../../core/models/project/employee.model";
 import {EmployeeService} from "../../../core/services/employee.service";
 import {HttpErrorResponse} from "@angular/common/http";
+import { Store } from '@ngrx/store';
+import { selectAllowImportFile } from 'src/app/core/store/setting/setting.selectors';
 
 @Component({
   selector: 'app-create-project',
@@ -28,6 +30,7 @@ export class CreateProjectComponent implements OnInit {
   focus = false
   mouseIn = false
   showErrorMsg = true
+  allowImportFile: boolean = false
 
   message = ''
   groups: Group[] = []
@@ -43,7 +46,8 @@ export class CreateProjectComponent implements OnInit {
     protected groupService: GroupService,
     protected projectService: ProjectService,
     protected employeeService: EmployeeService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private store: Store
   ) { }
 
   apiObserver: Observer<ApiResponse> = {
@@ -90,6 +94,7 @@ export class CreateProjectComponent implements OnInit {
   })
 
   ngOnInit() {
+    this.store.select(selectAllowImportFile).subscribe(value => this.allowImportFile = value)
     this.groupService.getGroups().subscribe(value => this.groups = value)
     this.employeeService.getEmployees()
       .subscribe(value => {

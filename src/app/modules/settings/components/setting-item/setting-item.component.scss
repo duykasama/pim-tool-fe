@@ -1,3 +1,5 @@
+@import "src/styles";
+
 .setting-item {
   display: flex;
   justify-content: space-between;
@@ -23,6 +25,7 @@
     }
     .move-right {
       transform: translateX(0.9rem);
+      background-color: $color-blue;
     }
     .move-left {
       transform: -translateX(0.8rem);

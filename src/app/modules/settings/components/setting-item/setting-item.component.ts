@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-setting-item',
@@ -7,9 +7,10 @@ import {Component, Input} from '@angular/core';
 })
 export class SettingItemComponent {
   @Input() text?: string
-  toggled: boolean = false
+  @Input() status?: boolean
+  @Output() toggle: EventEmitter<void> = new EventEmitter<void>()
 
-  toggle() {
-    this.toggled = !this.toggled
+  handleToggle() {
+    this.toggle.emit()
   }
 }

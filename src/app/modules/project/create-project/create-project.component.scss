@@ -5,10 +5,15 @@
   font-size: $font-regular;
   font-weight: $fw-semibold;
   color: $text-faded;
-  h2 {
+  .title-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     padding-bottom: 1rem;
-    border-bottom: 1px solid gray;
-    opacity: 0.5;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.5);
+    h2 {
+      opacity: 0.5;
+    }
   }
   .error-container {
     background-color: #f2dfdc;
