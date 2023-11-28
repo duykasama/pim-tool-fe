@@ -1,39 +1,50 @@
 import {createAction, props} from "@ngrx/store";
 
+export enum AdvancedFilterActionTypes {
+  SHOW_ADVANCED_FILTER = '[Advanced Filter Action] Show advanced filter',
+  RESET_ADVANCED_FILTER = '[Advanced Filter Action] Reset advanced filter',
+  UPDATE_LEADER = '[Advanced Filter Action] Update leader',
+  UPDATE_MEMBER = '[Advanced Filter Action] Update member',
+  UPDATE_START_FROM = '[Advanced Filter Action] Update start date from',
+  UPDATE_START_TO = '[Advanced Filter Action] Update start date to',
+  UPDATE_END_FROM = '[Advanced Filter Action] Update end date from',
+  UPDATE_END_TO = '[Advanced Filter Action] Update end date to'
+}
+
 export const showAdvancedFilter = createAction(
-  '[Advanced Filter Action] Show advanced filter'
+  AdvancedFilterActionTypes.SHOW_ADVANCED_FILTER
 )
 
 export const resetAdvancedFilter = createAction(
-  '[Advanced Filter Action] Reset advanced filter'
+  AdvancedFilterActionTypes.RESET_ADVANCED_FILTER
 )
 
 export const updateLeader = createAction(
-  '[Advanced Filter Action] Update leader',
+  AdvancedFilterActionTypes.UPDATE_LEADER,
   props<{leaderName: string}>()
 )
 
 export const updateMember = createAction(
-  '[Advanced Filter Action] Update member',
+  AdvancedFilterActionTypes.UPDATE_MEMBER,
   props<{memberName: string}>()
 )
 
 export const updateStartFrom = createAction(
-  '[Advanced Filter Action] Update start date from',
+  AdvancedFilterActionTypes.UPDATE_START_FROM,
   props<{startFrom: string}>()
 )
 
 export const updateStartTo = createAction(
-  '[Advanced Filter Action] Update start date to',
+ AdvancedFilterActionTypes.UPDATE_START_TO,
   props<{startTo: string}>()
 )
 
 export const updateEndFrom = createAction(
-  '[Advanced Filter Action] Update end date from',
+  AdvancedFilterActionTypes.UPDATE_END_FROM,
   props<{endFrom: string}>()
 )
 export const updateEndTo = createAction(
-  '[Advanced Filter Action] Update end date to',
+  AdvancedFilterActionTypes.UPDATE_END_TO,
   props<{endTo: string}>()
 )
 

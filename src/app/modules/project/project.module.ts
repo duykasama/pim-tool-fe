@@ -5,11 +5,15 @@ import {ProjectListComponent} from "./project-list/project-list.component";
 import {SearchBarComponent} from "./project-list/search-bar/search-bar.component";
 import {PaginationComponent} from "./project-list/pagination/pagination.component";
 import {CreateProjectComponent} from "./create-project/create-project.component";
+import { FileImportComponent } from './components/file-import/file-import.component';
+import { FileExportComponent } from './components/file-export/file-export.component';
 
 
 
 @NgModule({
   declarations: [
+    // FileImportComponent,
+    // FileExportComponent
   ],
   imports: [
     CommonModule,

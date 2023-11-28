@@ -46,6 +46,8 @@ import {ToastrModule} from "ngx-toastr";
 import { EmployeeFormatPipe } from './core/pipes/employee-format.pipe';
 import {MatTooltipModule} from "@angular/material/tooltip";
 import {settingReducer} from "./core/store/setting/setting.reducers";
+import { FileImportComponent } from './modules/project/components/file-import/file-import.component';
+import { FileExportComponent } from './modules/project/components/file-export/file-export.component';
 
 @NgModule({
   declarations: [
@@ -71,12 +73,23 @@ import {settingReducer} from "./core/store/setting/setting.reducers";
     AdvancedFilterComponent,
     DateInputComponent,
     EmployeeFormatPipe,
+    FileImportComponent,
+    FileExportComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
     ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    BrowserAnimationsModule,
+    CdkDrag,
+    CdkDropList,
+    DragScrollModule,
+    MatDatepickerModule,
+    NgOptimizedImage,
+    MatTooltipModule,
     StoreModule.forRoot({
       searchCriteria: searchReducer,
       sortInfo: sortReducer,
@@ -91,16 +104,6 @@ import {settingReducer} from "./core/store/setting/setting.reducers";
         deps: [HttpClient]
       }
     }),
-    HttpClientModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    CdkDrag,
-    CdkDropList,
-    DragScrollModule,
-    MatDatepickerModule,
-    EffectsModule.forRoot([RouteEffects]),
-    StoreRouterConnectingModule.forRoot(),
-    NgOptimizedImage,
     ToastrModule.forRoot({
       timeOut: 3000,
       closeButton: true,
@@ -109,7 +112,8 @@ import {settingReducer} from "./core/store/setting/setting.reducers";
       progressAnimation: 'decreasing',
       tapToDismiss: false,
     }),
-    MatTooltipModule
+    EffectsModule.forRoot([RouteEffects]),
+    StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
     {

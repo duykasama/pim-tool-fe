@@ -14,11 +14,13 @@ import {EmployeeService} from "../../../core/services/employee.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import { Store } from '@ngrx/store';
 import { selectAllowImportFile } from 'src/app/core/store/setting/setting.selectors';
+import { slideAnimation } from 'src/app/core/animations/slide.animation';
 
 @Component({
   selector: 'app-create-project',
   templateUrl: './create-project.component.html',
-  styleUrls: ['./create-project.component.scss']
+  styleUrls: ['./create-project.component.scss'],
+  animations: [...slideAnimation]
 })
 export class CreateProjectComponent implements OnInit {
 
@@ -31,6 +33,7 @@ export class CreateProjectComponent implements OnInit {
   mouseIn = false
   showErrorMsg = true
   allowImportFile: boolean = false
+  importFile: boolean = false
 
   message = ''
   groups: Group[] = []

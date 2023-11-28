@@ -1,7 +1,8 @@
 <div class="create-project-layout">
   <div class="title-container">
     <h2>{{(doCreate ? 'NEW_PROJECT' : 'EDIT_PROJECT') | translate}}</h2>
-    <button *ngIf="allowImportFile" class="common-button">Import from file</button>
+    <button *ngIf="allowImportFile" (click)="importFile = true" class="common-button">Import from file</button>
+    <!-- <input type="file" accept=".csv,.xlsx" hidden #file> -->
   </div>
   <div *ngIf="(createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched
     || createProjectForm.get('name')?.invalid && createProjectForm.get('name')?.touched
@@ -148,4 +149,7 @@
   </form>
   <app-page-loader *ngIf="isLoading"></app-page-loader>
 <!--  <app-create-project-success *ngIf="!isLoading && isRequestSent" [showModal]="isRequestSent" [isSuccess]="isSuccess" [message]="message"></app-create-project-success>-->
+</div>
+<div *ngIf="importFile" @slideDown @slideUp style="position: absolute; top: 0; left: 0;">
+  <app-file-import (hide)="importFile = false"></app-file-import>
 </div>
