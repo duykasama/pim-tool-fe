@@ -63,6 +63,7 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
       setTimeout(() => {
         if (response.isSuccess){
           response.messages.forEach(msg => msg.type === 1 && this.toast.success(msg.content, 'Success'))
+          this.store.dispatch(setLoadingOff())
           this.router.navigate(['project/project-list'])
         } else {
           response.messages.forEach(msg => this.toast.error(msg.content, 'Error'))
@@ -70,7 +71,6 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
       }, 200)
     },
     error: (err: HttpErrorResponse) => {
-      // this.isLoading = false
       this.store.dispatch(setLoadingOff())
       err.error.messages.forEach((msg: ApiMessage) => this.toast.error(msg.content, 'Error'))
     },

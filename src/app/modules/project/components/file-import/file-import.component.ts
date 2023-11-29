@@ -46,10 +46,9 @@ export class FileImportComponent implements OnDestroy {
           )
         }
       }, 200)
+      this.store.dispatch(setLoadingOff())
     },
     error: (err: HttpErrorResponse) => {
-      // this.isLoading = false
-      err.error.messages.forEach((msg: ApiMessage) => this.toast.error(msg.content, 'Error'))
       err.error.messages.forEach(
         (msg: ApiMessage) => 
           msg.content.split(',').forEach(
@@ -60,9 +59,7 @@ export class FileImportComponent implements OnDestroy {
       )
       this.store.dispatch(setLoadingOff())
     },
-    complete: () => {
-      this.store.dispatch(setLoadingOff())
-    }
+    complete: () => { }
   }
 
   ngOnDestroy(): void {
@@ -81,7 +78,9 @@ export class FileImportComponent implements OnDestroy {
     }
     
     this.store.dispatch(setLoadingOn())
-    this.projectService.importProjectsFromFile(files[0]).subscribe(this.apiObserver)
+    this.subscriptions.push(
+      this.projectService.importProjectsFromFile(files[0]).subscribe(this.apiObserver)
+    )
 
     // TODO: handle response
   }
