@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import {faXmark} from "@fortawesome/free-solid-svg-icons";
 import {Router} from "@angular/router";
@@ -7,7 +7,7 @@ import {formatDateTime} from "../../../core/utils/date.util";
 import {ApiMessage, ApiResponse, ProjectService} from "../../../core/services/project.service";
 import {Group} from "../../../core/models/project/project.models";
 import {routes} from "../../../core/constants/routeConstants";
-import {Observer} from "rxjs";
+import { Observer, Subscription } from "rxjs";
 import {ToastrService} from "ngx-toastr";
 import {Employee} from "../../../core/models/project/employee.model";
 import {EmployeeService} from "../../../core/services/employee.service";
@@ -15,6 +15,9 @@ import {HttpErrorResponse} from "@angular/common/http";
 import { Store } from '@ngrx/store';
 import { selectAllowImportFile } from 'src/app/core/store/setting/setting.selectors';
 import { slideAnimation } from 'src/app/core/animations/slide.animation';
+import { SubscriptionService } from 'src/app/core/services/subscription.service';
+import { setLoadingOff, setLoadingOn } from 'src/app/core/store/page/page.actions';
+import { selectLoadingState } from 'src/app/core/store/page/page.selectors';
 
 @Component({
   selector: 'app-create-project',
@@ -22,7 +25,7 @@ import { slideAnimation } from 'src/app/core/animations/slide.animation';
   styleUrls: ['./create-project.component.scss'],
   animations: [...slideAnimation]
 })
-export class CreateProjectComponent implements OnInit {
+export class CreateProjectComponent implements OnInit, OnDestroy {
 
   isLoading = false
   isSuccess = false
@@ -42,6 +45,7 @@ export class CreateProjectComponent implements OnInit {
   members: Employee[] = []
   filteredMembers: Employee[] = []
   selectedMembers: Employee[] = []
+  subscriptions: Subscription[] = []
 
   constructor(
     private formBuilder: FormBuilder,
@@ -50,7 +54,8 @@ export class CreateProjectComponent implements OnInit {
     protected projectService: ProjectService,
     protected employeeService: EmployeeService,
     private toast: ToastrService,
-    private store: Store
+    private store: Store,
+    private subService: SubscriptionService
   ) { }
 
   apiObserver: Observer<ApiResponse> = {
@@ -65,7 +70,8 @@ export class CreateProjectComponent implements OnInit {
       }, 200)
     },
     error: (err: HttpErrorResponse) => {
-      this.isLoading = false
+      // this.isLoading = false
+      this.store.dispatch(setLoadingOff())
       err.error.messages.forEach((msg: ApiMessage) => this.toast.error(msg.content, 'Error'))
     },
     complete: () => {}
@@ -97,14 +103,14 @@ export class CreateProjectComponent implements OnInit {
   })
 
   ngOnInit() {
-    this.store.select(selectAllowImportFile).subscribe(value => this.allowImportFile = value)
-    this.groupService.getGroups().subscribe(value => this.groups = value)
-    this.employeeService.getEmployees()
+    const importFileSub = this.store.select(selectAllowImportFile).subscribe(value => this.allowImportFile = value)
+    const groupSub = this.groupService.getGroups().subscribe(value => this.groups = value)
+    const employeeSub = this.employeeService.getEmployees()
       .subscribe(value => {
         this.members = [...value]
         this.filteredMembers = [...value]
       })
-
+    const loadingSub = this.store.select(selectLoadingState).subscribe(value => this.isLoading = value)
     const url = this.router.url
     if (url === routes.CREATE_PROJECT) {
       this.doCreate = true
@@ -128,6 +134,15 @@ export class CreateProjectComponent implements OnInit {
       })
       this.createProjectForm.controls['projectNumber'].disable()
     }
+
+    this.subscriptions.push(importFileSub)
+    this.subscriptions.push(groupSub)
+    this.subscriptions.push(employeeSub)
+    this.subscriptions.push(loadingSub)
+  }
+
+  ngOnDestroy(): void {
+    this.subService.unsubscribe(this.subscriptions)
   }
 
   onSubmit() {
@@ -135,7 +150,8 @@ export class CreateProjectComponent implements OnInit {
       return
     }
 
-    this.isLoading = true
+    // this.isLoading = true
+    this.store.dispatch(setLoadingOn())
     this.doCreate
       ? this.projectService.createProject(this.createProjectForm.getRawValue())
         .subscribe(this.apiObserver)
@@ -148,21 +164,6 @@ export class CreateProjectComponent implements OnInit {
         this.projectVersion
       ).subscribe(this.apiObserver)
   }
-
-  // private resetForm() {
-  //   this.createProjectForm.reset()
-  //   const initState = {
-  //     projectNumber: 0,
-  //     name: '',
-  //     customer: '',
-  //     groupId: '',
-  //     members: '',
-  //     status: 'NEW',
-  //     startDate: '',
-  //     endDate: null
-  //   }
-  //   this.createProjectForm.setValue(initState)
-  // }
 
   hideErrorMsg(): void {
     this.showErrorMsg = false

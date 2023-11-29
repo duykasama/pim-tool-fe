@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, OnDestroy} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Store} from "@ngrx/store";
 import {Project, ProjectToDelete} from "../../../core/models/project/project.models";
@@ -10,6 +10,8 @@ import {selectSortInfo} from "../../../core/store/sort/sort.selectors";
 import {collapseAnimation} from "../../../core/animations/collapse.animation";
 import {selectAllSearch} from "../../../core/store/search/search.selectors";
 import { selectAllowExportFile, selectAllowImportFile } from 'src/app/core/store/setting/setting.selectors';
+import { SubscriptionService } from 'src/app/core/services/subscription.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-project-list',
@@ -17,7 +19,7 @@ import { selectAllowExportFile, selectAllowImportFile } from 'src/app/core/store
   styleUrls: ['./project-list.component.scss'],
   animations: [...collapseAnimation]
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent implements OnInit, OnDestroy {
 
   projects: Project[] = []
   selectedProjects: string[] = []
@@ -26,31 +28,41 @@ export class ProjectListComponent implements OnInit {
   singleDeletion: boolean = true
   showAdvancedFilter: boolean = false
   allowExportFile: boolean = false
+  searchCriteria!: SearchCriteria
+  sortInfo!: SortInfo
+  subscriptions: Subscription[] = []
   paginationStatus: PaginationStatus = {
     pageIndex: 1,
     pageSize: 10,
     lastPage: 1,
     isLastPage: false,
   }
-
-  searchCriteria!: SearchCriteria
-
-  sortInfo!: SortInfo
-
   projectToDelete: ProjectToDelete = {
     id: '',
     name: ''
   }
 
-  constructor(private store: Store, private projectService: ProjectService) {
-  }
+  constructor(
+    private store: Store,
+    private projectService: ProjectService,
+    private subService: SubscriptionService
+  ) { }
   
   ngOnInit() {
-    this.store.select(selectAllSearch).subscribe(value => this.searchCriteria = value)
-    this.store.select(selectSortInfo).subscribe(value => this.sortInfo = value)
-    this.store.select(selectFilterStatus).subscribe(value => this.showAdvancedFilter = value)
-    this.store.select(selectAllowExportFile).subscribe(value => this.allowExportFile = value)
+    const allSearchSub = this.store.select(selectAllSearch).subscribe(value => this.searchCriteria = value)
+    const sortSub = this.store.select(selectSortInfo).subscribe(value => this.sortInfo = value)
+    const filterStatusSub = this.store.select(selectFilterStatus).subscribe(value => this.showAdvancedFilter = value)
+    const allowExportFileSub = this.store.select(selectAllowExportFile).subscribe(value => this.allowExportFile = value)
     this.setProjects()
+
+    this.subscriptions.push(allSearchSub)
+    this.subscriptions.push(sortSub)
+    this.subscriptions.push(filterStatusSub)
+    this.subscriptions.push(allowExportFileSub)
+  }
+
+  ngOnDestroy(): void {
+    this.subService.unsubscribe(this.subscriptions)
   }
 
   selectProject(projectId: string): void {
@@ -61,7 +73,7 @@ export class ProjectListComponent implements OnInit {
 
   setProjects() {
     this.isLoading = true
-    this.projectService.loadProjects(this.paginationStatus.pageIndex, this.paginationStatus.pageSize, this.searchCriteria, this.sortInfo)
+    const projectSub = this.projectService.loadProjects(this.paginationStatus.pageIndex, this.paginationStatus.pageSize, this.searchCriteria, this.sortInfo)
       .subscribe(value => {
         this.projects = value.data?.data
         this.paginationStatus = {
@@ -72,6 +84,8 @@ export class ProjectListComponent implements OnInit {
         }
         this.isLoading = false
       })
+      
+    this.subscriptions.push(projectSub)
   }
 
   isProjectSelected(projectId: string): boolean {

@@ -10,6 +10,8 @@ import {
 } from "../../../../core/store/advanced-filter/advancedFilter.actions";
 import {AdvancedFilter} from "../../../../core/models/filter.models";
 import {selectFilterProperties} from "../../../../core/store/advanced-filter/advancedFilter.selectors";
+import { SubscriptionService } from 'src/app/core/services/subscription.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-advanced-filter',
@@ -17,6 +19,8 @@ import {selectFilterProperties} from "../../../../core/store/advanced-filter/adv
   styleUrls: ['./advanced-filter.component.scss']
 })
 export class AdvancedFilterComponent implements OnInit {
+
+  subscriptions: Subscription[] = []
   advancedFilter: AdvancedFilter = {
     leaderName: '',
     memberName: '',
@@ -30,15 +34,24 @@ export class AdvancedFilterComponent implements OnInit {
     }
   }
 
-  constructor(protected store: Store<{advancedFilter: AdvancedFilterState}>) {}
+  constructor(
+    protected store: Store<{advancedFilter: AdvancedFilterState}>,
+    private subService: SubscriptionService
+  ) {}
 
   ngOnInit() {
-    this.store.select(selectFilterProperties).subscribe(value =>
+    const advancedFilterSub = this.store.select(selectFilterProperties).subscribe(value =>
       this.advancedFilter = {
       ...value,
       startDateRange: {...value.startDateRange},
       endDateRange: {...value.endDateRange}
     })
+
+    this.subscriptions.push(advancedFilterSub)
+  }
+
+  ngOnDestroy(): void {
+    this.subService.unsubscribe(this.subscriptions)
   }
 
   updateFilter(field: AdvancedFilterFieldName) {

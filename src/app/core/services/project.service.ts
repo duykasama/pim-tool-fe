@@ -102,7 +102,17 @@ export class ProjectService {
       {
         projectIds: projects
       },
-    ).subscribe()
+    )
+  }
+
+  importProjectsFromFile(file: File): Observable<ApiResponse> {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.IMPORT_PROJECTS}`,
+      formData,
+    )
   }
 }
 

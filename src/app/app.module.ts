@@ -48,6 +48,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {settingReducer} from "./core/store/setting/setting.reducers";
 import { FileImportComponent } from './modules/project/components/file-import/file-import.component';
 import { FileExportComponent } from './modules/project/components/file-export/file-export.component';
+import { pageReducer } from './core/store/page/page.reducer';
 
 @NgModule({
   declarations: [
@@ -95,7 +96,8 @@ import { FileExportComponent } from './modules/project/components/file-export/fi
       sortInfo: sortReducer,
       route: routeReducer,
       advancedFilter: advancedFilterReducer,
-      settings: settingReducer
+      settings: settingReducer,
+      page: pageReducer
     }),
     TranslateModule.forRoot({
       loader: {

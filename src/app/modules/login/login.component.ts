@@ -6,6 +6,9 @@ import {ApiResponse} from "../../core/services/project.service";
 import {routes} from "../../core/constants/routeConstants";
 import {Router} from "@angular/router";
 import {jwtDecode} from "jwt-decode";
+import { TokenTypes } from 'src/app/core/constants/tokenConstants';
+import { Store } from '@ngrx/store';
+import { setLoadingOff, setLoadingOn } from 'src/app/core/store/page/page.actions';
 
 @Component({
   selector: 'app-login',
@@ -16,12 +19,13 @@ export class LoginComponent {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 
   isValidEmail = true
   isValidPassword = true
-  isLoading = false
+  // isLoading = false
   isLoginSuccess = true
   errorMsg = ''
 
@@ -52,23 +56,26 @@ export class LoginComponent {
       return
     }
 
-    this.isLoading = true
+    // this.isLoading = true
+    this.store.dispatch(setLoadingOn())
     this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.LOGIN}`,
       this.loginForm.getRawValue()
     ).subscribe({
       next: (response) =>  {
         if (response.isSuccess) {
-          localStorage.setItem('access_token', response.data?.accessToken)
-          localStorage.setItem('refresh_token', response.data?.refreshToken)
+          localStorage.setItem(TokenTypes.ACCESS_TOKEN, response.data?.accessToken)
+          localStorage.setItem(TokenTypes.REFRESH_TOKEN, response.data?.refreshToken)
+          this.store.dispatch(setLoadingOff())
           this.router.navigate([routes.PROJECT_LIST])
           const expireTime = jwtDecode(response.data?.accessToken).exp
           expireTime && setTimeout(() => {
             console.log('request for refresh token')
-          }, expireTime - Date.now())
+          }, expireTime - (Date.now() + 60 * 1000))
         } else {
           this.isLoginSuccess = false
-          this.isLoading = false
+          this.store.dispatch(setLoadingOff())
+          // this.isLoading = false
         }
       }
     })

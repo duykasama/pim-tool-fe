@@ -1,7 +1,7 @@
 <div class="create-project-layout">
   <div class="title-container">
     <h2>{{(doCreate ? 'NEW_PROJECT' : 'EDIT_PROJECT') | translate}}</h2>
-    <button *ngIf="allowImportFile" (click)="importFile = true" class="common-button">Import from file</button>
+    <button *ngIf="allowImportFile && doCreate" (click)="importFile = true" class="common-button">Import from file</button>
     <!-- <input type="file" accept=".csv,.xlsx" hidden #file> -->
   </div>
   <div *ngIf="(createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched
