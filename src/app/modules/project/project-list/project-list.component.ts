@@ -8,6 +8,7 @@ import {addSortInfo, revertSortOrder} from "../../../core/store/sort/sort.action
 import {selectFilterStatus} from "../../../core/store/advanced-filter/advancedFilter.selectors";
 import {selectSortInfo} from "../../../core/store/sort/sort.selectors";
 import {collapseAnimation} from "../../../core/animations/collapse.animation";
+import { slideAnimation } from 'src/app/core/animations/slide.animation';
 import {selectAllSearch} from "../../../core/store/search/search.selectors";
 import { selectAllowExportFile, selectAllowImportFile } from 'src/app/core/store/setting/setting.selectors';
 import { SubscriptionService } from 'src/app/core/services/subscription.service';
@@ -17,7 +18,7 @@ import { Subscription } from 'rxjs';
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss'],
-  animations: [...collapseAnimation]
+  animations: [...collapseAnimation, ...slideAnimation]
 })
 export class ProjectListComponent implements OnInit, OnDestroy {
 
@@ -28,6 +29,7 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   singleDeletion: boolean = true
   showAdvancedFilter: boolean = false
   allowExportFile: boolean = false
+  exportFile: boolean = false
   searchCriteria!: SearchCriteria
   sortInfo!: SortInfo
   subscriptions: Subscription[] = []
@@ -124,16 +126,16 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.showDeleteModal = false
   }
 
-  exportFile(): void {
-    this.projectService.exportProjectsToFile().subscribe((value: any) => {
+  // exportFile(): void {
+  //   this.projectService.exportProjectsToFile().subscribe((value: any) => {
 
-      const url= window.URL.createObjectURL(value);
-      const link = document.createElement('a')
-      link.href = url
-      link.download = 'Projects.xlsx'
-      link.click()
-    })
-  }
+  //     const url= window.URL.createObjectURL(value);
+  //     const link = document.createElement('a')
+  //     link.href = url
+  //     link.download = 'Projects.xlsx'
+  //     link.click()
+  //   })
+  // }
 
   faTrash = faTrash
 }

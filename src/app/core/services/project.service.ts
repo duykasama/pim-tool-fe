@@ -10,6 +10,7 @@ import {Project} from "../models/project/project.models";
 import {map} from "rxjs/operators";
 import {selectFilterProperties, selectFilterStatus} from "../store/advanced-filter/advancedFilter.selectors";
 import {AppState} from "../store/app.state";
+import { ExportFileRequest } from 'src/app/modules/project/components/file-export/file-export.component';
 
 @Injectable({
   providedIn: 'root'
@@ -117,10 +118,10 @@ export class ProjectService {
     )
   }
 
-  exportProjectsToFile(): Observable<any> {
+  exportProjectsToFile(request: ExportFileRequest): Observable<any> {
     return this.http.post<any>(
       `${BASE_URL}/${EndPoints.EXPORT_PROJECTS}`, 
-      null,
+      request,
       {
         responseType: 'blob' as 'json'
       }
