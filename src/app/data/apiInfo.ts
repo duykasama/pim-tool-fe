@@ -7,6 +7,7 @@ export enum EndPoints {
   SEARCH_PROJECTS = "projects/search",
   DELETE_PROJECT = "projects/delete",
   IMPORT_PROJECTS = "projects/import-from-file",
+  EXPORT_PROJECTS = "projects/export-to-excel",
   VALIDATE_PROJECT_NUMBER = "projects/validate",
   LOGIN = "auth/login",
   VALIDATE_TOKEN = "auth/validate-token",

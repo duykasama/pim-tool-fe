@@ -2,9 +2,10 @@
     <div class="content">
         <fa-icon [icon]="faXmark"  (click)="hide.emit()" class="close-icon"></fa-icon>
         <div class="file-name-container">
-            <p *ngIf="!fileName">Select a file to import data (.csv or .xlsx)</p>
-            <p *ngIf="fileName">{{fileName}}</p>
-            <button (click)="downloadTemplate()" *ngIf="!fileName" class="common-button" style="background-color: plum;">Download template</button>
+            <p *ngIf="!fileName && isValidData">Select a file to import data (.csv or .xlsx)</p>
+            <p *ngIf="fileName && isValidData">{{fileName}}</p>
+            <button (click)="downloadTemplate()" *ngIf="!fileName && isValidData" class="common-button" style="background-color: plum;">Download template</button>
+            <p *ngIf="!isValidData">Your file contains invalid data. Click <a [href]="fileErrorDownload" download="Error Details.xlsx">here</a> to see details</p>
         </div>
         <div class="button-container">
             <button type="button" (click)="file.click()" class="common-button">Choose file</button>

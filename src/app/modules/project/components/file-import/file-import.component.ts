@@ -30,6 +30,8 @@ export class FileImportComponent implements OnDestroy {
   @ViewChild('file', {static:false}) fileInput!: ElementRef<HTMLInputElement>
   fileName: string = ''
   subscriptions: Subscription[] = []
+  isValidData: boolean = true
+  fileErrorDownload: string = ''
 
   apiObserver: Observer<ApiResponse> = {
     next: (response) => {
@@ -45,8 +47,8 @@ export class FileImportComponent implements OnDestroy {
               )
           )
         }
+        this.store.dispatch(setLoadingOff())
       }, 200)
-      this.store.dispatch(setLoadingOff())
     },
     error: (err: HttpErrorResponse) => {
       err.error.messages.forEach(
@@ -79,10 +81,20 @@ export class FileImportComponent implements OnDestroy {
     
     this.store.dispatch(setLoadingOn())
     this.subscriptions.push(
-      this.projectService.importProjectsFromFile(files[0]).subscribe(this.apiObserver)
-    )
+      this.projectService.importProjectsFromFile(files[0]).subscribe((res: any) => {
 
-    // TODO: handle response
+        if (!res.size) {
+          this.toast.success("Imported projects successfully", "Success")
+          this.router.navigateByUrl("project/project-list")
+        } else {
+          this.isValidData = false
+          const url = window.URL.createObjectURL(res)
+          this.fileErrorDownload = url
+        }
+
+        this.store.dispatch(setLoadingOff())
+      })
+    )
   }
   
   downloadTemplate(): void {

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import BASE_URL, {EndPoints} from "../../data/apiInfo";
 import {HttpClient} from "@angular/common/http";
@@ -9,25 +9,30 @@ import {jwtDecode} from "jwt-decode";
 import { TokenTypes } from 'src/app/core/constants/tokenConstants';
 import { Store } from '@ngrx/store';
 import { setLoadingOff, setLoadingOn } from 'src/app/core/store/page/page.actions';
+import { Subscription } from 'rxjs';
+import { selectLoadingState } from 'src/app/core/store/page/page.selectors';
+import { SubscriptionService } from 'src/app/core/services/subscription.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient,
     private router: Router,
-    private store: Store
+    private store: Store,
+    private subService: SubscriptionService
   ) {}
 
   isValidEmail = true
   isValidPassword = true
-  // isLoading = false
+  isLoading = false
   isLoginSuccess = true
   errorMsg = ''
+  subscriptions: Subscription[] =[]
 
   loginForm = this.formBuilder.group({
     email: new FormControl('', [
@@ -40,6 +45,16 @@ export class LoginComponent {
       // Validators.pattern('^(?=.*[A-Z])(?=.*[!@#$%^&*()-_+=]).{8,}$')
     ])
   })
+
+  ngOnInit(): void {
+    this.subscriptions.push(
+      this.store.select(selectLoadingState).subscribe(value => this.isLoading = value)
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.subService.unsubscribe(this.subscriptions)
+  }
 
   validateEmail() {
     this.isValidEmail = !this.loginForm.get('email')?.invalid && !this.loginForm.pristine
@@ -56,7 +71,6 @@ export class LoginComponent {
       return
     }
 
-    // this.isLoading = true
     this.store.dispatch(setLoadingOn())
     this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.LOGIN}`,
@@ -75,7 +89,6 @@ export class LoginComponent {
         } else {
           this.isLoginSuccess = false
           this.store.dispatch(setLoadingOff())
-          // this.isLoading = false
         }
       }
     })

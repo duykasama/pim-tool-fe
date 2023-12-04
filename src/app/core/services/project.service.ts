@@ -96,13 +96,13 @@ export class ProjectService {
     ).subscribe()
   }
 
-  deleteMultipleProjects(projects: string[]) {
+  deleteMultipleProjects(projects: string[]): void {
     this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.DELETE_PROJECT}`,
       {
         projectIds: projects
       },
-    )
+    ).subscribe()
   }
 
   importProjectsFromFile(file: File): Observable<ApiResponse> {
@@ -111,7 +111,19 @@ export class ProjectService {
 
     return this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.IMPORT_PROJECTS}`,
-      formData,
+      formData,{
+        responseType: 'blob' as 'json'
+      }
+    )
+  }
+
+  exportProjectsToFile(): Observable<any> {
+    return this.http.post<any>(
+      `${BASE_URL}/${EndPoints.EXPORT_PROJECTS}`, 
+      null,
+      {
+        responseType: 'blob' as 'json'
+      }
     )
   }
 }

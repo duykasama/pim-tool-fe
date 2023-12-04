@@ -19,6 +19,6 @@
       <button [ngClass]="{'forbid': loginForm.invalid || loginForm.pristine}" [disabled]="loginForm.invalid || loginForm.pristine">{{'LOG_IN' | translate}}</button>
     </form>
   </main>
-  <!-- <app-page-loader *ngIf="isLoading"></app-page-loader> -->
   <app-login-failed-modal [showModal]="!isLoginSuccess" [message]="errorMsg"></app-login-failed-modal>
 </div>
+<app-page-loader *ngIf="isLoading"></app-page-loader>
