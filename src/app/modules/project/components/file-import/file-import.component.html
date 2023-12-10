@@ -1,15 +1,15 @@
 <div class="file-import">
     <div class="content">
-        <fa-icon [icon]="faXmark"  (click)="hide.emit()" class="close-icon"></fa-icon>
+        <fa-icon [icon]="faXmark" (click)="hide.emit()" class="close-icon"></fa-icon>
         <div class="file-name-container">
-            <p *ngIf="!fileName && isValidData">Select a file to import data (.csv or .xlsx)</p>
+            <p *ngIf="!fileName && isValidData">{{'SELECT_FILE_MESSAGE' | translate}}</p>
             <p *ngIf="fileName && isValidData">{{fileName}}</p>
-            <button (click)="downloadTemplate()" *ngIf="!fileName && isValidData" class="common-button" style="background-color: plum;">Download template</button>
-            <p *ngIf="!isValidData">Your file contains invalid data. Click <a [href]="fileErrorDownload" download="Error Details.xlsx">here</a> to see details</p>
+            <button (click)="downloadTemplate()" *ngIf="!fileName && isValidData" class="common-button" style="background-color: plum;">{{'DOWNLOAD_TEMPLATE' | translate}}</button>
+            <p *ngIf="!isValidData">{{'INVALID_FILE_DATA_MESSAGE_1' | translate}} <a [href]="fileErrorDownload" download="Error Details.xlsx">{{'INVALID_FILE_DATA_MESSAGE_2' | translate}}</a> {{'INVALID_FILE_DATA_MESSAGE_3' | translate}}</p>
         </div>
         <div class="button-container">
-            <button type="button" (click)="file.click()" class="common-button">Choose file</button>
-            <button type="button" (click)="handleSubmit()" class="common-button" *ngIf="fileName && isValidData">Submit</button>    
+            <button type="button" (click)="file.click()" class="common-button">{{'CHOOSE_FILE' | translate}}</button>
+            <button type="button" (click)="handleSubmit()" class="common-button" *ngIf="fileName && isValidData">{{'SUBMIT' | translate}}</button>    
         </div>
         <input type="file" accept=".csv,.xlsx" #file (change)="handleFileChange()" hidden>
     </div>

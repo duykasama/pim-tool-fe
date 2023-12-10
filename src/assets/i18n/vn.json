@@ -46,6 +46,7 @@
   "PASSWORD": "Mật khẩu",
   "FORGOT_PASSWORD": "Quên mật khẩu",
   "LOG_IN": "Đăng nhập",
+  "LOG_IN_FAILURE": "Đăng nhập thất bại",
   "REQUIRE_VALID_EMAIL": "Vui lòng điền email hợp lệ",
   "REQUIRE_PASSWORD": "Vui lòng điền mật khẩu",
   "REQUIRE_PROJECT_NUMBER": "Số dự án không thể bỏ trống",
@@ -55,6 +56,20 @@
   "REQUIRE_CUSTOMER": "Khách hàng không thể bỏ trống",
   "REQUIRE_GROUP": "Nhóm không thể bỏ trống",
   "REQUIRE_STATUS": "Trạng thái không thể bỏ trống",
-  "REQUIRE_START_DATE": "Ngày bắt đầu không thể bỏ trống"
-
+  "REQUIRE_START_DATE": "Ngày bắt đầu không thể bỏ trống",
+  "DELETE_SINGLE_PROJECT_WARNING": "Bạn có chắc chắn muốn xóa dự án này?",
+  "DELETE_MULTIPLE_PROJECTS_WARNING": "Bạn có chắc chắn muốn xóa các dự án đã chọn?",
+  "EXPORT_TO_FILE": "Tải về tập tin",
+  "EXPORT": "Tải về",
+  "NONE": "Không",
+  "ORDER_BY": "Sắp xếp",
+  "NUMBER_OF_ROWS": "Số dòng",
+  "IMPORT_FROM_FILE": "Nhập từ tập tin",
+  "CHOOSE_FILE": "Chọn tập tin",
+  "SELECT_FILE_MESSAGE": "Chọn một tập tin để nhập dữ liệu (.csv or .xlsx)",
+  "DOWNLOAD_TEMPLATE": "Tải bản mẫu",
+  "SUBMIT": "Gửi",
+  "INVALID_FILE_DATA_MESSAGE_1": "Tập tin của bạn chứa dữ liệu không hợp lệ. Nhấn vào",
+  "INVALID_FILE_DATA_MESSAGE_2": "đây",
+  "INVALID_FILE_DATA_MESSAGE_3": "để xem thông tin chi tiết."
 }

@@ -1,7 +1,7 @@
 <div class="projects-list-layout">
   <div class="title-container">
     <h2>{{'PROJECT_LIST' | translate}}</h2>
-    <button *ngIf="allowExportFile" class="common-button" (click)="exportFile = true">Export to file</button>
+    <button *ngIf="allowExportFile" class="common-button" (click)="exportFile = true">{{'EXPORT_TO_FILE' | translate}}</button>
   </div>
   <app-search-bar (searchProjectEvent)="setProjects()"></app-search-bar>
   <div *ngIf="showAdvancedFilter" @open @close>
