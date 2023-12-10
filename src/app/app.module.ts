@@ -1,4 +1,4 @@
-import {LOCALE_ID, NgModule} from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -118,10 +118,6 @@ import { pageReducer } from './core/store/page/page.reducer';
     StoreRouterConnectingModule.forRoot(),
   ],
   providers: [
-    {
-      provide: LOCALE_ID,
-      useValue: 'en-US'
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpClientInterceptor,

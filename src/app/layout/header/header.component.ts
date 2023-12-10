@@ -27,7 +27,7 @@ export class HeaderComponent implements OnInit {
 
   setLang() {
     const lang = getLocalLanguage()
-    if (!lang || !['en', 'fr'].includes(lang)) {
+    if (!lang || (!['en', 'fr'].includes(lang) && !this.allowMultiLanguages)) {
       this.switchLanguage('en')
       this.currentLanguage = 'en'
     } else {

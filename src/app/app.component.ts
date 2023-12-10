@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Store, select } from '@ngrx/store';
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
@@ -8,12 +9,12 @@ import {TranslateService} from "@ngx-translate/core";
 })
 export class AppComponent implements OnInit {
   title = 'PIM Tool';
-  constructor(public translate: TranslateService) {
+  constructor(public translate: TranslateService, private store: Store) {
   }
   
   ngOnInit(): void {
     this.translate.addLangs(['en', 'vn', 'fr', 'jp'])
-    const lang = localStorage.getItem('lang') || 'en'    
+    const lang = localStorage.getItem('lang') || 'jp'   
     localStorage.setItem('lang', lang)
     this.translate.setDefaultLang(lang)
   }

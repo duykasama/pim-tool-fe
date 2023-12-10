@@ -15,7 +15,7 @@ import {setLocalSettings} from "../../../core/utils/localStorage.util";
   templateUrl: './general-settings.component.html',
   styleUrls: ['./general-settings.component.scss']
 })
-export class GeneralSettingsComponent implements OnInit{
+export class GeneralSettingsComponent implements OnInit {
 
   constructor(protected store: Store) {
   }
