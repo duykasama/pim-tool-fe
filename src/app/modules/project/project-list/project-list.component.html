@@ -1,12 +1,13 @@
 <div class="projects-list-layout">
   <div class="title-container">
     <h2>{{'PROJECT_LIST' | translate}}</h2>
-    <button *ngIf="allowExportFile" class="common-button">Export to file</button>
+    <button *ngIf="allowExportFile" class="common-button" (click)="exportFile = true">Export to file</button>
   </div>
   <app-search-bar (searchProjectEvent)="setProjects()"></app-search-bar>
   <div *ngIf="showAdvancedFilter" @open @close>
     <app-advanced-filter></app-advanced-filter>
   </div>
+  
   <table>
     <colgroup>
       <col span="1" style="width: 3%">
@@ -78,4 +79,7 @@
                            [isSingle]="singleDeletion"
                            (cancelEvent)="cancelDelete()"
                            (deleteEvent)="singleDeletion ? deleteSingleProject() : deleteMultipleProjects()"></app-delete-confirmation>
+</div>
+<div *ngIf="exportFile" @slideDown @slideUp style="position: absolute; top: 0; left: 0;">
+  <app-file-export (hide)="exportFile = false"></app-file-export>
 </div>

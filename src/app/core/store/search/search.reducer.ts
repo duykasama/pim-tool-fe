@@ -15,14 +15,12 @@ export const initialState: SearchCriteria = {
 export const searchReducer = createReducer(
   initialState,
   on(addConjunctionSearchInfo, (state, {searchInfo}) => {
-    const searchInfos: SearchInfo[] = []
-    state.ConjunctionSearchInfos.forEach(value => searchInfos.push(value))
+    const searchInfos: SearchInfo[] = [...state.ConjunctionSearchInfos]
     searchInfos.includes(searchInfo) || searchInfos.push(searchInfo)
     return {...state, ConjunctionSearchInfos: searchInfos}
   }),
   on(addDisjunctionSearchInfo, (state, {searchInfo}) => {
-    let searchInfos: SearchInfo[] = []
-    state.DisjunctionSearchInfos.forEach(value => searchInfos.push(value))
+    const searchInfos: SearchInfo[] = [...state.DisjunctionSearchInfos]
     searchInfos.includes(searchInfo) || searchInfos.push(searchInfo)
     return {...state, DisjunctionSearchInfos: searchInfos}
   }),

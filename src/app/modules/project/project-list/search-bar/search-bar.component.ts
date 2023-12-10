@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Output, OnInit, OnDestroy} from '@angular/core';
 import {SearchCriteria, SearchInfo} from "../../../../core/models/filter.models";
 import {Store} from "@ngrx/store";
 import {
@@ -8,31 +8,46 @@ import {
 } from "../../../../core/store/search/search.actions";
 import {resetSortInfo} from "../../../../core/store/sort/sort.actions";
 import {resetAdvancedFilter, showAdvancedFilter} from "../../../../core/store/advanced-filter/advancedFilter.actions";
+import { Subscription } from 'rxjs';
+import { SubscriptionService } from 'src/app/core/services/subscription.service';
 
 @Component({
   selector: 'app-search-bar',
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent {
+export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() searchProjectEvent = new EventEmitter<void>()
   projectStatus = ''
   currentProjectStatus = ''
   searchKeyword = ''
+  subscriptions: Subscription[] = []
 
-  constructor(protected store: Store<{searchCriteria: SearchCriteria}>) {
-    this.store.select('searchCriteria').subscribe(value => {
+  constructor(
+    protected store: Store<{searchCriteria: SearchCriteria}>,
+    private subService: SubscriptionService
+  ) { }
+  
+  ngOnInit(): void {
+    const searchCriteriaSub1 = this.store.select('searchCriteria').subscribe(value => {
       const disjunctionSearchInfos = value.DisjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName == 'status')
       if (disjunctionSearchInfos.length > 0) {
         this.currentProjectStatus = disjunctionSearchInfos[0].value
       }
     })
-    this.store.select('searchCriteria').subscribe(value => {
+    const searchCriteriaSub2 = this.store.select('searchCriteria').subscribe(value => {
       const conjunctionSearchInfos = value.ConjunctionSearchInfos.filter(searchInfo => searchInfo.fieldName === 'name')
       if (conjunctionSearchInfos.length > 0) {
         this.searchKeyword = conjunctionSearchInfos[0].value
       }
     })
+    
+    this.subscriptions.push(searchCriteriaSub1)
+    this.subscriptions.push(searchCriteriaSub2)
+  }
+
+  ngOnDestroy(): void {
+    this.subService.unsubscribe(this.subscriptions)
   }
 
   protected search(){

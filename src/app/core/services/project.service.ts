@@ -10,6 +10,7 @@ import {Project} from "../models/project/project.models";
 import {map} from "rxjs/operators";
 import {selectFilterProperties, selectFilterStatus} from "../store/advanced-filter/advancedFilter.selectors";
 import {AppState} from "../store/app.state";
+import { ExportFileRequest } from 'src/app/modules/project/components/file-export/file-export.component';
 
 @Injectable({
   providedIn: 'root'
@@ -96,13 +97,35 @@ export class ProjectService {
     ).subscribe()
   }
 
-  deleteMultipleProjects(projects: string[]) {
+  deleteMultipleProjects(projects: string[]): void {
     this.http.post<ApiResponse>(
       `${BASE_URL}/${EndPoints.DELETE_PROJECT}`,
       {
         projectIds: projects
       },
     ).subscribe()
+  }
+
+  importProjectsFromFile(file: File): Observable<ApiResponse> {
+    const formData = new FormData()
+    formData.append('file', file)
+
+    return this.http.post<ApiResponse>(
+      `${BASE_URL}/${EndPoints.IMPORT_PROJECTS}`,
+      formData,{
+        responseType: 'blob' as 'json'
+      }
+    )
+  }
+
+  exportProjectsToFile(request: ExportFileRequest): Observable<any> {
+    return this.http.post<any>(
+      `${BASE_URL}/${EndPoints.EXPORT_PROJECTS}`, 
+      request,
+      {
+        responseType: 'blob' as 'json'
+      }
+    )
   }
 }
 
