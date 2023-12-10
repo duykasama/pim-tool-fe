@@ -71,5 +71,10 @@
   "SUBMIT": "提出する",
   "INVALID_FILE_DATA_MESSAGE_1": "ファイルに無効なデータが含まれています。 詳細を確認するには",
   "INVALID_FILE_DATA_MESSAGE_2": "ここ",
-  "INVALID_FILE_DATA_MESSAGE_3": "をクリックしてください."
+  "INVALID_FILE_DATA_MESSAGE_3": "をクリックしてください.",
+  "SETTINGS": "設定",
+  "DARK_MODE": "ダークモード",
+  "ALLOW_FILE_IMPORT": "ファイルからのインポートを許可する",
+  "ALLOW_FILE_EXPORT": "ファイルへのエクスポートを許可する",
+  "ALLOW_MULTI_LANG": "複数の言語を許可する"
 }

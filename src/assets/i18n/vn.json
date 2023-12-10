@@ -71,5 +71,10 @@
   "SUBMIT": "Gửi",
   "INVALID_FILE_DATA_MESSAGE_1": "Tập tin của bạn chứa dữ liệu không hợp lệ. Nhấn vào",
   "INVALID_FILE_DATA_MESSAGE_2": "đây",
-  "INVALID_FILE_DATA_MESSAGE_3": "để xem thông tin chi tiết."
+  "INVALID_FILE_DATA_MESSAGE_3": "để xem thông tin chi tiết.",
+  "SETTINGS": "Cài đặt",
+  "DARK_MODE": "Chế độ tối",
+  "ALLOW_FILE_IMPORT": "Cho phép nhập từ tập tin",
+  "ALLOW_FILE_EXPORT": "Cho phép xuất thành tập tin",
+  "ALLOW_MULTI_LANG": "Cho phép nhiều ngôn ngữ"
 }

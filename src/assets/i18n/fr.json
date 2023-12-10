@@ -71,5 +71,10 @@
   "SUBMIT": "Soumettre",
   "INVALID_FILE_DATA_MESSAGE_1": "Votre fichier contient des données invalides. Cliquez sur",
   "INVALID_FILE_DATA_MESSAGE_2": "ici",
-  "INVALID_FILE_DATA_MESSAGE_3": "pour voir les détails."
+  "INVALID_FILE_DATA_MESSAGE_3": "pour voir les détails.",
+  "SETTINGS": "Paramètres",
+  "DARK_MODE": "mode sombre",
+  "ALLOW_FILE_IMPORT": "Autoriser l'importation à partir d'un fichier",
+  "ALLOW_FILE_EXPORT": "Autoriser l'exportation vers un fichier",
+  "ALLOW_MULTI_LANG": "Autoriser plusieurs langues"
 }

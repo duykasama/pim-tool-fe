@@ -1,23 +1,23 @@
 <section class="settings-container">
-  <h2>Settings</h2>
+  <h2>{{'SETTINGS' | translate}}</h2>
   <ul>
     <li>
-      <app-setting-item [text]="'Dark mode:'"
+      <app-setting-item [text]="'DARK_MODE' | translate"
                         [status]="settings.darkMode"
                         (toggle)="toggle(SettingActionTypes.TOGGLE_DARK_MODE)"></app-setting-item>
     </li>
     <li>
-      <app-setting-item [text]="'Allow import from file:'"
+      <app-setting-item [text]="'ALLOW_FILE_IMPORT' | translate"
                         [status]="settings.allowImportFile"
                         (toggle)="toggle(SettingActionTypes.TOGGLE_FILE_IMPORT)"></app-setting-item>
     </li>
     <li>
-      <app-setting-item [text]="'Allow export to file:'"
+      <app-setting-item [text]="'ALLOW_FILE_EXPORT' | translate"
                         [status]="settings.allowExportFile"
                         (toggle)="toggle(SettingActionTypes.TOGGLE_FILE_EXPORT)"></app-setting-item>
     </li>
     <li>
-      <app-setting-item [text]="'Allow multiple languages:'"
+      <app-setting-item [text]="'ALLOW_MULTI_LANG' | translate"
                         [status]="settings.allowMultipleLanguages"
                         (toggle)="toggle(SettingActionTypes.TOGGLE_MULTIPLE_LANGUAGES)"></app-setting-item>
     </li>

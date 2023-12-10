@@ -71,5 +71,10 @@
   "SUBMIT": "Submit",
   "INVALID_FILE_DATA_MESSAGE_1": "Your file contains invalid data. Click",
   "INVALID_FILE_DATA_MESSAGE_2": "here",
-  "INVALID_FILE_DATA_MESSAGE_3": "to see details."
+  "INVALID_FILE_DATA_MESSAGE_3": "to see details.",
+  "SETTINGS": "Settings",
+  "DARK_MODE": "Dark mode",
+  "ALLOW_FILE_IMPORT": "Allow import from file",
+  "ALLOW_FILE_EXPORT": "Allow export to file",
+  "ALLOW_MULTI_LANG": "Allow multiple languages"
 }
