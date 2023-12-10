@@ -67,6 +67,14 @@
       border-radius: 0.3rem;
       box-shadow: 0 0 2px #333 inset;
     }
+    input[type=number] {
+      text-align: right;
+    }
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin-right: 0.5rem;
+    }
     input[type=date], select {
       font-size: 1em;
       font-weight: $fw-semibold;
@@ -88,7 +96,7 @@
       label {
         grid-column: 1 / 4;
       }
-      input[type=text]{
+      input[type=text] {
         grid-column: 4 / 13;
       }
       input[type=number], select {
@@ -206,7 +214,6 @@
         grid-column: 10 / 13;
       }
       input[type="date"]::-webkit-calendar-picker-indicator {
-        //display: none;
         z-index: -1;
       }
       input[type=date] {
@@ -251,9 +258,4 @@
       }
     }
   }
-}
-
-drag-scroll {
-  //width: fit-content;
-  //max-width: 70%;
 }
