@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Store} from "@ngrx/store";
 import {Project, ProjectToDelete} from "../../../core/models/project/project.models";
-import {ApiResponse, ProjectService} from "../../../core/services/project.service";
+import { ProjectService } from "../../../core/services/project.service";
 import {PaginationStatus, SearchCriteria, SortInfo} from "../../../core/models/filter.models";
 import {addSortInfo, revertSortOrder} from "../../../core/store/sort/sort.actions";
 import {selectFilterStatus} from "../../../core/store/advanced-filter/advancedFilter.selectors";
@@ -125,17 +125,6 @@ export class ProjectListComponent implements OnInit, OnDestroy {
   cancelDelete() {
     this.showDeleteModal = false
   }
-
-  // exportFile(): void {
-  //   this.projectService.exportProjectsToFile().subscribe((value: any) => {
-
-  //     const url= window.URL.createObjectURL(value);
-  //     const link = document.createElement('a')
-  //     link.href = url
-  //     link.download = 'Projects.xlsx'
-  //     link.click()
-  //   })
-  // }
 
   faTrash = faTrash
 }

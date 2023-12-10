@@ -4,33 +4,33 @@
         <div class="filter-container">
             <div class="row-container">
                 <div class="container">
-                    <label for="projectName">Project name</label>
+                    <label for="projectName">{{'PROJECT_NAME' | translate}}</label>
                     <input type="text" id="projectName" [(ngModel)]="request.projectName">
                 </div>
                 <div class="container">
-                    <label for="customer">Customer</label>
+                    <label for="customer">{{'CUSTOMER' | translate}}</label>
                     <input type="text" id="customer" [(ngModel)]="request.customer">
                 </div>
                 <div class="container">
-                    <label for="leaderName">Leader name</label>
+                    <label for="leaderName">{{'LEADER_NAME' | translate}}</label>
                     <input type="text" id="leaderName" [(ngModel)]="request.leaderName">
                 </div>
             </div>
             <div class="row-container">
-                <p>Start date:</p>
+                <p>{{'START_DATE' | translate}}:</p>
                 <div class="container">
-                    <label for="">From:</label>
+                    <label for="">{{'FROM' | translate}}:</label>
                     <app-date-input [(date)]="request.startDateFrom" ></app-date-input>
                 </div>
                 <div class="container">
-                    <label for="">To:</label>
+                    <label for="">{{'TO' | translate}}:</label>
                     <app-date-input [(date)]="request.startDateTo"></app-date-input>
                 </div>
             </div>
             <div class="row-container">
-                <p>Start date:</p>
+                <p>{{'END_DATE' | translate}}:</p>
                 <div class="container">
-                    <label for="">From:</label>
+                    <label for="">{{'FROM' | translate}}:</label>
                     <app-date-input [(date)]="request.endDateFrom"></app-date-input>
                 </div>
                 <div class="container">
@@ -40,34 +40,34 @@
             </div>
             <div class="other-options">
                 <div class="container">
-                    <label for="status">Status:</label>
+                    <label for="status">{{'STATUS' | translate}}:</label>
                     <select id="status" [(ngModel)]="request.status">
-                        <option value="" selected>None</option>
-                        <option value="NEW">New</option>
-                        <option value="PLA">Planned</option>
-                        <option value="INP">In progress</option>
-                        <option value="FIN">Finished</option>
+                        <option value="" selected>{{'NONE' | translate}}</option>
+                        <option value="NEW">{{'NEW' | translate}}</option>
+                        <option value="PLA">{{'PLANNED' | translate}}</option>
+                        <option value="INP">{{'IN_PROGRESS' | translate}}</option>
+                        <option value="FIN">{{'FINISHED' | translate}}</option>
                     </select>
                 </div>
                 <div class="container">
-                    <label for="orderBy">Order by:</label>
+                    <label for="orderBy">{{'ORDER_BY' | translate}}:</label>
                     <select id="orderBy" [(ngModel)]="request.orderBy">
-                        <option value="projectNumber" selected>Project number</option>
-                        <option value="projectName">Project name</option>
-                        <option value="customer">Customer</option>
-                        <option value="status">Project status</option>
-                        <option value="startDate">Start date</option>
-                        <option value="endDate">End date</option>
+                        <option value="projectNumber" selected>{{'PROJECT_NUMBER' | translate}}</option>
+                        <option value="projectName">{{'PROJECT_NAME' | translate}}</option>
+                        <option value="customer">{{'CUSTOMER' | translate}}</option>
+                        <option value="status">{{'PROJECT_STATUS' | translate}}</option>
+                        <option value="startDate">{{'START_DATE' | translate}}</option>
+                        <option value="endDate">{{'END_DATE' | translate}}</option>
                     </select>
                 </div>
                 <div class="container">
-                    <label for="numberOfRows">Number of rows</label>
+                    <label for="numberOfRows">{{'NUMBER_OF_ROWS' | translate}}</label>
                     <input type="number" id="numberOfRows" min="1" [(ngModel)]="request.numberOfRows"/>
                 </div>
             </div>
         </div>
         <div class="button-container">
-            <button type="button" (click)="export()" class="common-button">Export</button>    
+            <button type="button" (click)="export()" class="common-button">{{'EXPORT' | translate}}</button>    
         </div>
     </div>
 </div>

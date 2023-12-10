@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import {FormBuilder, FormControl, Validators} from "@angular/forms";
 import BASE_URL, {EndPoints} from "../../data/apiInfo";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {ApiResponse} from "../../core/services/project.service";
 import {routes} from "../../core/constants/routeConstants";
 import {Router} from "@angular/router";
@@ -76,7 +76,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       `${BASE_URL}/${EndPoints.LOGIN}`,
       this.loginForm.getRawValue()
     ).subscribe({
-      next: (response) =>  {
+      next: (response) => {
         if (response.isSuccess) {
           localStorage.setItem(TokenTypes.ACCESS_TOKEN, response.data?.accessToken)
           localStorage.setItem(TokenTypes.REFRESH_TOKEN, response.data?.refreshToken)
@@ -87,6 +87,12 @@ export class LoginComponent implements OnInit, OnDestroy {
             console.log('request for refresh token')
           }, expireTime - (Date.now() + 60 * 1000))
         } else {
+          this.isLoginSuccess = false
+          this.store.dispatch(setLoadingOff())
+        }
+      },
+      error: (err: HttpErrorResponse) => {
+        if (!err.ok) {
           this.isLoginSuccess = false
           this.store.dispatch(setLoadingOff())
         }

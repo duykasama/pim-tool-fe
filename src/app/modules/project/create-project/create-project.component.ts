@@ -150,7 +150,6 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
       return
     }
 
-    // this.isLoading = true
     this.store.dispatch(setLoadingOn())
     this.doCreate
       ? this.projectService.createProject(this.createProjectForm.getRawValue())
