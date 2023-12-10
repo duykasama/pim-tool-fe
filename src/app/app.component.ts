@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import {TranslateService} from "@ngx-translate/core";
 
 @Component({
@@ -14,7 +14,7 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     this.translate.addLangs(['en', 'vn', 'fr', 'jp'])
-    const lang = localStorage.getItem('lang') || 'jp'   
+    const lang = localStorage.getItem('lang') || 'en'   
     localStorage.setItem('lang', lang)
     this.translate.setDefaultLang(lang)
   }

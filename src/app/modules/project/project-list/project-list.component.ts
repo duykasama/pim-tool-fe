@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {faTrash} from "@fortawesome/free-solid-svg-icons";
 import {Store} from "@ngrx/store";
 import {Project, ProjectToDelete} from "../../../core/models/project/project.models";
-import {ApiResponse, ProjectService} from "../../../core/services/project.service";
+import { ProjectService } from "../../../core/services/project.service";
 import {PaginationStatus, SearchCriteria, SortInfo} from "../../../core/models/filter.models";
 import {addSortInfo, revertSortOrder} from "../../../core/store/sort/sort.actions";
 import {selectFilterStatus} from "../../../core/store/advanced-filter/advancedFilter.selectors";
