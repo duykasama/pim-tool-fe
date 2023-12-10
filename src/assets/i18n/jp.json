@@ -76,5 +76,12 @@
   "DARK_MODE": "ダークモード",
   "ALLOW_FILE_IMPORT": "ファイルからのインポートを許可する",
   "ALLOW_FILE_EXPORT": "ファイルへのエクスポートを許可する",
-  "ALLOW_MULTI_LANG": "複数の言語を許可する"
+  "ALLOW_MULTI_LANG": "複数の言語を許可する",
+  "SORRY": "ごめん",
+  "404_MESSAGE": "お探しのページは存在しません",
+  "BACK_TO_HOME_PAGE": "ホームページに戻ります",
+  "ERROR_OCCURRED": "予期しないエラーが発生しました",
+  "CONTACT_ADMIN": "管理者に連絡してください",
+  "OR": "または",
+  "BACK_TO_SEARCH_PROJECT": "プロジェクトの検索に戻る"
 }

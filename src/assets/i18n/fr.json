@@ -76,5 +76,12 @@
   "DARK_MODE": "mode sombre",
   "ALLOW_FILE_IMPORT": "Autoriser l'importation à partir d'un fichier",
   "ALLOW_FILE_EXPORT": "Autoriser l'exportation vers un fichier",
-  "ALLOW_MULTI_LANG": "Autoriser plusieurs langues"
+  "ALLOW_MULTI_LANG": "Autoriser plusieurs langues",
+  "SORRY": "Désolée",
+  "404_MESSAGE": "La page que vous cherchiez n'existe pas",
+  "BACK_TO_HOME_PAGE": "Retour à la page d'accueil",
+  "ERROR_OCCURRED": "Une erreur inattendue s'est produite",
+  "CONTACT_ADMIN": "Veuillez contacter votre administrateur",
+  "OR": "ou",
+  "BACK_TO_SEARCH_PROJECT": "retour à la recherche de projet"
 }

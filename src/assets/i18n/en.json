@@ -76,5 +76,12 @@
   "DARK_MODE": "Dark mode",
   "ALLOW_FILE_IMPORT": "Allow import from file",
   "ALLOW_FILE_EXPORT": "Allow export to file",
-  "ALLOW_MULTI_LANG": "Allow multiple languages"
+  "ALLOW_MULTI_LANG": "Allow multiple languages",
+  "SORRY": "Sorry",
+  "404_MESSAGE": "The page you were looking for doesn't exist",
+  "BACK_TO_HOME_PAGE": "Back to home page",
+  "ERROR_OCCURRED": "Unexpected error occurred",
+  "CONTACT_ADMIN": "Please contact your administrator",
+  "OR": "or",
+  "BACK_TO_SEARCH_PROJECT": "back to search project"
 }

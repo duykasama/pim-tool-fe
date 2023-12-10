@@ -76,5 +76,12 @@
   "DARK_MODE": "Chế độ tối",
   "ALLOW_FILE_IMPORT": "Cho phép nhập từ tập tin",
   "ALLOW_FILE_EXPORT": "Cho phép xuất thành tập tin",
-  "ALLOW_MULTI_LANG": "Cho phép nhiều ngôn ngữ"
+  "ALLOW_MULTI_LANG": "Cho phép nhiều ngôn ngữ",
+  "SORRY": "Xin lỗi",
+  "404_MESSAGE": "Trang bạn đang tìm không tồn tại",
+  "BACK_TO_HOME_PAGE": "Quay về trang chủ",
+  "ERROR_OCCURRED": "Đã có lỗi xảy ra",
+  "CONTACT_ADMIN": "Vui lòng liên hệ với người quản lý",
+  "OR": "hoặc",
+  "BACK_TO_SEARCH_PROJECT": "quay về tìm kiếm dự án"
 }
