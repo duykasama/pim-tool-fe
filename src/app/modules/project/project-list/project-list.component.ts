@@ -126,16 +126,5 @@ export class ProjectListComponent implements OnInit, OnDestroy {
     this.showDeleteModal = false
   }
 
-  // exportFile(): void {
-  //   this.projectService.exportProjectsToFile().subscribe((value: any) => {
-
-  //     const url= window.URL.createObjectURL(value);
-  //     const link = document.createElement('a')
-  //     link.href = url
-  //     link.download = 'Projects.xlsx'
-  //     link.click()
-  //   })
-  // }
-
   faTrash = faTrash
 }

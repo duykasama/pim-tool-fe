@@ -1,4 +1,4 @@
-<div class="delete-confirmation" *ngIf="showModal">
+<div class="delete-confirmation" *ngIf="showModal" @fadeIn @fadeOut>
   <div class="msg-container">
     <fa-icon [icon]="faXmark" class="btn-close" (click)="cancel()"></fa-icon>
     <p>{{isSingle ? 'Are you are to delete this project?' : 'Are you sure to delete selected projects?'}} </p>

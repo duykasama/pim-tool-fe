@@ -74,12 +74,12 @@
   </app-pagination>
   <p *ngIf="!isLoading && (!projects || projects.length === 0)" class="empty-msg">{{'EMPTY_PROJECT_LIST' | translate}}</p>
   <app-loader *ngIf="isLoading"></app-loader>
-  <app-delete-confirmation *ngIf="showDeleteModal"
-                           [projectName]="projectToDelete.name"
-                           [isSingle]="singleDeletion"
-                           (cancelEvent)="cancelDelete()"
-                           (deleteEvent)="singleDeletion ? deleteSingleProject() : deleteMultipleProjects()"></app-delete-confirmation>
 </div>
+<app-delete-confirmation [(showModal)]="showDeleteModal"
+                         [projectName]="projectToDelete.name"
+                         [isSingle]="singleDeletion"
+                         (cancelEvent)="cancelDelete()"
+                         (deleteEvent)="singleDeletion ? deleteSingleProject() : deleteMultipleProjects()"></app-delete-confirmation>
 <div *ngIf="exportFile" @slideDown @slideUp style="position: absolute; top: 0; left: 0;">
   <app-file-export (hide)="exportFile = false"></app-file-export>
 </div>
