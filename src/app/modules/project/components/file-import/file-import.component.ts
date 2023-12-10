@@ -71,6 +71,7 @@ export class FileImportComponent implements OnDestroy {
   handleFileChange(): void {
     const files = this.fileInput.nativeElement.files
     this.fileName = files ? files[0].name : ''
+    this.isValidData = true
   }
   
   handleSubmit(): void {
@@ -84,7 +85,7 @@ export class FileImportComponent implements OnDestroy {
       this.projectService.importProjectsFromFile(files[0]).subscribe((res: any) => {
 
         if (!res.size) {
-          this.toast.success("Imported projects successfully", "Success")
+          this.toast.success("Projects imported successfully", "Success")
           this.router.navigateByUrl("project/project-list")
         } else {
           this.isValidData = false
@@ -95,6 +96,8 @@ export class FileImportComponent implements OnDestroy {
         this.store.dispatch(setLoadingOff())
       })
     )
+
+    this.fileInput.nativeElement.value = ''
   }
   
   downloadTemplate(): void {

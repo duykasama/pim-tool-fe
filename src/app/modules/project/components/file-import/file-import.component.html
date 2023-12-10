@@ -9,7 +9,7 @@
         </div>
         <div class="button-container">
             <button type="button" (click)="file.click()" class="common-button">Choose file</button>
-            <button type="button" (click)="handleSubmit()" class="common-button" *ngIf="fileName">Submit</button>    
+            <button type="button" (click)="handleSubmit()" class="common-button" *ngIf="fileName && isValidData">Submit</button>    
         </div>
         <input type="file" accept=".csv,.xlsx" #file (change)="handleFileChange()" hidden>
     </div>
