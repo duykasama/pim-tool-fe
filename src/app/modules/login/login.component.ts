@@ -92,9 +92,11 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       },
       error: (err: HttpErrorResponse) => {
-        if (!err.ok) {
+        this.store.dispatch(setLoadingOff())
+        if (err.status === 400 || err.status === 401 || err.status === 403 || err.status === 409) {
           this.isLoginSuccess = false
-          this.store.dispatch(setLoadingOff())
+        } else {
+          this.router.navigate(['error'])
         }
       }
     })
