@@ -21,6 +21,7 @@
         type="number"
         id="projectNumber"
         class="form-input"
+        min="0"
         [ngClass]="{'alert': (createProjectForm.get('projectNumber')?.invalid && createProjectForm.get('projectNumber')?.touched) || !isValidProjectNumber}"
         (focusout)="validateProjectNumber()">
       <div class="validation-msg-container">

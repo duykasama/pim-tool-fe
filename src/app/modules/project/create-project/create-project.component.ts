@@ -152,7 +152,12 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
 
     this.store.dispatch(setLoadingOn())
     this.doCreate
-      ? this.projectService.createProject(this.createProjectForm.getRawValue())
+      ? this.projectService.createProject(
+        {
+          ...this.createProjectForm.getRawValue(),
+          memberIds: this.selectedMembers.map(e => e.id)
+        }
+      )
         .subscribe(this.apiObserver)
       : this.projectService.updateProject(
         this.projectId,
