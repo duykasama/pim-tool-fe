@@ -3,7 +3,7 @@ import BASE_URL, {EndPoints} from "../../data/apiInfo";
 import {SearchCriteria, SortInfo} from "../models/filter.models";
 import {Store} from "@ngrx/store";
 import {AdvancedFilterState} from "../store/advanced-filter/advancedFilter.reducers";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {catchError, Observable, of} from "rxjs";
 import {getLocalAccessToken} from "../utils/localStorage.util";
 import {Project} from "../models/project/project.models";
@@ -11,6 +11,7 @@ import {map} from "rxjs/operators";
 import {selectFilterProperties, selectFilterStatus} from "../store/advanced-filter/advancedFilter.selectors";
 import {AppState} from "../store/app.state";
 import { ExportFileRequest } from 'src/app/modules/project/components/file-export/file-export.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ProjectService {
 
   isAdvancedSearch = false
 
-  constructor(private store: Store<AppState>, private http: HttpClient) {
+  constructor(private store: Store<AppState>, private http: HttpClient, private toast: ToastrService) {
     store.select(selectFilterStatus).subscribe(value => this.isAdvancedSearch = value)
   }
 
@@ -94,7 +95,13 @@ export class ProjectService {
   deleteProject(id: string) {
     this.http.delete(
       `${BASE_URL}/${EndPoints.DELETE_PROJECT}/${id}`,
-    ).subscribe()
+    ).subscribe({
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 409) {
+          this.toast.error(err.error.messages[0].content, "Error")
+        }
+      }
+    })
   }
 
   deleteMultipleProjects(projects: string[]): void {
@@ -103,7 +110,13 @@ export class ProjectService {
       {
         projectIds: projects
       },
-    ).subscribe()
+    ).subscribe({
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 409) {
+          this.toast.error(err.error.messages[0], "Error")
+        }
+      }
+    })
   }
 
   importProjectsFromFile(file: File): Observable<ApiResponse> {

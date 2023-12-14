@@ -72,6 +72,12 @@ export class CreateProjectComponent implements OnInit, OnDestroy {
     },
     error: (err: HttpErrorResponse) => {
       this.store.dispatch(setLoadingOff())
+      if (err.status === 400) {
+        this.toast.error(err.error.title, 'Error')        
+        return
+      } else if (err.status === 401) {
+        this.router.navigate(['/login'])
+      }
       err.error.messages.forEach((msg: ApiMessage) => this.toast.error(msg.content, 'Error'))
     },
     complete: () => {}
